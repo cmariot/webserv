@@ -1,0 +1,6 @@
+webserv
+a.out
+objs/
+*.o
+*.d
+.DS_Store
