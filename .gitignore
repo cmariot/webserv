@@ -4,3 +4,4 @@ objs/
 *.o
 *.d
 .DS_Store
+docs
