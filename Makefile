@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/02 22:40:49 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/11 21:45:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,15 @@ INCLUDES		 = -I includes
 
 SRC_ROOTDIR		= srcs/
 
-SRC_SUBDIR	    = $(MAIN)
-				  #$(addprefix templates/, $(TEMPLATES))
+SRC_SUBDIR	    = $(MAIN) \
+				  $(addprefix utils/, $(UTILS)) \
+				  $(addprefix webserver/, $(WEBSERVER))
 
 MAIN			= main.cpp
 
-TEMPLATES		= template1.cpp \
-				  template2.cpp ...
+UTILS			= display_error.cpp
+
+WEBSERVER		= Webserver.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
