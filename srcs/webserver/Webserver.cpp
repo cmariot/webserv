@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:43:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/12 11:58:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:02:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ int	Webserver::parse(int argc, const char *argv[])
 			return (1);
 		}
 		std::cout << "Let's parse " << argv[1] << std::endl;
+		for (int i = 0 ; i < 5 ; ++i)
+			this->server.push_back(Server());
 		configuration_file.close();
 	}
 	else
 		return (usage());
+	std::cout << "Number of servers = " << this->server.size() << std::endl;	
 	return (0);
 };
 

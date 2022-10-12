@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/11 21:45:56 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/12 15:43:30 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,13 +44,16 @@ SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix utils/, $(UTILS)) \
-				  $(addprefix webserver/, $(WEBSERVER))
+				  $(addprefix sockets/, $(SOCKETS))
 
 MAIN			= main.cpp
 
-UTILS			= display_error.cpp
+SOCKETS			= accept_socket.cpp \
+				  bind_socket.cpp \
+				  create_socket.cpp \
+				  listen_socket.cpp
 
-WEBSERVER		= Webserver.cpp
+UTILS			= display_error.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
