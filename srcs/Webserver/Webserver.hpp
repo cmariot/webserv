@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:38:22 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/12 14:32:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/13 18:18:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,16 @@
 # include <iostream>
 # include <fstream>
 # include <vector>
-
-# define RED_COLOR		"\033[1m\033[31m"
-# define RESET_COLOR	"\033[0m"
-
-class Server
-{
-	public:
-
-		int		ID;
-
-		Server()
-		{
-			std::cout << "New server" << std::endl;
-			ID = 42;
-		};
-
-		~Server()
-		{
-			std::cout << "Server down" << std::endl;
-		};
-
-	private:
-
-};
+# include <string>
 
 class Webserver
 {
 
 	private:
 
+		std::vector<void *>		virtual_server;
 
 	public:
-
-		std::vector<Server>		server;
 
 		// Default constructor
 		Webserver(void);
@@ -57,19 +33,17 @@ class Webserver
 		// Destructor
 		~Webserver(void);
 
-		// Copy assignation
-		Webserver(const Webserver &);
-
-		// Operator =
-		Webserver & operator = (const Webserver &);
-
-		// Parse the configuration file given as argument
+		// Parse the main's arguments
 		int		parse(int argc, const char *argv[]);
 
 	private:
 
 		// Display an error explaining the Webserv usage
-		int		usage(void);
+		int		usage(void) const;
+
+		// Display an error with the error message (complement can be set to NULL)
+		int		error(const char *error, const char *complement) const;
+
 };
 
 #endif

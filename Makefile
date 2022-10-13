@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/12 15:43:30 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/13 19:12:32 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@
 
 NAME			 = webserv
 
+CONFIG_FILE		 = configuration_files/main.conf
+
 
 
 # **************************************************************************** #
@@ -27,40 +29,55 @@ NAME			 = webserv
 
 CC				 = c++
 
-CFLAGS			 = -Wall -Wextra -Werror -std=c++98 -O3 -g3
+CFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
-LFLAGS			 = -Wall -Wextra -Werror -std=c++98 -O3 -g3
+LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
 INCLUDES		 = -I includes
+
+INCLUDES		+= -I srcs/Webserver
 
 
 
 # **************************************************************************** #
-#                                SOURCE FILES                                  #
+#                                    DEBUG                                     #
+# **************************************************************************** #
+
+
+DEBUG			 = true
+
+ifeq ($(DEBUG), true)
+
+	CFLAGS		+= -g3
+
+	LFLAGS		+= -g3
+
+endif
+
+VALGRIND_FLAGS	 = --leak-check=full --show-leak-kinds=all --track-fds=yes
+
+
+
+# **************************************************************************** #
+#                                 SOURCE FILES                                 #
 # **************************************************************************** #
 
 
 SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
-				  $(addprefix utils/, $(UTILS)) \
-				  $(addprefix sockets/, $(SOCKETS))
+				  $(addprefix Webserver/, $(WEBSERVER))
 
 MAIN			= main.cpp
 
-SOCKETS			= accept_socket.cpp \
-				  bind_socket.cpp \
-				  create_socket.cpp \
-				  listen_socket.cpp
-
-UTILS			= display_error.cpp
+WEBSERVER		= Webserver.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
 
 
 # **************************************************************************** #
-#                                OBJECT FILES                                  #
+#                                 OBJECT FILES                                 #
 # **************************************************************************** #
 
 
@@ -77,7 +94,7 @@ DEPENDS			:= $(OBJS:.o=.d)
 
 
 # **************************************************************************** #
-#                                  COLORS                                      #
+#                                    COLORS                                    #
 # **************************************************************************** #
 
 
@@ -90,7 +107,7 @@ RESET			= \033[0m
 
 
 # **************************************************************************** #
-#                             MAKEFILE'S RULES                                 #
+#                               MAKEFILE'S RULES                               #
 # **************************************************************************** #
 
 
@@ -106,11 +123,11 @@ $(NAME)	: 		$(OBJS)
 				$(CC) $(LFLAGS) $(OBJS) $(LIBRARY) -o $(NAME)
 				@printf "\n"
 
-leaks :			all
-				valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
+leaks :			$(NAME)
+				@valgrind $(VALGRIND_FLAGS) ./$(NAME) $(CONFIG_FILE)
 
-test :			all
-				./$(NAME)
+test :			$(NAME)
+				@./$(NAME) $(CONFIG_FILE)
 
 clean :
 				@rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
