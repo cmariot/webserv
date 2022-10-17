@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:43:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/17 09:06:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/17 14:51:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ Webserver::~Webserver(void)
 #include <sstream>
 
 /* nginx consists of modules which are controlled by directives specified in the configuration file.
+ *
  * Directives are divided into simple directives and block directives.
- * A simple directive consists of the name and parameters separated by spaces and ends with a semicolon (;).
- * A block directive has the same structure as a simple directive,
- * but instead of the semicolon it ends with a set of additional instructions surrounded by braces ({ and }).
+ * - A simple directive consists of the name and parameters separated by spaces and ends with a semicolon (;).
+ * - A block directive has the same structure as a simple directive,
+ *   but instead of the semicolon it ends with a set of additional instructions surrounded by braces ({ and }).
+ *
  * If a block directive can have other directives inside braces, it is called a context (examples: events, http, server, and location).
  * Directives placed in the configuration file outside of any contexts are considered to be in the main context.
  * The events and http directives reside in the main context, server in http, and location in server.
@@ -45,7 +47,7 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 	for (size_t i = 0 ; i < vector_size ; ++i)
 	{
 		size_t comment_pos = string_vector[i].find("#");
-		if (comment_pos < string_vector[i].size() &&
+		if (comment_pos != std::string::npos &&
 				(comment_pos == 0 || isblank(string_vector[i][comment_pos - 1])))
 			string_vector[i] = string_vector[i].substr(0, comment_pos);
 	}
@@ -55,47 +57,57 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 			if (isblank(string_vector[i][j]))
 				string_vector[i][j] = ' ';
 
-	// Split the strings with ' ' as delimiter
+	// Split the strings with ' ', '{' and '}' as delimiters
 	std::string					token;
 	std::vector<std::string>	tokens_vector;
+
 	for (size_t i = 0 ; i < vector_size ; ++i)
 	{
 		std::istringstream	iss(string_vector[i]);
 		while (std::getline(iss, token, ' '))
 		{
 			if (token.empty() == false)
-				tokens_vector.push_back(token);
+			{
+				if (token.find("{") != std::string::npos
+					|| token.find("}") != std::string::npos)
+				{
+					if (token == "{" || token == "}")
+						tokens_vector.push_back(token);
+					else
+					{
+						size_t	begin = 0;
+
+						for (size_t j = 0 ; j < token.size() ; ++j)
+						{
+							if (token[j] == '{' || token[j] == '}')
+							{
+								if (j != begin)
+									tokens_vector.push_back(token.substr(begin, j));
+								if (token[j] == '{')
+									tokens_vector.push_back("{");
+								else if (token[j] == '}')
+									tokens_vector.push_back("}");
+								begin = j + 1;
+							}
+						}
+					}
+				}
+				else
+					tokens_vector.push_back(token);
+			}
 		}
 	}
 
-	size_t			number_of_servers = 0;
-	size_t			bracket = 0;
-	const size_t	number_of_tokens = tokens_vector.size();
-
-	for (size_t i = 0 ; i < number_of_tokens ; ++i)
+	for (size_t i = 0 ; i < tokens_vector.size() ; ++i)
 	{
-		std::cout << "TOKEN[" << i << "] = " << tokens_vector[i] << std::endl;
-		if (tokens_vector[i].find("server"))
+		if (tokens_vector[i] == "server")
 		{
-			std::cout << "SERVER++" << std::endl;
-			++number_of_servers;
+			std::cout << "SERVER !" << std::endl;
+			
 		}
-		else if (tokens_vector[i].find("{"))
-		{
-			std::cout << "BRACKET++" << std::endl;
-			++bracket;
-		}
-		else if (tokens_vector[i].find("}"))
-		{
-			std::cout << "BRACKET--" << std::endl;
-			--bracket;
-		}
+		std::cout << "tokens_vector[" << i << "] = " << tokens_vector[i] << std::endl;
 	}
-	if (bracket != 0)
-		return (error("unclosed bracket in the configuration file.", NULL));
 
-	std::cout << "NUMBER OF SERVERS = " << number_of_servers << std::endl;
-	std::cout << "BRACKETS = " << bracket << std::endl;
 	return (0);
 };
 
