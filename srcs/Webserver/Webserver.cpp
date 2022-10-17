@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:43:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/17 15:32:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:39:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,18 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 					else
 					{
 						size_t	begin = 0;
+						size_t	len = 0;
 
 						for (size_t j = 0 ; j < token.size() ; ++j)
 						{
 							if (token[j] == '{' || token[j] == '}')
 							{
 								if (j != begin)
-									tokens_vector.push_back(token.substr(begin, j));
+								{
+									len = j;
+									std::cout << "STR = " << token << " SUBSTR BEGIN = " << begin << "LEN = " << len << std::endl;
+									tokens_vector.push_back(token.substr(begin, len));
+								}
 								if (token[j] == '{')
 									tokens_vector.push_back("{");
 								else if (token[j] == '}')
