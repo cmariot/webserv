@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:43:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/15 15:45:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/17 09:06:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,34 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 		}
 	}
 
-	for (size_t i = 0 ; i < tokens_vector.size() ; ++i)
-		std::cout << tokens_vector[i] << std::endl;
+	size_t			number_of_servers = 0;
+	size_t			bracket = 0;
+	const size_t	number_of_tokens = tokens_vector.size();
 
+	for (size_t i = 0 ; i < number_of_tokens ; ++i)
+	{
+		std::cout << "TOKEN[" << i << "] = " << tokens_vector[i] << std::endl;
+		if (tokens_vector[i].find("server"))
+		{
+			std::cout << "SERVER++" << std::endl;
+			++number_of_servers;
+		}
+		else if (tokens_vector[i].find("{"))
+		{
+			std::cout << "BRACKET++" << std::endl;
+			++bracket;
+		}
+		else if (tokens_vector[i].find("}"))
+		{
+			std::cout << "BRACKET--" << std::endl;
+			--bracket;
+		}
+	}
+	if (bracket != 0)
+		return (error("unclosed bracket in the configuration file.", NULL));
+
+	std::cout << "NUMBER OF SERVERS = " << number_of_servers << std::endl;
+	std::cout << "BRACKETS = " << bracket << std::endl;
 	return (0);
 };
 
