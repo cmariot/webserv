@@ -1,4 +1,0 @@
-- [ ] Parsing fichier de configuration en fonction des characteres blank, "{", "}" ";"
-- [ ] Compter le nombre de blocs "server"
-- [ ] Gestion d'erreurs au niveau des '{' et '}'
-- [ ] Initialiser des classes "server" avec les blocs de directives associees a ces blocs
