@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:38:22 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/13 18:18:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/15 14:54:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fstream>
 # include <vector>
 # include <string>
+# include <cstring>
 
 class Webserver
 {
@@ -44,6 +45,7 @@ class Webserver
 		// Display an error with the error message (complement can be set to NULL)
 		int		error(const char *error, const char *complement) const;
 
+		int		parse_configuration_file(std::vector<std::string> &);
 };
 
 #endif
