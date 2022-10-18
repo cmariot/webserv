@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/16 18:07:56 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/18 18:44:36 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
 INCLUDES		 = -I includes
 
-INCLUDES		+= -I srcs/Webserver
+INCLUDES		+= -I srcs/Webserver/includes
 
 
 
@@ -66,11 +66,20 @@ VALGRIND_FLAGS	 = --leak-check=full --show-leak-kinds=all --track-fds=yes
 SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
-				  $(addprefix Webserver/, $(WEBSERVER))
+				  $(addprefix Webserver/srcs/, $(WEBSERVER))
 
 MAIN			= main.cpp
 
-WEBSERVER		= Webserver.cpp
+WEBSERVER		= constructor.cpp \
+				  destructor.cpp \
+				  error.cpp \
+				  parse_configuration_file.cpp \
+				  parse.cpp \
+				  remove_commentaries.cpp \
+				  replace_blank_characters.cpp \
+				  separate_braces.cpp \
+				  split_strings.cpp \
+				  usage.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
@@ -85,7 +94,7 @@ OBJ_ROOTDIR		= objs/
 
 OBJ_SUBDIR		= $(SRC_SUBDIR:.cpp=.o)
 
-OBJ_DIR 		= $(shell find ./srcs -type d | sed s/".\/srcs"/".\/objs"/g)
+OBJ_DIR 		= $(shell find ./srcs -type d | sed s/srcs/objs/)
 
 OBJS			= $(addprefix $(OBJ_ROOTDIR), $(OBJ_SUBDIR))
 
