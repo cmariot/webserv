@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/18 22:19:33 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/19 12:11:06 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,9 @@ SRC_SUBDIR	    = $(MAIN) \
 
 MAIN			= main.cpp
 
-SERVER			= constructor.cpp
+SERVER			= constructor.cpp \
+				  destructor.cpp \
+				  set_server_arguments.cpp
 
 WEBSERVER		= constructor.cpp \
 				  destructor.cpp \

@@ -34,12 +34,10 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 
 		// Create a server whith the instructions stored in the vector from begin to end
 		server.push_back(Server());
-		while (begin != end)
-		{
-			// server arguments
-			std::cout << tokens_vector[begin] << std::endl;
-			++begin;
-		}
+		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin,
+														tokens_vector.begin() + end);
+		server[i].set_server_arguments(arguments_vector);
+
 	}
 	return (0);
 }

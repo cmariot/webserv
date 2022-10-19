@@ -1,7 +1,3 @@
-// files opening errors (directory, read_access, does not exists, empty ...)
-// getline errors
-// push_back exceptions
-
 #include "Webserver.hpp"
 
 // Check the number of arguments,
@@ -19,18 +15,27 @@ int	Webserver::parse(int argc, const char *argv[])
 	configuration_file.open(argv[1], std::ios_base::in);
 	if (configuration_file.is_open() == false)
 		return (error("Could not open the file", argv[1]));
-	while (std::getline(configuration_file, line))
+	try
 	{
-		string_vector.push_back(line);
-		if (string_vector.size() + 1 >= string_vector.max_size())
-			return (error("the configuarion file is too big.", NULL));
-	}
-	if (configuration_file.eof() == false)
-	{
+		while (std::getline(configuration_file, line))
+			string_vector.push_back(line);
+		if (configuration_file.eof() == false)
+		{
+			configuration_file.close();
+			return (error("while reading the file", argv[1]));
+		}
 		configuration_file.close();
-		return (error("while reading the file", argv[1]));
+		if (string_vector.size() == 0)
+			return (error("The configuration file is empty.", NULL));
 	}
-	configuration_file.close();
+	catch (std::ios_base::failure & exception)
+	{
+		return (error(exception.what(), "(getline in parse)"));
+	}
+	catch (std::bad_alloc & exception)
+	{
+		return (error(exception.what(), "(push_back in parse)"));
+	}
 	if (parse_configuration_file(string_vector))
 		return (1);
 	return (0);

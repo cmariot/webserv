@@ -26,6 +26,10 @@ int		Webserver::remove_commentaries(std::vector<std::string> & string_vector) co
 				tmp = string_vector[i].substr(0, comment_pos);
 				string_vector[i] = tmp;
 			}
+			catch (const std::out_of_range & exception)
+			{
+				return (error(exception.what(), "(remove_commentaries)"));
+			}
 			catch (const std::bad_alloc & exception)
 			{
 				return (error(exception.what(), "(remove_commentaries)"));
