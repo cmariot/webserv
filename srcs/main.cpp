@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:21:52 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/19 14:06:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:18:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	main(int argc, const char *argv[])
 	if (webserv.parse(argc, argv))
 		return (1);
 
-
 	int					socket_fd;
 	struct sockaddr_in	address;
 	int					accepted_socket;
@@ -147,7 +146,7 @@ int	main(int argc, const char *argv[])
 
 	// Send a response to the client
 	char response[1024];
-	strcpy(response, "Hello from server");
+	strcpy(response, "HTTP/1.1 200 OK\nDate: Mon, 27 Jul 2009 12:28:53 GMT\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Length: 88\nContent-Type: text/html\nConnection: Closed\n\n<html><body><h1>Hello, World!</h1></body></html>");
 	send(accepted_socket, response, strlen(response), 0);
 
 	close(accepted_socket);
