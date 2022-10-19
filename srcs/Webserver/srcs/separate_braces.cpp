@@ -1,9 +1,14 @@
+// string init
+// push_back
+// substr
+
 #include "Webserver.hpp"
 
 // Cut the strings before and after each '{' or '}'
 int		Webserver::separate_braces(std::vector<std::string>	& tokens_vector) const
 {
 	std::vector<std::string>	tmp_vector;
+	std::string					previous_word;
 	size_t						begin;
 	size_t						len;
 
@@ -19,12 +24,15 @@ int		Webserver::separate_braces(std::vector<std::string>	& tokens_vector) const
 			{
 				if (tokens_vector[i][j] == '{' || tokens_vector[i][j] == '}')
 				{
+					std::string		brace(1, tokens_vector[i][j]);
+
 					if (len == 0)
-						tmp_vector.push_back(tokens_vector[i].substr(j, 1));
+						tmp_vector.push_back(brace);
 					else
 					{
-						tmp_vector.push_back(tokens_vector[i].substr(begin, len));
-						tmp_vector.push_back(tokens_vector[i].substr(j, 1));
+						previous_word = tokens_vector[i].substr(begin, len);
+						tmp_vector.push_back(previous_word);
+						tmp_vector.push_back(brace);
 					}
 					begin = j + 1;
 					len = 0;
@@ -32,8 +40,11 @@ int		Webserver::separate_braces(std::vector<std::string>	& tokens_vector) const
 				else
 				{
 					++len;
-					if (j + 1 == tokens_vector[i].size())
-						tmp_vector.push_back(tokens_vector[i].substr(begin, len));
+					if (j + 1 >= tokens_vector[i].size())
+					{
+						std::string	final_word = tokens_vector[i].substr(begin, len);
+						tmp_vector.push_back(final_word);
+					}
 				}
 			}
 		}

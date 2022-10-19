@@ -1,3 +1,3 @@
-- [ ] Compter le nombre de blocs "server"
-- [ ] Gestion d'erreurs au niveau des '{' et '}'
-- [ ] Initialiser des classes "server" avec les blocs de directives associees a ces blocs
+- [ ] Gestion des erreurs au niveau du parsing
+- [ ] Fichier de configuration pour chaque gestion d'erreur
+- [ ] Initialiser des classes "Server" avec les blocs de directives associees

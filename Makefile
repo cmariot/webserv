@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/18 18:44:36 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/18 22:19:33 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 INCLUDES		 = -I includes
 
 INCLUDES		+= -I srcs/Webserver/includes
+INCLUDES		+= -I srcs/Server/includes
 
 
 
@@ -66,14 +67,18 @@ VALGRIND_FLAGS	 = --leak-check=full --show-leak-kinds=all --track-fds=yes
 SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
+				  $(addprefix Server/srcs/, $(SERVER)) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER))
 
 MAIN			= main.cpp
+
+SERVER			= constructor.cpp
 
 WEBSERVER		= constructor.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  parse_configuration_file.cpp \
+				  parse_server.cpp \
 				  parse.cpp \
 				  remove_commentaries.cpp \
 				  replace_blank_characters.cpp \

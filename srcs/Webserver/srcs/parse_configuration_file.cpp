@@ -13,7 +13,7 @@
  * The rest of a line after the # sign is considered a comment
  */
 
-int		Webserver::parse_configuration_file(std::vector<std::string> & string_vector) const
+int		Webserver::parse_configuration_file(std::vector<std::string> & string_vector)
 {
 	std::vector<std::string>	tokens_vector;
 
@@ -25,9 +25,7 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 		return (1);
 	if (separate_braces(tokens_vector))
 		return (1);
-
-	for (size_t i = 0 ; i < tokens_vector.size() ; ++i)
-		std::cout << "tokens_vector[" << i << "] = " << tokens_vector[i] << std::endl;
-
+	if (parse_server(tokens_vector))
+		return (1);
 	return (0);
 };
