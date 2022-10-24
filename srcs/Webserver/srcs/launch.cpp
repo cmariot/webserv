@@ -194,10 +194,10 @@ int		Webserver::launch(void)
 				if (add_client(epoll_socket, client_socket, &ev))
 					return (1);
 			}
-			else if ()
-			{
+			//else if ()
+			//{
 
-			}
+			//}
 			else
 			{
 				char request[1024];
