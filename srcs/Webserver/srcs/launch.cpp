@@ -14,6 +14,64 @@
 # include <poll.h>
 # include <fcntl.h>
 
+#define MAX_EVENTS 10
+
+int	Webserver::add_client(int epoll_socket, int client_socket, struct epoll_event *ev)
+{
+	fcntl(client_socket, F_SETFL, O_NONBLOCK);
+	ev->events = EPOLLIN | EPOLLET;
+	ev->data.fd = client_socket;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, ev) == -1)
+	{
+		perror("epoll_ctl: client_socket");
+		return (1);
+	}
+	return (0);
+}
+
+int	Webserver::wait_epoll(int epoll_socket, struct epoll_event *events)
+{
+	int			nb_ready_fd;
+	const int	maxevents = MAX_EVENTS;
+	const int	timeout = -1;
+
+	nb_ready_fd = epoll_wait(epoll_socket, events, maxevents, timeout);
+	if (nb_ready_fd == -1)
+	{
+		error("epoll_wait() failed.", NULL);
+		perror("epoll_wait");
+	}
+	return (nb_ready_fd);
+}
+
+int	Webserver::add_tcp_socket_to_epoll(int epoll_socket, int tcp_socket, struct epoll_event *ev)
+{
+	bzero(ev, sizeof(*ev));
+	ev->events = EPOLLIN;
+	ev->data.fd = tcp_socket;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, tcp_socket, ev) == -1)
+	{
+		error("epoll_ctl() failed.", NULL);
+		perror("epoll_ctl: tcp_socket");
+		return (1);
+	}
+	return (0);
+}
+
+int	Webserver::create_epoll_socket(int *epoll_socket)
+{
+	const int	flags = 0;	// Just create an epoll fd
+
+	*epoll_socket = epoll_create1(flags);
+	if (*epoll_socket == -1)
+	{
+		error("epoll_create1() failed.", NULL);
+		perror("epoll_create1");
+		return (1);
+	}
+	return (0);
+}
+
 // Listen for client connections on a socket
 int Webserver::listen_socket(int tcp_socket)
 {
@@ -29,12 +87,12 @@ int Webserver::listen_socket(int tcp_socket)
 	return (0);
 }
 
-int Webserver::accept_connexion(int tcp_socket, struct sockaddr_in address, int *accepted_socket)
+int Webserver::accept_connexion(int tcp_socket, struct sockaddr_in address, int *client_socket)
 {
 	int addrlen = sizeof(address);
 
-	*accepted_socket = accept(tcp_socket, (struct sockaddr *)&address, (socklen_t *)&addrlen);
-	if (*accepted_socket == -1)
+	*client_socket = accept(tcp_socket, (struct sockaddr *)&address, (socklen_t *)&addrlen);
+	if (*client_socket == -1)
 	{
 		error("accept() failed.", NULL);
 		perror("accept");
@@ -100,12 +158,15 @@ int	Webserver::create_socket(int *tcp_socket)
 	return (0);
 }
 
-#define MAX_EVENTS 10
-
 int		Webserver::launch(void)
 {
 	int					tcp_socket;
 	struct sockaddr_in	address;
+	int					epoll_socket;
+	struct epoll_event	ev;
+	int					nb_events;
+	struct epoll_event	events[MAX_EVENTS];
+	int					client_socket;
 
 	if (create_socket(&tcp_socket))
 		return (1);
@@ -113,61 +174,42 @@ int		Webserver::launch(void)
 		return (1);
 	if (listen_socket(tcp_socket))
 		return (1);
-
-	struct epoll_event	ev;
-	struct epoll_event	events[MAX_EVENTS];
-	int					conn_sock;
-	int					nfds;
-	int					epollfd;
-
-	epollfd = epoll_create1(0);
-	if (epollfd == -1)
-	{
-		perror("epoll_create1");
-		exit(EXIT_FAILURE);
-	}
-
-	bzero(&ev, sizeof(ev));
-	ev.events = EPOLLIN;
-	ev.data.fd = tcp_socket;
-	if (epoll_ctl(epollfd, EPOLL_CTL_ADD, tcp_socket, &ev) == -1)
-	{
-		perror("epoll_ctl: listen_sock");
-		exit(EXIT_FAILURE);
-	}
-
+	if (create_epoll_socket(&epoll_socket))
+		return (1);
+	if (add_tcp_socket_to_epoll(epoll_socket, tcp_socket, &ev))
+		return (1);
 	while (true)
 	{
-		nfds = epoll_wait(epollfd, events, MAX_EVENTS, -1);
-		if (nfds == -1) {
-			perror("epoll_wait");
-			exit(EXIT_FAILURE);
-		}
-
-		for (int n = 0 ; n < nfds ; ++n)
+		nb_events = wait_epoll(epoll_socket, events);
+		if (nb_events == 0)
+			continue ;
+		else if (nb_events == -1)
+			return (1);
+		for (int i = 0 ; i < nb_events ; ++i)
 		{
-			if (events[n].data.fd == tcp_socket)
+			if (events[i].data.fd == tcp_socket)
 			{
-				if (accept_connexion(tcp_socket, address, &conn_sock))
+				if (accept_connexion(tcp_socket, address, &client_socket))
 					return (1);
-				conn_sock = fcntl(conn_sock, F_SETFL, O_NONBLOCK);
-				if (conn_sock == -1)
-					return (error("fcntl", NULL));
-				ev.events = EPOLLIN | EPOLLET;
-				ev.data.fd = conn_sock;
-				if (epoll_ctl(epollfd, EPOLL_CTL_ADD, conn_sock, &ev) == -1)
-				{
-					perror("epoll_ctl: conn_sock");
-					exit(EXIT_FAILURE);
-				}
+				if (add_client(epoll_socket, client_socket, &ev))
+					return (1);
+			}
+			else if ()
+			{
 
 			}
 			else
 			{
-				//do_use_fd(events[n].data.fd);
+				char request[1024];
+				memset(request, 0, 1024);
+				recv(events[i].data.fd, request, 1024, 0);
+				std::cout << request << std::endl;
+
+				char response[1024];
+				strcpy(response, "Response : OK\n\n");
+				send(events[i].data.fd, response, strlen(response), 0);
 			}
 		}
 	}
-
 	return (0);
 };
