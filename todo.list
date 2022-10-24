@@ -1,1 +1,1 @@
-- [ ] Initialiser des classes "Server" avec les blocs de directives associees
+- [ ] Remplacer select par epoll : Objectif = pouvoir connecter plusieurs clients, recevoir requetes envoyer reponse par defaut

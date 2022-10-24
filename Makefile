@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/19 12:11:06 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/21 04:03:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SERVER			= constructor.cpp \
 WEBSERVER		= constructor.cpp \
 				  destructor.cpp \
 				  error.cpp \
+				  launch.cpp \
 				  parse_configuration_file.cpp \
 				  parse_server.cpp \
 				  parse.cpp \

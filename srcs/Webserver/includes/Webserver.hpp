@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/19 12:19:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/21 04:27:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ class Webserver
 		~Webserver(void);
 
 		int		parse(int argc, const char *argv[]);
+		int		launch(void);
 
 	private:
 
@@ -48,6 +49,14 @@ class Webserver
 
 		//	servers initialization
 		int		parse_server(std::vector<std::string> &);
+
+		// launch
+		int		create_socket(int *);
+		int		set_sockets_options(int);
+		int		bind_socket_and_address(int, struct sockaddr_in *);
+		int		listen_socket(int);
+		int		accept_connexion(int, struct sockaddr_in, int *);
+		int		wait_event(void);
 
 		//	error
 		int		usage(void) const;
