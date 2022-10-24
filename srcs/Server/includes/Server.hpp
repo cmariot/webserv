@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/19 15:26:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/24 17:16:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ class	Server
 
 	private:
 
-		std::vector<std::pair<std::string, int> >	listen;
+		std::string				ip;
+		int						port;
+		std::string				server_name;
+		std::vector<void *>		error_pages;
+		size_t					max_body_size;
+		std::vector<void *>		locations;
 
 	public:
 
