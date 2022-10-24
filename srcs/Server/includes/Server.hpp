@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/24 17:16:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/24 20:39:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,19 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sys/socket.h>
+#include <sys/epoll.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 class	Server
 {
 
-	private:
+	public:
+
+		int						server_socket;
+		struct sockaddr_in		server_address;
+		struct epoll_event		server_event;
 
 		std::string				ip;
 		int						port;

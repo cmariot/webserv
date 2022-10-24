@@ -37,7 +37,7 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin,
 														tokens_vector.begin() + end);
 		server[i].set_server_arguments(arguments_vector);
-
+		++nb_of_servers;
 	}
 	return (0);
 }

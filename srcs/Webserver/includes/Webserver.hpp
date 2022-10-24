@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/24 17:27:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/24 20:40:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@
 # include <iostream>
 # include <sstream>
 # include <climits>
+# include <sys/types.h>
+# include <errno.h>
+# include <netinet/in.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+# include <iostream>
+# include <cstdio>
+# include <cstdlib>
+# include <cstring>
+# include <unistd.h>
+# include <sys/epoll.h>
+# include <poll.h>
+# include <fcntl.h>
+
+#define MAX_EVENTS 10
 
 # include "Server.hpp"
 
@@ -29,6 +44,7 @@ class Webserver
 	private:
 
 		std::vector<Server>		server;
+		ssize_t					nb_of_servers;
 
 	public:
 
@@ -51,13 +67,13 @@ class Webserver
 		int		parse_server(std::vector<std::string> &);
 
 		// launch
-		int		create_socket(int *);
-		int		set_sockets_options(int);
-		int		bind_socket_and_address(int, struct sockaddr_in *);
-		int		listen_socket(int);
+		int		create_server_socket(int *);
+		int		set_server_socket_options(int);
+		int		bind_address_to_server_socket(struct sockaddr_in *, int);
+		int		listen_server_socket(int);
 		int		create_epoll_socket(int *);
 		int		accept_connexion(int, struct sockaddr_in, int *);
-		int		add_server_socket_to_epoll(int, int, struct epoll_event *);
+		int		add_to_interest_list(int, int, struct epoll_event *);
 		int		wait_epoll(int, struct epoll_event *);
 		int		add_client(int, int, struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);

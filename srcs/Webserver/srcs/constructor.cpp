@@ -1,7 +1,8 @@
 #include "Webserver.hpp"
 
 // Default constructor
-Webserver::Webserver(void)
+Webserver::Webserver(void) :
+	nb_of_servers(0)
 {
 	return ;
 };

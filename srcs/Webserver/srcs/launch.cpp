@@ -1,34 +1,18 @@
 #include "Webserver.hpp"
 
-# include <sys/types.h>
-# include <errno.h>
-# include <netinet/in.h>
-# include <sys/socket.h>
-# include <arpa/inet.h>
-# include <iostream>
-# include <cstdio>
-# include <cstdlib>
-# include <cstring>
-# include <unistd.h>
-# include <sys/epoll.h>
-# include <poll.h>
-# include <fcntl.h>
-
-#define MAX_EVENTS 10
-
-int	Webserver::remove_client(int epoll_socket, int client_socket, struct epoll_event *ev)
+int	Webserver::remove_client(int epoll_socket, int client_socket, struct epoll_event *server_event)
 {
-	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, client_socket, ev);
+	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, client_socket, server_event);
 	close(client_socket);
 	return (0);
 };
 
-int	Webserver::add_client(int epoll_socket, int client_socket, struct epoll_event *ev)
+int	Webserver::add_client(int epoll_socket, int client_socket, struct epoll_event *server_event)
 {
 	fcntl(client_socket, F_SETFL, O_NONBLOCK);
-	ev->events = EPOLLIN | EPOLLET;
-	ev->data.fd = client_socket;
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, ev) == -1)
+	server_event->events = EPOLLIN | EPOLLET;
+	server_event->data.fd = client_socket;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, server_event) == -1)
 	{
 		perror("epoll_ctl: client_socket");
 		return (1);
@@ -51,12 +35,12 @@ int	Webserver::wait_epoll(int epoll_socket, struct epoll_event *events)
 	return (nb_ready_fd);
 };
 
-int	Webserver::add_server_socket_to_epoll(int epoll_socket, int server_socket, struct epoll_event *ev)
+int	Webserver::add_to_interest_list(int epoll_socket, int server_socket, struct epoll_event *server_event)
 {
-	bzero(ev, sizeof(*ev));
-	ev->events = EPOLLIN;
-	ev->data.fd = server_socket;
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server_socket, ev) == -1)
+	bzero(server_event, sizeof(*server_event));
+	server_event->data.fd = server_socket;
+	server_event->events = EPOLLIN;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server_socket, server_event) == -1)
 	{
 		error("epoll_ctl() failed.", NULL);
 		perror("epoll_ctl: server_socket");
@@ -80,9 +64,9 @@ int	Webserver::create_epoll_socket(int *epoll_socket)
 };
 
 // Listen for client connections on a socket
-int Webserver::listen_socket(int server_socket)
+int Webserver::listen_server_socket(int server_socket)
 {
-	const int	backlog = 5;	// Maximum length to which the queue of
+	const int	backlog = 42;	// Maximum length to which the queue of
 								// pending connections may grow
 
 	if (listen(server_socket, backlog) == -1)
@@ -109,7 +93,7 @@ int Webserver::accept_connexion(int server_socket, struct sockaddr_in server_add
 };
 
 // Assigns the server_address specified by addr to the socket referred to by the file descriptor server_socket.
-int	Webserver::bind_socket_and_address(int server_socket, struct sockaddr_in *server_address)
+int	Webserver::bind_address_to_server_socket(struct sockaddr_in *server_address, int server_socket)
 {
 	const sockaddr	*addr			= (const sockaddr *)server_address;	// Pointer on server_address
 	socklen_t		addrlen			= sizeof(*server_address);			// Size, in bytes, of the server_address
@@ -128,92 +112,61 @@ int	Webserver::bind_socket_and_address(int server_socket, struct sockaddr_in *se
 	return (0);
 };
 
-// Set options on sockets
-int	Webserver::set_sockets_options(int server_socket)
-{
-	const int		level			= SOL_SOCKET;					// Option at the Socket API level
-	const int		option_name		= SO_REUSEADDR | SO_REUSEPORT;	//
-	const int		options			= 1;							//
-	const void *	option_value	= &options;						//
-	const socklen_t	option_len		= sizeof(options);				//
-
-	if (setsockopt(server_socket, level, option_name, option_value, option_len) == -1)
-	{
-		error("setsockopt() failed.", NULL);
-		perror("setsockopt");
-		return (1);
-	}
-	return (0);
-};
-
-// Create a socket
-int	Webserver::create_socket(int *server_socket)
-{
-	const int	socket_family	= AF_INET;		// IPv4 Internet protocols
-	const int	socket_type		= SOCK_STREAM;	// TCP
-	const int	protocol		= IPPROTO_TCP;	// IP
-
-	*server_socket = socket(socket_family, socket_type, protocol);
-	if (*server_socket == -1)
-	{
-		error("socket() failed.", NULL);
-		perror("socket");
-		return (1);
-	}
-	if (set_sockets_options(*server_socket))
-		return (1);
-	return (0);
-};
-
 int		Webserver::launch(void)
 {
-	int					server_socket;
-	struct sockaddr_in	server_address;
 	int					epoll_socket;
-	struct epoll_event	ev;
-	ssize_t				nb_events;
-	struct epoll_event	events[MAX_EVENTS];
-	int					client_socket;
-	ssize_t				i;
+	//struct epoll_event	events[MAX_EVENTS];
+	//ssize_t				nb_events;
+	//int					client_socket;
 
-	if (create_socket(&server_socket))
-		return (1);
-	if (bind_socket_and_address(server_socket, &server_address))
-		return (1);
-	if (listen_socket(server_socket))
-		return (1);
 	if (create_epoll_socket(&epoll_socket))
 		return (1);
-	if (add_server_socket_to_epoll(epoll_socket, server_socket, &ev))
-		return (1);
+	for (int i = 0 ; i < nb_of_servers ; ++i)
+	{
+		// /!\ A MODIFIER : Ca devrait etre des methodes de la classe Server !
+		// (sauf ajout a la liste d'interet)
+		// 1 socket par server avec IP/port provenant du fichier de config
+		if (create_server_socket(&(server[i].server_socket)))
+			return (1);
+		if (bind_address_to_server_socket(&(server[i].server_address), server[i].server_socket))
+			return (1);
+		if (listen_server_socket(server[i].server_socket))
+			return (1);
+		// a ajouter a la liste d'interet d'epoll
+		if (add_to_interest_list(epoll_socket, server[i].server_socket, &(server[i].server_event)))
+			return (1);
+	}
 	while (true)
 	{
-		if ((nb_events = wait_epoll(epoll_socket, events)) == -1)
-			return (1);
-		for (i = 0 ; i < nb_events ; ++i)
-		{
-			if (events[i].data.fd == server_socket)
-			{
-				if (accept_connexion(server_socket, server_address, &client_socket))
-					return (1);
-				if (add_client(epoll_socket, client_socket, &ev))
-					return (1);
-			}
-			else
-			{
-				char request[1024];
-				memset(request, 0, 1024);
-				recv(events[i].data.fd, request, 1024, 0);
-				std::cout << request << std::endl;
+	//	if ((nb_events = wait_epoll(epoll_socket, events)) == -1)
+	//		return (1);
+	//	for (ssize_t i = 0 ; i < nb_events ; ++i)
+	//	{
+	//		for (int j = 0 ; j < 1 /* nb_of_servers */ ; ++j)
+	//		{
+	//			if (events[i].data.fd == server_socket)
+	//			{
+	//				if (accept_connexion(server_socket, server_address, &client_socket))
+	//					return (1);
+	//				if (add_client(epoll_socket, client_socket, &server_event))
+	//					return (1);
+	//			}
+	//			else
+	//			{
+	//				char request[1024];
+	//				memset(request, 0, 1024);
+	//				recv(events[i].data.fd, request, 1024, 0);
+	//				std::cout << request << std::endl;
 
-				char response[1024];
-				strcpy(response, "Response : OK\n");
-				send(events[i].data.fd, response, strlen(response), 0);
+	//				char response[1024];
+	//				strcpy(response, "Response : OK\n");
+	//				send(events[i].data.fd, response, strlen(response), 0);
 
-				if (remove_client(epoll_socket, client_socket, &ev))
-					return (1);
-			}
-		}
+	//				if (remove_client(epoll_socket, client_socket, &server_event))
+	//					return (1);
+	//			}
+	//		}
+	//	}
 	}
 	return (0);
 };

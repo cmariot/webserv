@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/21 04:03:00 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/24 18:14:01 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SERVER			= constructor.cpp \
 				  set_server_arguments.cpp
 
 WEBSERVER		= constructor.cpp \
+				  create_server_socket.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  launch.cpp \
