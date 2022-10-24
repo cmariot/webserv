@@ -10,7 +10,9 @@
 # include <cstdlib>
 # include <cstring>
 # include <unistd.h>
+# include <sys/epoll.h>
 # include <poll.h>
+# include <fcntl.h>
 
 // Listen for client connections on a socket
 int Webserver::listen_socket(int tcp_socket)
@@ -99,6 +101,8 @@ int	Webserver::create_socket(int *tcp_socket)
 	return (0);
 }
 
+#define MAX_EVENTS 10
+
 int		Webserver::launch(void)
 {
 	int					tcp_socket;
@@ -111,73 +115,60 @@ int		Webserver::launch(void)
 	if (listen_socket(tcp_socket))
 		return (1);
 
-	const size_t		max_clients = 30;
-	std::vector<int>	client_sockets(max_clients);
+	struct epoll_event	ev;
+	struct epoll_event	events[MAX_EVENTS];
+	int					conn_sock;
+	int					nfds;
+	int					epollfd;
 
-	fd_set			readfds;
-	int				accepted_socket;
-	int				max_socket;
+	epollfd = epoll_create1(0);
+	if (epollfd == -1)
+	{
+		perror("epoll_create1");
+		exit(EXIT_FAILURE);
+	}
+
+	bzero(&ev, sizeof(ev));
+	ev.events = EPOLLIN;
+	ev.data.fd = tcp_socket;
+	if (epoll_ctl(epollfd, EPOLL_CTL_ADD, tcp_socket, &ev) == -1)
+	{
+		perror("epoll_ctl: listen_sock");
+		exit(EXIT_FAILURE);
+	}
 
 	while (true)
 	{
-		FD_ZERO(&readfds);	// Initialize / Reset the FD set
-		FD_SET(tcp_socket, &readfds);	// Add the tcp_socket to the FD set
-		max_socket = tcp_socket;
-		for (size_t i = 0 ; i < max_clients ; ++i)
-		{
-			if (client_sockets[i] > 0)
-				FD_SET(client_sockets[i], &readfds); // Add the client_sockets[i] to the FD set
-			if (client_sockets[i] > max_socket)
-				max_socket = client_sockets[i];
+		nfds = epoll_wait(epollfd, events, MAX_EVENTS, -1);
+		if (nfds == -1) {
+			perror("epoll_wait");
+			exit(EXIT_FAILURE);
 		}
-		if (select(max_socket + 1, &readfds, NULL, NULL, NULL) == -1)
-			return (error("select()", NULL));
-		if (FD_ISSET(tcp_socket, &readfds))	// If the tcp_socket still inside the FD set
-		{
-			if (accept_connexion(tcp_socket, address, &accepted_socket))
-				return (1);
-			std::cout << "New connection, socket fd is " << accepted_socket
-				<< " ip is : " << inet_ntoa(address.sin_addr)
-				<< " port : " << ntohs(address.sin_port) << std::endl;
-			for (size_t i = 0 ; i < max_clients ; ++i)	// Add the accepted_socket value to the list of client_sockets
-			{
-				if (client_sockets[i] == 0)
-				{
-					client_sockets[i] = accepted_socket;
-					break ;
-				}
-			}
-		}
-		for (size_t i = 0 ; i < max_clients ; ++i)
-		{
-			if (FD_ISSET(client_sockets[i], &readfds))
-			{
-				char request[1024];
-				memset(request, 0, 1024);
-				recv(client_sockets[i], request, 1024, 0);
-				std::cout << request << std::endl;
 
-				char response[1024];
-				strcpy(response, "Response : OK\n\n");
-				send(client_sockets[i], response, strlen(response), 0);
-				
-				std::cout << "Connection closed for the client whith the socket " << accepted_socket
-					<< " on the ip " << inet_ntoa(address.sin_addr)
-					<< " and the port " << ntohs(address.sin_port) << std::endl;
-				
-				close(client_sockets[i]);
-				client_sockets[i] = 0;
-				if (request[0] == '\0')
+		for (int n = 0 ; n < nfds ; ++n)
+		{
+			if (events[n].data.fd == tcp_socket)
+			{
+				if (accept_connexion(tcp_socket, address, &conn_sock))
+					return (1);
+				conn_sock = fcntl(conn_sock, F_SETFL, O_NONBLOCK);
+				if (conn_sock == -1)
+					return (error("fcntl", NULL));
+				ev.events = EPOLLIN | EPOLLET;
+				ev.data.fd = conn_sock;
+				if (epoll_ctl(epollfd, EPOLL_CTL_ADD, conn_sock, &ev) == -1)
 				{
-					std::cout << "Empty request -> server shutdown" << std::endl;
-					shutdown(tcp_socket, SHUT_RDWR);
-					close(tcp_socket);
-					return (0);
+					perror("epoll_ctl: conn_sock");
+					exit(EXIT_FAILURE);
 				}
+
+			}
+			else
+			{
+				//do_use_fd(events[n].data.fd);
 			}
 		}
 	}
-	shutdown(tcp_socket, SHUT_RDWR);
-	close(tcp_socket);
+
 	return (0);
 };
