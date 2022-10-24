@@ -51,7 +51,6 @@ int	Webserver::bind_socket_and_address(int tcp_socket, struct sockaddr_in *addre
 																	// structure pointed to by addr
 
 	address->sin_family				= AF_INET;						// IPv4 Internet protocols
-	// Toutes les addresses et tous les ports ?
 	address->sin_addr.s_addr		= inet_addr("127.0.0.1");		// IP
 	address->sin_port				= htons(8080);					// PORT
 
