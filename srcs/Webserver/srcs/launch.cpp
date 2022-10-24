@@ -16,6 +16,13 @@
 
 #define MAX_EVENTS 10
 
+int	Webserver::remove_client(int epoll_socket, int client_socket, struct epoll_event *ev)
+{
+	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, client_socket, ev);
+	close(client_socket);
+	return (0);
+}
+
 int	Webserver::add_client(int epoll_socket, int client_socket, struct epoll_event *ev)
 {
 	fcntl(client_socket, F_SETFL, O_NONBLOCK);
@@ -180,10 +187,7 @@ int		Webserver::launch(void)
 		return (1);
 	while (true)
 	{
-		nb_events = wait_epoll(epoll_socket, events);
-		if (nb_events == 0)
-			continue ;
-		else if (nb_events == -1)
+		if ((nb_events = wait_epoll(epoll_socket, events)) == -1)
 			return (1);
 		for (int i = 0 ; i < nb_events ; ++i)
 		{
@@ -194,10 +198,6 @@ int		Webserver::launch(void)
 				if (add_client(epoll_socket, client_socket, &ev))
 					return (1);
 			}
-			//else if ()
-			//{
-
-			//}
 			else
 			{
 				char request[1024];
@@ -206,8 +206,11 @@ int		Webserver::launch(void)
 				std::cout << request << std::endl;
 
 				char response[1024];
-				strcpy(response, "Response : OK\n\n");
+				strcpy(response, "Response : OK\n");
 				send(events[i].data.fd, response, strlen(response), 0);
+
+				if (remove_client(epoll_socket, client_socket, &ev))
+					return (1);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/24 15:01:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:33:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class Webserver
 		int		add_tcp_socket_to_epoll(int, int, struct epoll_event *);
 		int		wait_epoll(int, struct epoll_event *);
 		int		add_client(int, int, struct epoll_event *);
+		int		remove_client(int, int, struct epoll_event *);
 
 		//	error
 		int		usage(void) const;
