@@ -1,0 +1,1 @@
+{"buildTargets":["all","clean","executable","fclean","leaks","re","test"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

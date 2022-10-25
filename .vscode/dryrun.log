@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/abou/Desktop/Computering/containersfolder/ft_containers'
+printf "  \033[33;1mCompiling and linking all the files ⌛\n"
+printf "[\033[32;1mOK\033[0;m] executable generated. \n"
+make: Leaving directory `/Users/abou/Desktop/Computering/containersfolder/ft_containers'
+ 
