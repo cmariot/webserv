@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
-Server::Server()
+Server::Server(int id)
 {
-	std::cout << "SERVER !" << std::endl;
+	std::cout << "SERVER " << id << " :" << std::endl;
 	return ;
 };

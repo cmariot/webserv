@@ -8,6 +8,14 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 	size_t			end = 0;
 	int				nb_open_braces;
 
+	std::vector<std::string>	ip;
+	size_t						port;
+
+	ip.push_back("127.0.0.1");
+	ip.push_back("127.0.0.2");
+	ip.push_back("127.0.0.3");
+	port = 8080;
+
 	for (size_t i = 0 ; i < vector_size ; ++i)
 	{
 		if (tokens_vector[i] != "server")
@@ -33,10 +41,10 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 			return (error("unclosed brace in the configuration file.", NULL));
 
 		// Create a server whith the instructions stored in the vector from begin to end
-		server.push_back(Server());
-		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin,
-														tokens_vector.begin() + end);
-		server[i].set_server_arguments(arguments_vector);
+		server.push_back(Server(nb_of_servers));
+		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin, tokens_vector.begin() + end);
+		server[i].set_server_arguments(arguments_vector, ip[nb_of_servers], port);
+
 		++nb_of_servers;
 	}
 	return (0);

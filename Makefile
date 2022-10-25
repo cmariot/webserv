@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/24 18:14:01 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/25 09:10:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,12 +72,7 @@ SRC_SUBDIR	    = $(MAIN) \
 
 MAIN			= main.cpp
 
-SERVER			= constructor.cpp \
-				  destructor.cpp \
-				  set_server_arguments.cpp
-
 WEBSERVER		= constructor.cpp \
-				  create_server_socket.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  launch.cpp \
@@ -89,6 +84,13 @@ WEBSERVER		= constructor.cpp \
 				  separate_braces.cpp \
 				  split_strings.cpp \
 				  usage.cpp
+
+SERVER			= bind_server_address.cpp \
+				  constructor.cpp \
+				  create_server_socket.cpp \
+				  destructor.cpp \
+				  listen_for_clients.cpp \
+				  set_server_arguments.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

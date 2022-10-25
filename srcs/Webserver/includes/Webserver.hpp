@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/24 20:40:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 09:12:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,6 @@ class Webserver
 		int		parse_server(std::vector<std::string> &);
 
 		// launch
-		int		create_server_socket(int *);
-		int		set_server_socket_options(int);
-		int		bind_address_to_server_socket(struct sockaddr_in *, int);
-		int		listen_server_socket(int);
 		int		create_epoll_socket(int *);
 		int		accept_connexion(int, struct sockaddr_in, int *);
 		int		add_to_interest_list(int, int, struct epoll_event *);

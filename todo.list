@@ -1,1 +1,0 @@
-- [ ] Remplacer select par epoll : Objectif = pouvoir connecter plusieurs clients, recevoir requetes envoyer reponse par defaut

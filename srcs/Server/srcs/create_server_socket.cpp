@@ -1,7 +1,7 @@
-#include "Webserver.hpp"
+#include "Server.hpp"
 
 // Set options on sockets
-int	Webserver::set_server_socket_options(int server_socket)
+int	Server::set_server_socket_options(void)
 {
 	const int		level			= SOL_SOCKET;					// Option at the Socket API level
 	const int		option_name		= SO_REUSEADDR | SO_REUSEPORT;	//
@@ -11,7 +11,7 @@ int	Webserver::set_server_socket_options(int server_socket)
 
 	if (setsockopt(server_socket, level, option_name, option_value, option_len) == -1)
 	{
-		error("setsockopt() failed.", NULL);
+		//error("setsockopt() failed.", NULL);
 		perror("setsockopt");
 		return (1);
 	}
@@ -19,20 +19,21 @@ int	Webserver::set_server_socket_options(int server_socket)
 };
 
 // Create a socket
-int	Webserver::create_server_socket(int *server_socket)
+int	Server::create_server_socket(void)
 {
 	const int	socket_family	= AF_INET;		// IPv4 Internet protocols
 	const int	socket_type		= SOCK_STREAM;	// TCP
 	const int	protocol		= IPPROTO_TCP;	// IP
 
-	*server_socket = socket(socket_family, socket_type, protocol);
-	if (*server_socket == -1)
+	server_socket = socket(socket_family, socket_type, protocol);
+	if (server_socket == -1)
 	{
-		error("socket() failed.", NULL);
+		//error("socket() failed.", NULL);
 		perror("socket");
 		return (1);
 	}
-	if (set_server_socket_options(*server_socket))
+	if (set_server_socket_options())
 		return (1);
+	std::cout << "Socket creation : OK ; server_socket = " << server_socket << std::endl;
 	return (0);
 };

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/24 20:39:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 09:09:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@
 #include <sys/epoll.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <errno.h>
+#include <cstdio>
 
 class	Server
 {
 
 	public:
-
-		int						server_socket;
-		struct sockaddr_in		server_address;
-		struct epoll_event		server_event;
 
 		std::string				ip;
 		int						port;
@@ -37,13 +35,22 @@ class	Server
 		size_t					max_body_size;
 		std::vector<void *>		locations;
 
+		int						server_socket;
+		struct sockaddr_in		server_address;
+		struct epoll_event		server_event;
+
 	public:
 
-		Server();
+		Server(int id);
 
 		~Server();
 
-		int	set_server_arguments(std::vector<std::string> &);
+		int	set_server_arguments(std::vector<std::string> &, std::string, size_t);
+
+		int	create_server_socket(void);
+		int	set_server_socket_options(void);
+		int	bind_server_address(void);
+		int listen_for_clients(void) const;
 
 };
 
