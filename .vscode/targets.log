@@ -1,0 +1,339 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Mon Oct 24 19:20:15 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from `Makefile', line 43)
+OBJ := 
+# makefile (from `Makefile', line 45)
+SRC = $(addprefix $(DIRSRC), $(SRC))
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+ARCHFLAGS = -arch x86_64
+# makefile (from `Makefile', line 32)
+INCLUDES = -I ./includes
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/abou/Desktop/Computering/containersfolder/ft_containers
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 30)
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+VSCODE_CWD = /
+# environment
+PATH = /Users/abou/Library/Python/3.8/bin:/Users/abou/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
+# makefile (from `Makefile', line 47)
+DIROBJS = $(addprefix $(DIROBJ), $(OBJ))
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+LaunchInstanceID = 0ACCBD1B-268E-4813-91CF-79CD815A42B5
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# makefile (from `Makefile', line 34)
+LDFLAGS = 
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.KGtTMjlG5H/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+DISPLAY = /private/tmp/com.apple.launchd.qde1hYDFTV/org.xquartz:0
+# environment
+PWD = /Users/abou/Desktop/Computering/containersfolder/ft_containers
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# makefile (from `Makefile', line 6)
+GREEN = \033[32;1m
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/abou
+# default
+MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/abou/Library/Application Support/Code/CachedData/d045a5eda657f4d7b676dedbfa7aab8207f8a075
+# environment
+LOGNAME = abou
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/abou/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 1
+# makefile (from `Makefile', line 11)
+WHITE = \033[0;m
+# makefile (from `Makefile', line 28)
+CC = c++
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = abou
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from `Makefile', line 18)
+NAME = executable
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# makefile (from `Makefile', line 22)
+DIROBJ = objs/
+# default
+MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/2z/n_j1frln1rq2q__6qhnmdmrr0000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/abou/Library/Application Support/Code/1.72.2-main.sock
+# environment
+MallocNanoZone = 0
+# makefile (from `Makefile', line 7)
+RED = \033[31;1m
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.47669597.47669603
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile (from `Makefile', line 8)
+YELLOW = \033[33;1m
+# makefile (from `Makefile', line 9)
+CYAN = \033[36;1m
+# automatic
++F = $(notdir $+)
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# makefile (from `Makefile', line 13)
+CLEAR = \033[2K\r
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# makefile (from `Makefile', line 10)
+RESET = \033[0m
+# environment
+SECURITYSESSIONID = 186b3
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# makefile (from `Makefile', line 20)
+DIRSRC = src/
+# environment
+LANG = C
+# environment
+VSCODE_PID = 65744
+# variable set hash-table stats:
+# Load=83/1024=8%, Rehash=0, Collisions=5/124=4%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777229, inode 43315150): 12 files, no impossibilities.
+# src (device 16777229, inode 43315240): No files, no impossibilities so far.
+
+# 12 files, no impossibilities in 2 directories.
+
+# Implicit Rules
+
+objs/%.o: src/%.cpp
+#  commands to execute (from `Makefile', line 62):
+	@mkdir -p $(DIROBJ)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	
+
+# 1 implicit rules, 0 (0.0%) terminal.
+
+# Files
+
+all: executable
+#  Phony target (prerequisite of .PHONY).
+#  Command-line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
+
+.PHONY: all clean fclean re
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-10-24 19:17:17
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+test: executable
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 70):
+	@mkdir -p test_results
+	@$(CC) $(INCLUDES)  $(CFLAGS) $(DIROBJS)  $(LDFLAGS) src/vector_testeur.cpp -D library=0 -o test_results/std
+	@$(CC) $(INCLUDES)  $(CFLAGS) $(DIROBJS)  $(LDFLAGS) src/vector_testeur.cpp -D library=1 -o test_results/ft
+	@chmod +x test_results/std
+	@chmod +x test_results/ft
+	@printf "  $(YELLOW)Compiling and linking all the tests $(END)⌛\n"
+	@printf "[$(GREEN)OK$(WHITE)] Tests generated. \n"
+	@./script.sh
+	
+
+fclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 85):
+	@rm -rf $(NAME)
+	@rm -rf test_results
+	@printf "[$(GREEN)cleaned$(WHITE)] $(NAME) \n\n"
+	
+
+leaks: all
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 57):
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 80):
+	@rm -rf $(OBJS)	$(DIROBJ)
+	@rm -rf test_results
+	@printf "[$(GREEN)cleaned$(WHITE)] .o FILES \n"
+	
+
+executable:
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := executable
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/15=13%
+#  commands to execute (from `Makefile', line 66):
+	@printf "  $(YELLOW)Compiling and linking all the files $(END)⌛\n"
+	@printf "[$(GREEN)OK$(WHITE)] $(NAME) generated. \n"
+	
+
+# files hash-table stats:
+# Load=11/1024=1%, Rehash=0, Collisions=0/35=0%
+ 
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Mon Oct 24 19:20:15 2022
+
+ 
