@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/25 09:10:00 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/25 16:32:20 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRC_SUBDIR	    = $(MAIN) \
 MAIN			= main.cpp
 
 WEBSERVER		= constructor.cpp \
+				  exit_webserv.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  launch.cpp \
@@ -82,6 +83,7 @@ WEBSERVER		= constructor.cpp \
 				  remove_commentaries.cpp \
 				  replace_blank_characters.cpp \
 				  separate_braces.cpp \
+				  signals.cpp \
 				  split_strings.cpp \
 				  usage.cpp
 

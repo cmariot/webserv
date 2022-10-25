@@ -1,5 +1,7 @@
 #include "Webserver.hpp"
 
+#define SIGNAL_CAUGHT nb_events == -2
+
 int	Webserver::remove_client(int epoll_socket, int client_socket, struct epoll_event *server_event)
 {
 	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, client_socket, server_event);
@@ -43,6 +45,9 @@ int	Webserver::wait_epoll(int epoll_socket, struct epoll_event *events)
 	nb_ready_fd = epoll_wait(epoll_socket, events, maxevents, timeout);
 	if (nb_ready_fd == -1)
 	{
+		int err = errno;
+		if (err == EINTR)
+			return (-2);
 		error("epoll_wait() failed.", NULL);
 		perror("epoll_wait");
 	}
@@ -101,11 +106,15 @@ int		Webserver::launch(void)
 			return (1);
 		std::cout << "Server " << server[i].server_socket << " is listening on " << server[i].ip << ":" << server[i].port << std::endl;
 	}
+	catch_signal();
 	std::cout << "Waiting for new events ..." << std::endl;
 	while (true)
 	{
-		if ((nb_events = wait_epoll(epoll_socket, events)) == -1)
+		nb_events = wait_epoll(epoll_socket, events);
+		if (nb_events == -1)
 			return (1);
+		else if (SIGNAL_CAUGHT)
+			return (exit_webserv(epoll_socket));
 		for (ssize_t i = 0 ; i < nb_events ; ++i)
 		{
 			bool found = false;
@@ -141,7 +150,6 @@ int		Webserver::launch(void)
 				if (remove_client(epoll_socket, client_socket, events))
 					return (1);
 			}
-
 		}
 	}
 	return (0);

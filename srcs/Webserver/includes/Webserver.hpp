@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 12:07:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:33:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@
 # include <sys/epoll.h>
 # include <poll.h>
 # include <fcntl.h>
+#include <signal.h>
 
-#define MAX_EVENTS 10
+#define MAX_EVENTS	10
+#define STDIN		0
+#define STDOUT		1
+#define STDERR		2
 
 # include "Server.hpp"
 
@@ -78,6 +82,10 @@ class Webserver
 		int		usage(void) const;
 		int		error(const char *error, const char *complement) const;
 
+		// signal catcher
+		int		catch_signal(void);
+
+		int		exit_webserv(int);
 };
 
 #endif
