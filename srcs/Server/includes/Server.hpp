@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 09:09:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 12:15:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ class	Server
 
 		int						server_socket;
 		struct sockaddr_in		server_address;
-		struct epoll_event		server_event;
 
 	public:
 
-		Server(int id);
+		Server();
 
 		~Server();
 

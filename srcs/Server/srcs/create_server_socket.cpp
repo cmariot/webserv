@@ -34,6 +34,5 @@ int	Server::create_server_socket(void)
 	}
 	if (set_server_socket_options())
 		return (1);
-	std::cout << "Socket creation : OK ; server_socket = " << server_socket << std::endl;
 	return (0);
 };

@@ -41,9 +41,9 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 			return (error("unclosed brace in the configuration file.", NULL));
 
 		// Create a server whith the instructions stored in the vector from begin to end
-		server.push_back(Server(nb_of_servers));
+		server.push_back(Server());
 		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin, tokens_vector.begin() + end);
-		server[i].set_server_arguments(arguments_vector, ip[nb_of_servers], port);
+		server[nb_of_servers].set_server_arguments(arguments_vector, ip[nb_of_servers], port);
 
 		++nb_of_servers;
 	}

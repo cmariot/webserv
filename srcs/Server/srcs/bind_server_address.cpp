@@ -16,7 +16,6 @@ int	Server::bind_server_address()
 		perror("bind");
 		return (1);
 	}
-	std::cout << "Bind : OK" << std::endl;
 	return (0);
 };
 

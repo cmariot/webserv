@@ -12,7 +12,6 @@ int Server::listen_for_clients(void) const
 		perror("listen");
 		return (1);
 	}
-	std::cout << "Listen : OK" << std::endl;
 	return (0);
 };
 
