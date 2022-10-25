@@ -3,7 +3,7 @@
 void	sigint_primitive(int signal)
 {
 	(void)signal;
-	std::cout << "\rSIGINT signal catched." << std::endl;
+	std::cout << "\rSignal caught : Webserv is going to shut down." << std::endl;
 }
 
 int		Webserver::catch_signal(void)

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 16:33:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:40:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ class Webserver
 	private:
 
 		std::vector<Server>		server;
-		ssize_t					nb_of_servers;
+		static ssize_t			nb_of_servers;
 
 	public:
 
@@ -63,7 +63,7 @@ class Webserver
 		//	parsing
 		int		parse_configuration_file(std::vector<std::string> &);
 		int		remove_commentaries(std::vector<std::string> &) const;
-		int		replace_blank_characters(std::vector<std::string> & string_vector) const;
+		int		replace_blank_characters(std::vector<std::string> &) const;
 		int		split_strings(std::vector<std::string> &, std::vector<std::string>	&) const;
 		int		separate_braces(std::vector<std::string> &) const;
 
@@ -74,7 +74,7 @@ class Webserver
 		int		create_epoll_socket(int *);
 		int		add_to_interest_list(Server *, int);
 		int		accept_connexion(int, struct sockaddr_in, int *);
-		int		wait_epoll(int, struct epoll_event *);
+		int		wait_event(int, struct epoll_event *);
 		int		add_client(int, int, struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
@@ -85,7 +85,9 @@ class Webserver
 		// signal catcher
 		int		catch_signal(void);
 
+		// exit
 		int		exit_webserv(int);
+
 };
 
 #endif

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/25 16:32:20 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/25 17:36:11 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,20 +72,26 @@ SRC_SUBDIR	    = $(MAIN) \
 
 MAIN			= main.cpp
 
-WEBSERVER		= constructor.cpp \
-				  exit_webserv.cpp \
+WEBSERVER		= accept_connexion.cpp \
+				  add_client.cpp \
+				  add_to_interest_list.cpp \
+				  constructor.cpp \
+				  create_epoll_socket.cpp \
 				  destructor.cpp \
 				  error.cpp \
+				  exit_webserv.cpp \
 				  launch.cpp \
+				  parse.cpp \
 				  parse_configuration_file.cpp \
 				  parse_server.cpp \
-				  parse.cpp \
+				  remove_client.cpp \
 				  remove_commentaries.cpp \
 				  replace_blank_characters.cpp \
 				  separate_braces.cpp \
 				  signals.cpp \
 				  split_strings.cpp \
-				  usage.cpp
+				  usage.cpp \
+				  wait_event.cpp
 
 SERVER			= bind_server_address.cpp \
 				  constructor.cpp \
