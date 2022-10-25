@@ -3,6 +3,7 @@ a.out
 objs/
 *.o
 *.d
+*.swp
 .DS_Store
 docs/
 docs/*
