@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-int	Webserver::add_to_interest_list(Server *server, int epoll_socket)
+int	Webserver::add_to_interest_list(Server *server)
 {
 	struct epoll_event	event;
 	

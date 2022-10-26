@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-int	Webserver::add_client(int epoll_socket, int client_socket, struct epoll_event *server_event)
+int	Webserver::add_client(int client_socket, struct epoll_event *server_event)
 {
 	fcntl(client_socket, F_SETFL, O_NONBLOCK);
 	server_event->events = EPOLLIN | EPOLLET;

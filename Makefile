@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/26 10:50:30 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/26 11:02:24 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,11 +75,13 @@ MAIN			= main.cpp
 WEBSERVER		= accept_connexion.cpp \
 				  add_client.cpp \
 				  add_to_interest_list.cpp \
+				  client_connexion.cpp \
 				  constructor.cpp \
 				  create_epoll_socket.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  exit_webserv.cpp \
+				  init_sockets.cpp \
 				  launch.cpp \
 				  parse.cpp \
 				  parse_configuration_file.cpp \

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/26 10:49:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:20:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ class Webserver
 
 		// launch
 		int		init_sockets(void);
-		int		create_epoll_socket(int *);
-		int		add_to_interest_list(Server *, int);
-		bool	new_client_connexion(ssize_t *server_index, struct epoll_event & event);
-		int		accept_connexion(int, struct sockaddr_in, int *);
-		int		wait_event(int, struct epoll_event *);
-		int		add_client(int, int, struct epoll_event *);
+		int		create_epoll_socket(void);
+		int		add_to_interest_list(Server *);
+		bool	client_connexion(ssize_t *, struct epoll_event &);
+		int		accept_connexion(int *, Server &);
+		int		wait_event(struct epoll_event *);
+		int		add_client(int, struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
 		//	error

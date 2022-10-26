@@ -2,31 +2,20 @@
 
 #define SIGNAL_CAUGHT nb_events == -2
 
-bool	Webserver::new_client_connexion(ssize_t *server_index, struct epoll_event & event)
-{
-	for (*server_index = 0 ; *server_index < nb_of_servers ; ++(*server_index))
-		if (event.data.fd == server[*server_index].server_socket)
-			return (true);
-	return (false);
-};
+#define INFO	0
+#define ERROR	1
+#define DEBUG	2
 
-int		Webserver::init_sockets(void)
+void display(int level, std::string message)
 {
-	if (create_epoll_socket(&epoll_socket))
-		return (1);
-	for (int i = 0 ; i < nb_of_servers ; ++i)
-	{
-		if (server[i].create_server_socket())
-			return (1);
-		if (server[i].bind_server_address())
-			return (1);
-		if (server[i].listen_for_clients())
-			return (1);
-		if (add_to_interest_list(&server[i], epoll_socket))
-			return (1);
-		std::cout << "Server " << server[i].server_socket << " is listening on " << server[i].ip << ":" << server[i].port << std::endl;
-	}
-	return (0);
+	if (level == INFO)
+		std::cout << "[webserv:info] : "; 
+	else if (level == ERROR)
+		std::cout << "[webserv:debug] : "; 
+	else if (level == DEBUG)
+		std::cout << "[webserv:debug] : "; 
+	std::cout << message << std::endl;
+	return ;
 };
 
 int		Webserver::launch(void)
@@ -39,20 +28,20 @@ int		Webserver::launch(void)
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
-	std::cout << "Waiting for new events ..." << std::endl;
+	display(INFO, "Waiting for new events ..."); 
 	while (true)
 	{
-		nb_events = wait_event(epoll_socket, events);
+		nb_events = wait_event(events);
 		if (SIGNAL_CAUGHT || nb_events == -1)
 			return (exit_webserv());
 		for (ssize_t i = 0 ; i < nb_events ; ++i)
 		{
-			if (new_client_connexion(&index, events[i]))
+			if (client_connexion(&index, events[i]))
 			{
 				std::cout << "A client has just connected to the server " << server[index].ip << ":" << server[index].port << std::endl;
-				if (accept_connexion(server[index].server_socket, server[index].server_address, &client_socket))
+				if (accept_connexion(&client_socket, server[index]))
 					return (exit_webserv());
-				if (add_client(epoll_socket, client_socket, events))
+				if (add_client(client_socket, events))
 					return (exit_webserv());
 			}
 			// else if client disconnect

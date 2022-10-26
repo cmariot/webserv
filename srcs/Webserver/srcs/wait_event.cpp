@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-int	Webserver::wait_event(int epoll_socket, struct epoll_event *events)
+int	Webserver::wait_event(struct epoll_event *events)
 {
 	int			nb_ready_fd;
 	const int	maxevents = MAX_EVENTS;
@@ -14,6 +14,7 @@ int	Webserver::wait_event(int epoll_socket, struct epoll_event *events)
 			return (-2);
 		error("epoll_wait() failed.", NULL);
 		perror("epoll_wait");
+		return (-1);
 	}
 	return (nb_ready_fd);
 };

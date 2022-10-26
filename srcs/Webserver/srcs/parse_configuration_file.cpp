@@ -27,8 +27,10 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 		return (1);
 	if (separate_semicolon(tokens_vector))
 		return (1);
+
 	for (size_t i = 0 ; i < tokens_vector.size() ; ++i)
 		std::cout << "TOKENS_VECTOR[" << i << "] = " << tokens_vector[i] << std::endl;
+
 	if (parse_server(tokens_vector))
 		return (1);
 	return (0);
