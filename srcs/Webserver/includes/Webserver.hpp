@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 17:40:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/25 23:13:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@
 # include <sys/epoll.h>
 # include <poll.h>
 # include <fcntl.h>
-#include <signal.h>
+# include <signal.h>
 
-#define MAX_EVENTS	10
-#define STDIN		0
-#define STDOUT		1
-#define STDERR		2
+# define MAX_EVENTS	10
+# define STDIN		0
+# define STDOUT		1
+# define STDERR		2
+
+# define SUCCESS	0
+# define FAILURE	1
 
 # include "Server.hpp"
 
@@ -49,6 +52,7 @@ class Webserver
 
 		std::vector<Server>		server;
 		static ssize_t			nb_of_servers;
+		int						epoll_socket;
 
 	public:
 
@@ -71,8 +75,10 @@ class Webserver
 		int		parse_server(std::vector<std::string> &);
 
 		// launch
+		int		init_sockets(void);
 		int		create_epoll_socket(int *);
 		int		add_to_interest_list(Server *, int);
+		bool	new_client_connexion(ssize_t *server_index, struct epoll_event & event);
 		int		accept_connexion(int, struct sockaddr_in, int *);
 		int		wait_event(int, struct epoll_event *);
 		int		add_client(int, int, struct epoll_event *);
@@ -86,7 +92,7 @@ class Webserver
 		int		catch_signal(void);
 
 		// exit
-		int		exit_webserv(int);
+		int		exit_webserv(void);
 
 };
 
