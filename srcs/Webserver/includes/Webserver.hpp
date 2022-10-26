@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 23:13:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:49:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ class Webserver
 
 		//	parsing
 		int		parse_configuration_file(std::vector<std::string> &);
+		int		put_the_file_in_a_vector(const char *argv[], std::vector<std::string> &);
 		int		remove_commentaries(std::vector<std::string> &) const;
 		int		replace_blank_characters(std::vector<std::string> &) const;
 		int		split_strings(std::vector<std::string> &, std::vector<std::string>	&) const;
 		int		separate_braces(std::vector<std::string> &) const;
+		int		separate_semicolon(std::vector<std::string>	& tokens_vector) const;
 
 		//	servers initialization
 		int		parse_server(std::vector<std::string> &);

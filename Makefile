@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/25 17:36:11 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/26 10:50:30 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  remove_commentaries.cpp \
 				  replace_blank_characters.cpp \
 				  separate_braces.cpp \
+				  separate_semicolon.cpp \
 				  signals.cpp \
 				  split_strings.cpp \
 				  usage.cpp \
