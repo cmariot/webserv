@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/26 11:29:28 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/26 19:59:42 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,13 @@ SERVER			= bind_server_address.cpp \
 				  constructor.cpp \
 				  create_server_socket.cpp \
 				  destructor.cpp \
+				  error.cpp \
 				  listen_for_clients.cpp \
+				  parse_client_max_body_size_directive.cpp \
+				  parse_error_page_directive.cpp \
+				  parse_listen_directive.cpp \
+				  parse_location_context.cpp \
+				  parse_server_name_directive.cpp \
 				  set_server_arguments.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

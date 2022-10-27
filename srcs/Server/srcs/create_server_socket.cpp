@@ -11,7 +11,7 @@ int	Server::set_server_socket_options(void)
 
 	if (setsockopt(server_socket, level, option_name, option_value, option_len) == -1)
 	{
-		//error("setsockopt() failed.", NULL);
+		error("setsockopt() failed.");
 		perror("setsockopt");
 		return (1);
 	}
@@ -28,7 +28,7 @@ int	Server::create_server_socket(void)
 	server_socket = socket(socket_family, socket_type, protocol);
 	if (server_socket == -1)
 	{
-		//error("socket() failed.", NULL);
+		error("socket() failed.");
 		perror("socket");
 		return (1);
 	}

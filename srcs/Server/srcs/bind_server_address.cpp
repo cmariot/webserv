@@ -12,7 +12,7 @@ int	Server::bind_server_address()
 	server_address.sin_port				= htons(port);					// PORT
 	if (bind(server_socket, addr, addrlen) == -1)
 	{
-		//error("bind() failed.", NULL);
+		error("bind() failed.");
 		perror("bind");
 		return (1);
 	}

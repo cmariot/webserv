@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/25 12:15:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:03:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,33 @@ class	Server
 
 	public:
 
+		Server();
+		~Server();
+
 		std::string				ip;
 		int						port;
 		std::string				server_name;
 		std::vector<void *>		error_pages;
 		size_t					max_body_size;
 		std::vector<void *>		locations;
-
 		int						server_socket;
 		struct sockaddr_in		server_address;
 
-	public:
+		int		set_server_arguments(std::vector<std::string> &);
 
-		Server();
+		int		parse_listen_directive(std::vector<std::string> &, size_t &);
+		int		parse_server_name_directive(std::vector<std::string> &, size_t &);
+		int		parse_error_page_directive(std::vector<std::string> &, size_t &);
+		int		parse_client_max_body_size_directive(std::vector<std::string> &, size_t &);
+		int		parse_location_context(std::vector<std::string> &, size_t &);
 
-		~Server();
+		int		create_server_socket(void);
+		int		set_server_socket_options(void);
+		int		bind_server_address(void);
+		int		listen_for_clients(void) const;
 
-		int	set_server_arguments(std::vector<std::string> &, std::string, size_t);
-
-		int	create_server_socket(void);
-		int	set_server_socket_options(void);
-		int	bind_server_address(void);
-		int listen_for_clients(void) const;
-
+		int		error(const char *error) const;
+		int		error(const char *error, const char *complement) const;
 };
 
 #endif

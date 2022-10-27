@@ -8,7 +8,7 @@ int Server::listen_for_clients(void) const
 
 	if (listen(server_socket, backlog) == -1)
 	{
-		//error("listen() failed.", NULL);
+		error("listen() failed.");
 		perror("listen");
 		return (1);
 	}
