@@ -6,6 +6,8 @@ size_t	ft_atoi(std::string str)
 	size_t	result_len = 0;
 	size_t	i = 0;
 
+	if (str.empty())
+		return (-1);
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + str[i++] - '0';
@@ -19,7 +21,11 @@ size_t	ft_atoi(std::string str)
 
 size_t	set_port(std::string port)
 {
-	return (ft_atoi(port));
+	size_t	digit = ft_atoi(port);
+
+	if (digit >= 1 && digit <= 65535)
+		return (digit);
+	return (-1);
 }
 
 std::string	Server::set_ip(std::string ip)
@@ -90,6 +96,8 @@ int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
 			address.second = set_port(token_vector[i]);
 		}
 	}
+	if (address.first == "" || address.second == -1)
+		return (error("Invalid host:port in the listen directive."));
 	return (0);
 };
 
