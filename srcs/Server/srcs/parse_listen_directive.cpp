@@ -88,7 +88,7 @@ int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
 		if (token_vector[i].find(".") != std::string::npos || token_vector[i] == "*" || token_vector[i] == "localhost")
 		{
 			address.first = set_ip(token_vector[i]);
-			address.second = 8000;
+			address.second = 0;
 		}
 		else
 		{
