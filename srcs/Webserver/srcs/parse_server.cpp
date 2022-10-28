@@ -17,7 +17,7 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 		i += 2;
 		begin = i;
 		nb_open_braces = 1;
-		while (nb_open_braces != 0 && i < vector_size)
+		while (i < vector_size && nb_open_braces != 0)
 		{
 			end = i;
 			if (tokens_vector[i] == "{")

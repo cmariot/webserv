@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/26 11:20:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/28 10:21:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ class Webserver
 		int		add_to_interest_list(Server *);
 		bool	client_connexion(ssize_t *, struct epoll_event &);
 		int		accept_connexion(int *, Server &);
-		int		wait_event(struct epoll_event *);
 		int		add_client(int, struct epoll_event *);
+		int		wait_event(struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
 		//	error
 		int		usage(void) const;
-		int		error(const char *error, const char *complement) const;
+		int		error(const char *, const char *) const;
 
 		// signal catcher
 		int		catch_signal(void);

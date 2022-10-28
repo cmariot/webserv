@@ -38,17 +38,14 @@ int		Webserver::launch(void)
 		{
 			if (client_connexion(&index, events[i]))
 			{
-				std::cout << "A client has just connected to the server " << server[index].ip << ":" << server[index].port << std::endl;
+				std::cout << "A client has just connected to the server " << server[index].address.first << ":" << server[index].address.second << std::endl;
 				if (accept_connexion(&client_socket, server[index]))
 					return (exit_webserv());
 				if (add_client(client_socket, events))
 					return (exit_webserv());
 			}
-			// else if client disconnect
-			//		remove client
 			else
 			{
-				//std::cout << "Event traitment" << std::endl;
 				char request[1024];
 				memset(request, 0, 1024);
 				recv(events[i].data.fd, request, 1024, 0);
