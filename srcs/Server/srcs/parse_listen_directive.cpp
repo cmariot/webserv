@@ -26,11 +26,39 @@ std::string	Server::set_ip(std::string ip)
 {
 	size_t	i = 0;
 
-	while (i < ip.size())
+	if (ip.empty())
+		return ("");
+	else if (ip == "*")
+		return ("0.0.0.0");
+	else if (ip == "localhost")
+		return ("127.0.0.1");
+	else
 	{
-		++i;
+		int	digit_len = 0;
+		int	digit = 0;
+		int	nb_blocks = 0;
+
+		while (i < ip.size())
+		{
+			while (i < ip.size() && isdigit(ip[i]) == true)
+			{
+				digit = digit * 10 + ip[i++] - '0';
+				++digit_len;
+			}
+			if (digit_len > 3 || digit > 255 || (ip[i] != '.' && ip[i] != '\0'))
+				return ("");
+			if (ip[i] == '\0')
+				break ;
+			++nb_blocks;
+			digit = 0;
+			digit_len = 0;
+			++i;
+		}
+		if (ip[i] == '\0' && nb_blocks == 3)
+			return (ip);
+		else
+			return ("");
 	}
-	return (ip);
 };
 
 // listen 127.0.0.1:8000;
@@ -51,14 +79,16 @@ int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
 	}
 	else
 	{
-		if (token_vector[i] == "*")
-			address.first = "0.0.0.0";
-		else if (token_vector[i] == "localhost")
-			address.first = "127.0.0.1";
-		else if (token_vector[i].find(".") != std::string::npos)
+		if (token_vector[i].find(".") != std::string::npos || token_vector[i] == "*" || token_vector[i] == "localhost")
+		{
 			address.first = set_ip(token_vector[i]);
+			address.second = 8000;
+		}
 		else
+		{
+			address.first = "127.0.0.1";
 			address.second = set_port(token_vector[i]);
+		}
 	}
 	return (0);
 };

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/28 10:59:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/28 11:12:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class	Server
 
 	public:
 
-		std::pair<std::string, int>	address;		// Pair IP:Port
+		std::pair<std::string, int>	address;		// Pair Host:Port
 		std::string					server_name;
 		size_t						max_body_size;
 		std::vector<void *>			error_pages;
