@@ -4,6 +4,7 @@ objs/
 *.o
 *.d
 *.swp
+.vscode/
 .DS_Store
 docs/
 docs/*
