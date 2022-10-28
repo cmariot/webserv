@@ -82,6 +82,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  error.cpp \
 				  exit_webserv.cpp \
 				  init_sockets.cpp \
+				  server_response.cpp \
 				  launch.cpp \
 				  parse.cpp \
 				  parse_configuration_file.cpp \
@@ -94,7 +95,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  signals.cpp \
 				  split_strings.cpp \
 				  usage.cpp \
-				  wait_event.cpp
+				  wait_event.cpp 
 
 SERVER			= bind_server_address.cpp \
 				  constructor.cpp \

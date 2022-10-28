@@ -49,11 +49,13 @@ int		Webserver::launch(void)
 				char request[1024];
 				memset(request, 0, 1024);
 				recv(events[i].data.fd, request, 1024, 0);
-				std::cout << request;
+				//std::cout << request;
 
-				char response[1024];
-				strcpy(response, "Response : OK\n");
-				send(events[i].data.fd, response, strlen(response), 0);
+				if (server_response(events[i].data.fd, request))
+				{
+					std::cout << "response failure" << std::endl;
+					return (exit_webserv());
+				}
 
 				if (remove_client(epoll_socket, client_socket, events))
 					return (exit_webserv());
