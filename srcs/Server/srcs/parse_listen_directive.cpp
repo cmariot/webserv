@@ -10,30 +10,65 @@ size_t	ft_atoi(std::string str)
 	{
 		result = result * 10 + str[i++] - '0';
 		if (++result_len > 10)
-			return (0);
+			return (-1);
 	}
 	if (str[i])
-		return (0);
+		return (-1);
 	return (result);
 }
 
-std::string	set_ip(std::string ip)
+size_t	set_port(std::string port)
 {
-	if (ip == "*")
-		return ("0.0.0.0");
-	else if (ip == "localhost")
-		return ("127.0.0.1");
-	else
+	return (ft_atoi(port));
+}
+
+std::string	Server::set_ip(std::string ip)
+{
+	size_t	i = 0;
+
+	while (i < ip.size())
 	{
-		return (ip);
+		++i;
 	}
+	return (ip);
 };
 
-bool	correct_len(std::vector<std::string> & vector, size_t begin_index, std::string untill, size_t expected_len)
+// listen 127.0.0.1:8000;
+// listen 127.0.0.1;
+// listen 8000;
+// listen *:8000;
+// listen localhost:8000;
+
+int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
+{
+	size_t	pos;
+
+	pos = token_vector[++i].find(":");
+	if (pos != std::string::npos)
+	{
+		address.first = set_ip(token_vector[i].substr(0, pos));
+		address.second = set_port(token_vector[i].substr(pos + 1));
+	}
+	else
+	{
+		if (token_vector[i] == "*")
+			address.first = "0.0.0.0";
+		else if (token_vector[i] == "localhost")
+			address.first = "127.0.0.1";
+		else if (token_vector[i].find(".") != std::string::npos)
+			address.first = set_ip(token_vector[i]);
+		else
+			address.second = set_port(token_vector[i]);
+	}
+	return (0);
+};
+
+bool	Server::invalid_directive_len(std::vector<std::string> & vector, size_t begin_index, std::string untill,
+		size_t min_len, size_t max_len)
 {
 	size_t	line_len = 0;
 
-	while (vector.begin() + (begin_index + line_len) != vector.end())
+	while (begin_index + line_len < vector.size())
 	{
 		++line_len;
 		if (vector[begin_index + line_len] == untill)
@@ -42,52 +77,19 @@ bool	correct_len(std::vector<std::string> & vector, size_t begin_index, std::str
 			break ;
 		}
 	}
-	if (line_len == expected_len)
+	if (line_len > min_len || line_len < max_len)
 		return (true);
 	else
 		return (false);
 }
 
-// listen 127.0.0.1:8000;
-// listen 127.0.0.1;
-// listen 8000;
-// listen *:8000;
-// listen localhost:8000;
-
 int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size_t & i)
 {
-	size_t	pos;
-	const std::string	default_ip = "";
-	const size_t		default_port = 0;
-
-	if (correct_len(token_vector, i, ";", 3) == false)
+	if (invalid_directive_len(token_vector, i, ";", 3, 3))
 		return (error("Syntax error : invalid listen directive."));
-	ip = default_ip;
-	port = default_port;
-	pos = token_vector[++i].find(":");
-	if (pos != std::string::npos)
-	{
-		ip = set_ip(token_vector[i].substr(0, pos));
-		port = ft_atoi(token_vector[i].substr(pos + 1));
-	}
-	else
-	{
-		if (token_vector[i] == "*")
-		{
-			ip = "0.0.0.0";
-		}
-		if (token_vector[i].find(".") != std::string::npos
-				|| token_vector[i] == "localhost"
-				|| token_vector[i] == "*")
-		{
-			ip = set_ip(token_vector[i]);
-		}
-		else
-		{
-			port = ft_atoi(token_vector[i]);
-		}
-	}
-	if (token_vector[++i] != ";")
+	else if (set_ip_and_port(token_vector, i))
+		return (1);
+	else if (token_vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
 	return (0);
 };
