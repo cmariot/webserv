@@ -86,6 +86,9 @@ class Webserver
 		int		add_client(int, struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
+		// reponse
+		int 	server_response(int ,char *);
+
 		//	error
 		int		usage(void) const;
 		int		error(const char *error, const char *complement) const;
