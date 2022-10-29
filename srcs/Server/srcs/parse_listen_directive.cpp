@@ -129,5 +129,6 @@ int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size
 		return (1);
 	else if (token_vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
+	std::cout << "\tlisten\t\t\t" << address.first << ":" << address.second << std::endl;
 	return (0);
 };

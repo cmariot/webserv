@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/28 12:45:37 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/29 15:06:12 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,12 +184,16 @@ re :			fclean all
 
 header :
 				@printf "$(CYAN)"
-				@printf "WEBSERV COMPILATION\n"
-				@printf "$(RESET)"
+				@printf "__        _______ ____ ____  _____ ______     __\n"
+				@printf "\ \      / / ____| __ ) ___|| ____|  _ \ \   / /\n"
+				@printf " \ \ /\ / /|  _| |  _ \___ \|  _| | |_) \ \ / / \n"
+				@printf "  \ V  V / | |___| |_) |__) | |___|  _ < \ V /  \n"
+				@printf "   \_/\_/  |_____|____/____/|_____|_| \_\ \_/   \n"
+				@printf "$(RESET)\n"
 
 footer :
 				@printf "$(CYAN)"
-				@printf "➤     SUCCESS\n"
+				@printf "➤ COMPILATION SUCCESS\n"
 				@printf "\nUSAGE\n"
 				@printf "$(RESET)"
 				@printf "./$(NAME) [configuration file]\n"

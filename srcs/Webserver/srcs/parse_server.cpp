@@ -31,10 +31,14 @@ int		Webserver::parse_server(std::vector<std::string> & tokens_vector)
 		}
 		if (i >= vector_size)
 			return (error("unclosed brace in the configuration file.", NULL));
+		std::cout << "Parsing server[" << nb_of_servers << "] :" << std::endl;
 		server.push_back(Server());
 		std::vector<std::string>	arguments_vector(tokens_vector.begin() + begin, tokens_vector.begin() + end);
 		if (server[nb_of_servers].set_server_arguments(arguments_vector))
 			return (1);
+
+		std::cout << std::endl;
+
 		++nb_of_servers;
 	}
 	return (0);

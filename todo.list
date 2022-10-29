@@ -3,5 +3,5 @@ Parsing dans la classe Server:
 - [X] parse_listen
 - [ ] parse_server_name
 - [ ] parse_error_page
-- [ ] parse_client_max_body_size
+- [X] parse_client_max_body_size
 - [ ] parse_location

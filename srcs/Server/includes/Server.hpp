@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/29 14:35:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/29 16:25:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,37 @@
 #include <errno.h>
 #include <cstdio>
 
+class	Error_directive
+{
+	public:
+
+		Error_directive()
+		{
+			return ;
+		};
+		~Error_directive()
+		{
+			return ;
+		};
+
+		int				error;
+		int				redirection;
+		std::string		path;
+};
+
 class	Server
 {
 
 	public:
 
-		std::pair<std::string, int>	address;		// Pair Host:Port
-		std::string					server_name;
-		double						client_max_body_size;
-		std::vector<void *>			error_pages;
-		std::vector<void *>			locations;
+		std::pair<std::string, int>		address;		// Pair Host:Port
+		std::string						server_name;
+		double							client_max_body_size;
+		std::vector<Error_directive>	error_pages;
+		std::vector<void *>				locations;
 
-		int							server_socket;
-		struct sockaddr_in			server_address;
-
+		int								server_socket;
+		struct sockaddr_in				server_address;
 
 		Server();
 		~Server();
