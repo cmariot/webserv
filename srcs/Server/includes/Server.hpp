@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/28 11:12:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/29 14:35:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class	Server
 
 		std::pair<std::string, int>	address;		// Pair Host:Port
 		std::string					server_name;
-		size_t						max_body_size;
+		double						client_max_body_size;
 		std::vector<void *>			error_pages;
 		std::vector<void *>			locations;
 
@@ -59,6 +59,7 @@ class	Server
 		bool		invalid_directive_len(std::vector<std::string> &, size_t, std::string, size_t, size_t);
 		int			set_ip_and_port(std::vector<std::string> &, size_t &);
 		std::string	set_ip(std::string);
+		int			set_client_max_body_size(std::string & str);
 
 		int			error(const char *error) const;
 		int			error(const char *error, const char *complement) const;

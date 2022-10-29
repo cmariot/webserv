@@ -51,7 +51,7 @@ std::string	Server::set_ip(std::string ip)
 				digit = digit * 10 + ip[i++] - '0';
 				++digit_len;
 			}
-			if (digit_len > 3 || digit > 255 || (ip[i] != '.' && ip[i] != '\0'))
+			if (digit_len == 0 || digit_len > 3 || digit > 255 || (ip[i] != '.' && ip[i] != '\0'))
 				return ("");
 			if (ip[i] == '\0')
 				break ;
@@ -108,12 +108,12 @@ bool	Server::invalid_directive_len(std::vector<std::string> & vector, size_t beg
 
 	while (begin_index + line_len < vector.size())
 	{
-		++line_len;
-		if (vector[begin_index + line_len] == untill)
+		if (vector[begin_index + line_len]  == untill)
 		{
 			++line_len;
 			break ;
 		}
+		++line_len;
 	}
 	if (line_len > min_len || line_len < max_len)
 		return (true);
