@@ -3,7 +3,7 @@
 int	Server::set_server_arguments(std::vector<std::string> & token_vector)
 {
 	// default already set
-	for (size_t i = 0 ; i < token_vector.size() ; ++i)
+	for (size_t i = 0 ; i < token_vector.size() ; i++)
 	{
 		if (token_vector[i] == "listen")
 		{

@@ -67,10 +67,10 @@ int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, 
 	std::string	path;
 	size_t		j = i;
 
-	if (invalid_directive_len(token_vector, i + 1, ";", 4, token_vector.size()))
-		return (error("Syntax error : invalid error_page directive len."));
-	else if (no_semicolon(token_vector, j))
+	if (no_semicolon(token_vector, j))
 		return (error("Syntax error : the error_page directive doesn't ends with the ';' character."));
+	else if (invalid_directive_len(token_vector, i + 1, ";", 3, token_vector.size()))
+		return (error("Syntax error : invalid error_page directive len."));
 	path = token_vector[j--];
 	if (get_response(token_vector, j, change_response, specified_response, response))
 		return (error("Syntax error : invalid response code in the error_page directive."));
@@ -81,24 +81,22 @@ int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, 
 			return (error("Syntax error : invalid error code in the error_page directive."));
 		Directive_error_page	directive(code, change_response, specified_response, response, path);
 		error_pages.push_back(directive);
-	}
-	while (token_vector[i] != ";")
-		++i;
-
-	// Display infos
-	for (size_t j = 0 ; j < error_pages.size() ; ++j)
-	{
-		std::cout << "\terror_pages\t\t" << error_pages[j].get_error() << " ";
-		if (error_pages[j].get_change_response() == true)
+		
+		// Display infos
+		std::vector<Directive_error_page>::iterator last = error_pages.end() - 1;
+		std::cout << "\terror_pages\t\t" << last->get_error() << " ";
+		if (last->get_change_response() == true)
 		{
 			std::cout << "=";
-			if (error_pages[j].get_specified_response())
-				std::cout << error_pages[j].get_redirection() << " ";
+			if (last->get_specified_response())
+				std::cout << last->get_redirection() << " ";
 			else
 				std::cout << " ";
 		}
-		std::cout << error_pages[j].get_path() << ";" << std::endl;
+		std::cout << last->get_path() << ";" << std::endl;
+		// end display
 	}
-
+	while (token_vector[i] != ";")
+		++i;
 	return (0);
 };
