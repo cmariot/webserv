@@ -115,10 +115,10 @@ bool	Server::invalid_directive_len(std::vector<std::string> & vector, size_t beg
 		}
 		++line_len;
 	}
-	if (line_len > min_len || line_len < max_len)
-		return (true);
-	else
+	if (line_len >= min_len && line_len <= max_len)
 		return (false);
+	else
+		return (true);
 }
 
 int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size_t & i)
@@ -129,6 +129,6 @@ int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size
 		return (1);
 	else if (token_vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
-	std::cout << "\tlisten\t\t\t" << address.first << ":" << address.second << std::endl;
+	std::cout << "\tlisten\t\t\t" << address.first << ":" << address.second << ";" << std::endl;
 	return (0);
 };

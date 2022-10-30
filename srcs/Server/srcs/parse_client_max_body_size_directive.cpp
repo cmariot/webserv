@@ -47,6 +47,6 @@ int	Server::parse_client_max_body_size_directive(std::vector<std::string> & toke
 		return (1);
 	else if (token_vector[++i] != ";")
 		return (error("Syntax error : the client_max_body_size directive doesn't ends by ';'."));
-	std::cout << "\tclient max_body_size\t" << client_max_body_size << std::endl;
+	std::cout << "\tclient max_body_size\t" << client_max_body_size << ";" << std::endl;
 	return (0);
 }
