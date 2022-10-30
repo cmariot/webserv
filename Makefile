@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/29 15:06:12 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/30 15:53:57 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ INCLUDES		 = -I includes
 
 INCLUDES		+= -I srcs/Webserver/includes
 INCLUDES		+= -I srcs/Server/includes
+INCLUDES		+= -I srcs/Server/srcs/Directive_error_page/includes
 
 
 
@@ -68,7 +69,8 @@ SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
-				  $(addprefix Webserver/srcs/, $(WEBSERVER))
+				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
+				  $(addprefix Server/srcs/Directive_error_page/srcs/, $(DIRECTIVE_ERROR))
 
 MAIN			= main.cpp
 
@@ -109,6 +111,11 @@ SERVER			= bind_server_address.cpp \
 				  parse_location_context.cpp \
 				  parse_server_name_directive.cpp \
 				  set_server_arguments.cpp
+
+DIRECTIVE_ERROR	= constructor.cpp \
+				  destructor.cpp \
+				  getters.cpp \
+				  setters.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
@@ -155,10 +162,12 @@ all : 			header $(NAME) footer
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
-				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+				@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+				@printf "[$(CYAN)✓$(RESET)] $@\n"
 
 $(NAME)	: 		$(OBJS)
-				$(CC) $(LFLAGS) $(OBJS) $(LIBRARY) -o $(NAME)
+				@printf "\n"
+				$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
 				@printf "\n"
 
 leaks :			$(NAME)
@@ -194,7 +203,7 @@ header :
 footer :
 				@printf "$(CYAN)"
 				@printf "➤ COMPILATION SUCCESS\n"
-				@printf "\nUSAGE\n"
+				@printf "\nUSAGE :\n"
 				@printf "$(RESET)"
 				@printf "./$(NAME) [configuration file]\n"
 
