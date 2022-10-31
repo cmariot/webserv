@@ -25,6 +25,11 @@ int	Server::set_server_arguments(std::vector<std::string> & token_vector)
 			if (parse_client_max_body_size_directive(token_vector, i))
 				return (1);
 		}
+		else if (token_vector[i] == "root")
+		{
+			if (parse_root_directive(token_vector, i))
+				return (1);
+		}
 		else if (token_vector[i] == "location")
 		{
 			if (parse_location_context(token_vector, i))

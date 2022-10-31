@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/30 14:43:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/10/31 19:03:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class	Server
 		double								client_max_body_size;
 		std::vector<Directive_error_page>	error_pages;
 		std::vector<void *>					locations;
+		std::string							root;
 
 		int									server_socket;
 		struct sockaddr_in					server_address;
@@ -55,6 +56,7 @@ class	Server
 		int			parse_server_name_directive(std::vector<std::string> &, size_t &);
 		int			parse_error_page_directive(std::vector<std::string> &, size_t &);
 		int			parse_client_max_body_size_directive(std::vector<std::string> &, size_t &);
+		int			parse_root_directive(std::vector<std::string> &, size_t &);
 		int			parse_location_context(std::vector<std::string> &, size_t &);
 
 		bool		invalid_directive_len(std::vector<std::string> &, size_t, std::string, size_t, size_t);

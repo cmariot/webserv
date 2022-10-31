@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/30 15:53:57 by cmariot          ###   ########.fr        #
+#    Updated: 2022/10/31 19:10:10 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,6 +110,7 @@ SERVER			= bind_server_address.cpp \
 				  parse_listen_directive.cpp \
 				  parse_location_context.cpp \
 				  parse_server_name_directive.cpp \
+				  parse_root_directive.cpp \
 				  set_server_arguments.cpp
 
 DIRECTIVE_ERROR	= constructor.cpp \
@@ -162,8 +163,9 @@ all : 			header $(NAME) footer
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
-				@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
-				@printf "[$(CYAN)✓$(RESET)] $@\n"
+				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+
+#@printf "[$(CYAN)✓$(RESET)] $< \n"
 
 $(NAME)	: 		$(OBJS)
 				@printf "\n"

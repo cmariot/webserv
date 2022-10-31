@@ -94,7 +94,7 @@ int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, 
 				std::cout << " ";
 		}
 		std::cout << last->get_path() << ";" << std::endl;
-		// end display
+		// Display end
 	}
 	while (token_vector[i] != ";")
 		++i;
