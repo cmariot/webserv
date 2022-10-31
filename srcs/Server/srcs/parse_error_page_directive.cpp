@@ -40,7 +40,7 @@ int	get_response(std::vector<std::string> & token_vector, size_t & j, bool & cha
 	return (0);
 }
 
-int	no_semicolon(std::vector<std::string> & token_vector, size_t & j)
+int	Server::no_semicolon(std::vector<std::string> & token_vector, size_t & j)
 {
 	while (j < token_vector.size() && token_vector[j] != ";")
 		++j;
