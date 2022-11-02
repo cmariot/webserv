@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/11/02 12:44:05 by cmariot          ###   ########.fr        #
+#    Updated: 2022/11/02 15:55:06 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,14 +105,11 @@ SERVER			= bind_server_address.cpp \
 				  destructor.cpp \
 				  error.cpp \
 				  listen_for_clients.cpp \
+				  parse_listen_directive.cpp \
 				  parse_client_max_body_size_directive.cpp \
 				  parse_error_page_directive.cpp \
-				  parse_listen_directive.cpp \
 				  parse_location_context.cpp \
-				  parse_server_name_directive.cpp \
-				  parse_index_directive.cpp \
-				  parse_root_directive.cpp \
-				  parse_upload_path_directive.cpp \
+				  parse_server_names_directive.cpp \
 				  set_server_arguments.cpp
 
 DIRECTIVE_ERROR	= constructor.cpp \

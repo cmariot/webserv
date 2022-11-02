@@ -29,6 +29,5 @@ int		Webserver::parse_configuration_file(std::vector<std::string> & string_vecto
 		return (1);
 	if (parse_server(tokens_vector))
 		return (1);
-	std::cout << "Parsing OK" << std::endl << std::endl;
 	return (0);
 };

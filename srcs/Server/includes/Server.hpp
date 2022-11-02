@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/02 12:44:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/02 16:21:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <cstdio>
+#include "climits"
 
 #include "Directive_error_page.hpp"
 
@@ -31,13 +32,10 @@ class	Server
 	public:
 
 		std::pair<std::string, int>			address;		// Pair Host:Port
-		std::string							server_name;
+		std::vector<std::string>			server_names;
 		double								client_max_body_size;
 		std::vector<Directive_error_page>	error_pages;
 		std::vector<void *>					locations;
-		std::string							root;
-		std::vector<std::string>			index;
-		std::string							upload_path;
 
 		int									server_socket;
 		struct sockaddr_in					server_address;
@@ -55,13 +53,10 @@ class	Server
 	private :
 
 		int			parse_listen_directive(std::vector<std::string> &, size_t &);
-		int			parse_server_name_directive(std::vector<std::string> &, size_t &);
+		int			parse_server_names_directive(std::vector<std::string> &, size_t &);
 		int			parse_error_page_directive(std::vector<std::string> &, size_t &);
 		int			parse_client_max_body_size_directive(std::vector<std::string> &, size_t &);
-		int			parse_root_directive(std::vector<std::string> &, size_t &);
 		int			parse_location_context(std::vector<std::string> &, size_t &);
-		int			parse_index_directive(std::vector<std::string> &, size_t &);
-		int			parse_upload_path_directive(std::vector<std::string> &, size_t &);
 
 		bool		invalid_directive_len(std::vector<std::string> &, size_t, std::string, size_t, size_t);
 		int			no_semicolon(std::vector<std::string> &, size_t &);
