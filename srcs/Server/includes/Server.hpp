@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/31 19:22:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:44:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class	Server
 		std::vector<void *>					locations;
 		std::string							root;
 		std::vector<std::string>			index;
+		std::string							upload_path;
 
 		int									server_socket;
 		struct sockaddr_in					server_address;
@@ -60,6 +61,7 @@ class	Server
 		int			parse_root_directive(std::vector<std::string> &, size_t &);
 		int			parse_location_context(std::vector<std::string> &, size_t &);
 		int			parse_index_directive(std::vector<std::string> &, size_t &);
+		int			parse_upload_path_directive(std::vector<std::string> &, size_t &);
 
 		bool		invalid_directive_len(std::vector<std::string> &, size_t, std::string, size_t, size_t);
 		int			no_semicolon(std::vector<std::string> &, size_t &);

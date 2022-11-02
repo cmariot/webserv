@@ -35,6 +35,11 @@ int	Server::set_server_arguments(std::vector<std::string> & token_vector)
 			if (parse_index_directive(token_vector, i))
 				return (1);
 		}
+		else if (token_vector[i] == "upload_path") // OK
+		{
+			if (parse_upload_path_directive(token_vector, i))
+				return (1);
+		}
 		else if (token_vector[i] == "location") // A FAIRE
 		{
 			if (parse_location_context(token_vector, i))

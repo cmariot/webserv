@@ -40,8 +40,10 @@ int	Webserver::parse(int argc, const char *argv[])
 {
 	std::vector<std::string>	string_vector;
 
-	if (argc != 2)
+	if (argc > 2)
 		return (usage());
+	if (argc == 1)
+		argv[1] = "configuration_files/default.conf";
 	if (put_the_file_in_a_vector(argv, string_vector))
 		return (1);
 	if (parse_configuration_file(string_vector))

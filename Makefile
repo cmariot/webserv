@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/10/31 19:17:25 by cmariot          ###   ########.fr        #
+#    Updated: 2022/11/02 12:44:05 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,6 +112,7 @@ SERVER			= bind_server_address.cpp \
 				  parse_server_name_directive.cpp \
 				  parse_index_directive.cpp \
 				  parse_root_directive.cpp \
+				  parse_upload_path_directive.cpp \
 				  set_server_arguments.cpp
 
 DIRECTIVE_ERROR	= constructor.cpp \

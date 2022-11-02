@@ -9,20 +9,14 @@ int	Server::parse_index_directive(std::vector<std::string> & token_vector, size_
 	else if (invalid_directive_len(token_vector, i, ";", 3, token_vector.size()))
 		return (error("Syntax error : invalid index directive len."));
 	++i;
-	while (i != token_vector.size() - 1)
-		index.push_back(token_vector[i++]);
-
-	// Affichage ok tant qu'une seule declaration index dans le server,
-	// Sinon il y aura des repetitions
 	std::cout << "\tindex\t\t\t";
-	for (j = 0 ; j < index.size() ; ++j)
+	while (i != token_vector.size() - 1 && token_vector[i] != ";")
 	{
-		if (j != index.size() - 1)
-			std::cout << index[j] << " ";
+		if (token_vector[i + 1] != ";")
+			std::cout << token_vector[i] << " ";
 		else
-			std::cout << index[j];
+			std::cout << token_vector[i] << ";" << std::endl;
+		index.push_back(token_vector[i++]);
 	}
-	std::cout << ";" << std::endl;
-
 	return (0);
 };
