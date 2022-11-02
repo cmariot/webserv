@@ -30,13 +30,15 @@ int	Server::parse_location_context(std::vector<std::string> & token_vector, size
 	}
 	if (i >= vector_size)
 		return (error("Syntax error : unclosed brace in the location block of the configuration file.", NULL));
-	Location	location;
+	
+	std::cout << "\tlocation " << uri << std::endl << "\t{" << std::endl;
+	Location	location(uri);
 
 	std::vector<std::string> tmp_vector(token_vector.begin() + begin, token_vector.begin() + end);
 	if (location.parse_location(tmp_vector))
 		return (1);
 	locations.push_back(location);
-	(void)begin;
-	(void)end;
+	std::cout << "\t}" << std::endl;
+	
 	return (0);
 };

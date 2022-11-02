@@ -9,7 +9,10 @@ class Location
 {
 	public:
 
-		Location()
+		std::string		uri;
+
+		Location(std::string & uri) :
+			uri(uri)
 		{
 			return ;
 		};
