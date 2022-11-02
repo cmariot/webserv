@@ -6,22 +6,22 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 14:40:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/30 15:55:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/02 18:39:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DIRECTIVE_ERROR_PAGE_HPP
-# define DIRECTIVE_ERROR_PAGE_HPP
+#ifndef ERROR_PAGE_HPP
+# define ERROR_PAGE_HPP
 
 #include <string>
 
-class	Directive_error_page
+class	Error_page
 {
 
 	public:
 
-		Directive_error_page(int &, bool &, bool &, int &, std::string &);
-		~Directive_error_page();
+		Error_page(int &, bool &, bool &, int &, std::string &);
+		~Error_page();
 
 		void			set_error(int error);
 		void			set_change_response(bool change);

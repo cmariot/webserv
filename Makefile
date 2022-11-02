@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/11/02 15:55:06 by cmariot          ###   ########.fr        #
+#    Updated: 2022/11/02 19:07:50 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ INCLUDES		 = -I includes
 
 INCLUDES		+= -I srcs/Webserver/includes
 INCLUDES		+= -I srcs/Server/includes
-INCLUDES		+= -I srcs/Server/srcs/Directive_error_page/includes
+INCLUDES		+= -I srcs/Server/srcs/Error_page/includes
+INCLUDES		+= -I srcs/Server/srcs/Location/includes
 
 
 
@@ -70,7 +71,8 @@ SRC_ROOTDIR		= srcs/
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
-				  $(addprefix Server/srcs/Directive_error_page/srcs/, $(DIRECTIVE_ERROR))
+				  $(addprefix Server/srcs/Error_page/srcs/, $(DIRECTIVE_ERROR)) \
+				  $(addprefix Server/srcs/Location/srcs/, $(LOCATION))
 
 MAIN			= main.cpp
 
@@ -116,6 +118,8 @@ DIRECTIVE_ERROR	= constructor.cpp \
 				  destructor.cpp \
 				  getters.cpp \
 				  setters.cpp
+
+LOCATION		= parse_location.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

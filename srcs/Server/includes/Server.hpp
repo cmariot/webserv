@@ -6,36 +6,37 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/02 16:21:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/02 18:49:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sys/socket.h>
-#include <sys/epoll.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <errno.h>
-#include <cstdio>
-#include "climits"
+# include <iostream>
+# include <vector>
+# include <string>
+# include <sys/socket.h>
+# include <sys/epoll.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+# include <errno.h>
+# include <cstdio>
+# include "climits"
 
-#include "Directive_error_page.hpp"
+# include "Error_page.hpp"
+# include "Location.hpp"
 
 class	Server
 {
 
 	public:
 
-		std::pair<std::string, int>			address;		// Pair Host:Port
+		std::pair<std::string, int>			address;
 		std::vector<std::string>			server_names;
 		double								client_max_body_size;
-		std::vector<Directive_error_page>	error_pages;
-		std::vector<void *>					locations;
+		std::vector<Error_page>				error_pages;
+		std::vector<Location>					locations;
 
 		int									server_socket;
 		struct sockaddr_in					server_address;

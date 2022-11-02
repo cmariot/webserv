@@ -79,11 +79,11 @@ int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, 
 		++i;
 		if (get_error(code, token_vector, i))
 			return (error("Syntax error : invalid error code in the error_page directive."));
-		Directive_error_page	directive(code, change_response, specified_response, response, path);
+		Error_page	directive(code, change_response, specified_response, response, path);
 		error_pages.push_back(directive);
 		
 		// Display infos
-		std::vector<Directive_error_page>::iterator last = error_pages.end() - 1;
+		std::vector<Error_page>::iterator last = error_pages.end() - 1;
 		std::cout << "\terror_pages\t\t" << last->get_error() << " ";
 		if (last->get_change_response() == true)
 		{
