@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:44:38 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/02 18:49:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:09:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class	Server
 		std::vector<std::string>			server_names;
 		double								client_max_body_size;
 		std::vector<Error_page>				error_pages;
-		std::vector<Location>					locations;
+		std::vector<Location>				locations;
 
 		int									server_socket;
 		struct sockaddr_in					server_address;
@@ -63,10 +63,10 @@ class	Server
 		int			no_semicolon(std::vector<std::string> &, size_t &);
 		int			set_ip_and_port(std::vector<std::string> &, size_t &);
 		std::string	set_ip(std::string);
-		int			set_client_max_body_size(std::string & str);
+		int			set_client_max_body_size(std::string &);
 
-		int			error(const char *error) const;
-		int			error(const char *error, const char *complement) const;
+		int			error(const char *) const;
+		int			error(const char *, const char *) const;
 };
 
 #endif

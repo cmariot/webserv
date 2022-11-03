@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/10/28 10:21:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:03:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ class Webserver
 	private:
 
 		//	parsing
+		int		get_file(const char *argv[], std::vector<std::string> &);
 		int		parse_configuration_file(std::vector<std::string> &);
-		int		put_the_file_in_a_vector(const char *argv[], std::vector<std::string> &);
 		int		remove_commentaries(std::vector<std::string> &) const;
 		int		replace_blank_characters(std::vector<std::string> &) const;
 		int		split_strings(std::vector<std::string> &, std::vector<std::string>	&) const;
@@ -75,6 +75,7 @@ class Webserver
 
 		//	servers initialization
 		int		parse_server(std::vector<std::string> &);
+		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
 		// launch
 		int		init_sockets(void);
@@ -92,6 +93,7 @@ class Webserver
 		//	error
 		int		usage(void) const;
 		int		error(const char *, const char *) const;
+		int		error(const char *error) const;
 
 		// signal catcher
 		int		catch_signal(void);

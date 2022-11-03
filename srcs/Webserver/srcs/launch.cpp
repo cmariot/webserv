@@ -50,6 +50,7 @@ int		Webserver::launch(void)
 				memset(request, 0, 1024);
 				recv(events[i].data.fd, request, 1024, 0);
 				std::cout << request;
+				// Parser la requete pour trouver le serveur qui va etre utilise.
 
 				if (server_response(events[i].data.fd, request))
 				{

@@ -15,13 +15,11 @@ int	check_extension(const char *filename, const char *extension)
 	return (0);
 }
 
-int	Webserver::put_the_file_in_a_vector(const char *argv[], std::vector<std::string> & string_vector)
+int	Webserver::get_file(const char *argv[], std::vector<std::string> & string_vector)
 {
 	std::ifstream	configuration_file;
 	std::string		line;
 
-	if (check_extension(argv[1], ".conf"))
-		return (error("The configuration file must have the '.conf' extension.", NULL));
 	configuration_file.open(argv[1], std::ios_base::in);
 	if (configuration_file.is_open() == false)
 		return (error("Could not open the file", argv[1]));
@@ -59,9 +57,11 @@ int	Webserver::parse(int argc, const char *argv[])
 
 	if (argc > 2)
 		return (usage());
-	if (argc == 1)
+	else if (argc == 1)
 		argv[1] = "configuration_files/default.conf";
-	if (put_the_file_in_a_vector(argv, string_vector))
+	else if (check_extension(argv[1], ".conf"))
+		return (error("The configuration file must have the '.conf' extension.", NULL));
+	if (get_file(argv, string_vector))
 		return (1);
 	if (parse_configuration_file(string_vector))
 		return (1);
