@@ -1,4 +1,3 @@
-// OK untill the servers initialization
 #include "Webserver.hpp"
 
 int		Webserver::get_server_directives(std::vector<std::string> & vector, size_t & i, size_t & begin, size_t & end)
@@ -42,8 +41,8 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 		if (get_server_directives(vector, i, begin, end))
 			return (1);
 		server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
-		if (server[nb_of_servers++].set_server_arguments(server_directives))
+		if (server[nb_of_servers++].parse(server_directives))
 			return (1);
 	}
 	return (0);
-}
+};

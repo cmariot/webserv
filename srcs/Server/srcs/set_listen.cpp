@@ -73,42 +73,42 @@ std::string	Server::set_ip(std::string ip)
 // listen *:8000;
 // listen localhost:8000;
 
-int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
+int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 {
 	size_t	pos;
 
-	pos = token_vector[++i].find(":");
+	pos = vector[++i].find(":");
 	if (pos != std::string::npos)
 	{
-		address.first = set_ip(token_vector[i].substr(0, pos));
-		address.second = set_port(token_vector[i].substr(pos + 1));
+		_address.first = set_ip(vector[i].substr(0, pos));
+		_address.second = set_port(vector[i].substr(pos + 1));
 	}
 	else
 	{
-		if (token_vector[i].find(".") != std::string::npos || token_vector[i] == "*" || token_vector[i] == "localhost")
+		if (vector[i].find(".") != std::string::npos || vector[i] == "*" || vector[i] == "localhost")
 		{
-			address.first = set_ip(token_vector[i]);
-			address.second = 0;
+			_address.first = set_ip(vector[i]);
+			_address.second = 0;
 		}
 		else
 		{
-			address.first = "127.0.0.1";
-			address.second = set_port(token_vector[i]);
+			_address.first = "127.0.0.1";
+			_address.second = set_port(vector[i]);
 		}
 	}
-	if (address.first == "" || address.second == -1)
+	if (_address.first == "" || _address.second == -1)
 		return (error("Invalid host:port in the listen directive."));
 	return (0);
 };
 
-int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size_t & i)
+int	Server::set_listen(std::vector<std::string> & vector, size_t & i)
 {
-	if (invalid_directive_len(token_vector, i, ";", 3, 3))
+	if (invalid_directive_len(vector, i, ";", 3, 3))
 		return (error("Syntax error : invalid listen directive."));
-	else if (set_ip_and_port(token_vector, i))
+	else if (set_ip_and_port(vector, i))
 		return (1);
-	else if (token_vector[++i] != ";")
+	else if (vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
-	std::cout << "\tlisten\t\t\t" << address.first << ":" << address.second << ";" << std::endl;
+	std::cout << "\tlisten\t\t\t" << _address.first << ":" << _address.second << ";" << std::endl;
 	return (0);
 };

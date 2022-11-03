@@ -49,7 +49,7 @@ int	get_response(std::vector<std::string> & token_vector, size_t & j, bool & cha
 // 2- parsing (s'il y en a) du code response
 // 3- Parsing du ou des codes d'erreurs a ajouter dans un vecteur
 // Ajout de chaque triplet au vecteur error_page du serveur
-int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, size_t & i)
+int	Server::set_error_pages(std::vector<std::string> & token_vector, size_t & i)
 {
 	int			code;
 	bool		change_response = false;
@@ -71,10 +71,10 @@ int	Server::parse_error_page_directive(std::vector<std::string> & token_vector, 
 		if (get_error(code, token_vector, i))
 			return (error("Syntax error : invalid error code in the error_page directive."));
 		Error_page	directive(code, change_response, specified_response, response, path);
-		error_pages.push_back(directive);
-		
+		_error_pages.push_back(directive);
+
 		// Display infos
-		std::vector<Error_page>::iterator last = error_pages.end() - 1;
+		std::vector<Error_page>::iterator last = _error_pages.end() - 1;
 		std::cout << "\terror_pages\t\t" << last->get_error() << " ";
 		if (last->get_change_response() == true)
 		{

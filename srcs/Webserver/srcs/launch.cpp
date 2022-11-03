@@ -38,7 +38,7 @@ int		Webserver::launch(void)
 		{
 			if (client_connexion(&index, events[i]))
 			{
-				std::cout << "A client has just connected to the server " << server[index].address.first << ":" << server[index].address.second << std::endl;
+				std::cout << "A client has just connected to the server " << server[index]._address.first << ":" << server[index]._address.second << std::endl;
 				if (accept_connexion(&client_socket, server[index]))
 					return (exit_webserv());
 				if (add_client(client_socket, events))

@@ -22,12 +22,6 @@ LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
 INCLUDES		 = -I includes
 
-INCLUDES		+= -I srcs/Webserver/includes
-INCLUDES		+= -I srcs/Utils/includes
-INCLUDES		+= -I srcs/Server/includes
-INCLUDES		+= -I srcs/Error_page/includes
-INCLUDES		+= -I srcs/Location/includes
-
 
 
 # **************************************************************************** #
@@ -57,11 +51,11 @@ VALGRIND_FLAGS	 = --leak-check=full --show-leak-kinds=all --track-fds=yes
 SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
-				  $(addprefix Server/srcs/, $(SERVER)) \
-				  $(addprefix Utils/srcs/, $(UTILS)) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
-				  $(addprefix Error_page/srcs/, $(DIRECTIVE_ERROR)) \
-				  $(addprefix Location/srcs/, $(LOCATION))
+				  $(addprefix Server/srcs/, $(SERVER)) \
+				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
+				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Utils/srcs/, $(UTILS))
 
 MAIN			= main.cpp
 
@@ -93,19 +87,19 @@ WEBSERVER		= accept_connexion.cpp \
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp
 
-SERVER			= bind_server_address.cpp \
-				  constructor.cpp \
+SERVER			= constructor.cpp \
+				  parse.cpp \
+				  set_listen.cpp \
+				  set_server_names.cpp \
+				  set_client_max_body_size.cpp \
+				  set_error_page.cpp \
+				  set_location.cpp \
 				  create_server_socket.cpp \
-				  destructor.cpp \
+				  bind_server_address.cpp \
 				  listen_for_clients.cpp \
-				  parse_listen_directive.cpp \
-				  parse_client_max_body_size_directive.cpp \
-				  parse_error_page_directive.cpp \
-				  parse_location_context.cpp \
-				  parse_server_names_directive.cpp \
-				  set_server_arguments.cpp \
+				  destructor.cpp
 
-DIRECTIVE_ERROR	= constructor.cpp \
+ERROR_PAGE		= constructor.cpp \
 				  destructor.cpp \
 				  getters.cpp
 
@@ -170,7 +164,7 @@ all : 			header $(NAME) footer
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
 				@printf "Compiling ⌛ $< \n"
-				@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
 #@printf "[$(CYAN)✓$(RESET)] $< \n"
 

@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-int	Server::parse_location_context(std::vector<std::string> & token_vector, size_t & i)
+int	Server::set_location(std::vector<std::string> & token_vector, size_t & i)
 {
 	const size_t	vector_size = token_vector.size();
 	size_t			begin = 0;
@@ -36,7 +36,7 @@ int	Server::parse_location_context(std::vector<std::string> & token_vector, size
 	std::vector<std::string> tmp_vector(token_vector.begin() + begin, token_vector.begin() + end);
 	if (location.parse(tmp_vector))
 		return (1);
-	locations.push_back(location);
+	_locations.push_back(location);
 	std::cout << "\t}" << std::endl;
 	
 	return (0);

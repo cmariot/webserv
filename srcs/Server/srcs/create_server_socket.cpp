@@ -9,7 +9,7 @@ int	Server::set_server_socket_options(void)
 	const void *	option_value	= &options;						//
 	const socklen_t	option_len		= sizeof(options);				//
 
-	if (setsockopt(server_socket, level, option_name, option_value, option_len) == -1)
+	if (setsockopt(_server_socket, level, option_name, option_value, option_len) == -1)
 	{
 		error("setsockopt() failed.");
 		perror("setsockopt");
@@ -25,8 +25,8 @@ int	Server::create_server_socket(void)
 	const int	socket_type		= SOCK_STREAM;	// TCP
 	const int	protocol		= IPPROTO_TCP;	// IP
 
-	server_socket = socket(socket_family, socket_type, protocol);
-	if (server_socket == -1)
+	_server_socket = socket(socket_family, socket_type, protocol);
+	if (_server_socket == -1)
 	{
 		error("socket() failed.");
 		perror("socket");
