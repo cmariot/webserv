@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>WEBSERV</title>
+<style>
+  h1 {
+   text-align:center;
+  }
+  h2 {
+    margin-left:50px
+  }
+
+ p {
+   margin-left:20px
+   margin-right:20px
+ }
+article {
+    min-height: 100%;
+    display: grid;
+}
+
+footer {
+    display: flex;
+   justify-content: center;
+   padding: 2px;
+
+}
+
+</style>
+
+  <body>
+    <!--  En‑tête principale piru toutes les pages -->
+    <header>
+      <h1>WEBSERV</h1>
+      <h2>En-tête</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#">Objectifs</a></li>
+        <li><a href="#">Linked Pages</a></li>
+      </ul>
+        <!-- Un formulaire de recherche  -->
+        <form>
+          <input type="search" name="q" placeholder="Rechercher">
+          <input type="submit" value="Lancer !">
+        </form>
+      </nav>
+
+    <main>
+
+      <article>
+        <h2>Objectifs du projet</h2>
+        <p>L’objectif de ce projet est de créer un serveur web basé sur le protocole HTTP.
+          Un serveur HTTP est un programme qui permet à des clients de se connecter et
+          d’envoyer des requetes. Le serveur leur répond en envoyant des réponses HTTP.</p>
+          <!-- <img src="img/SERVEURCLIENT.png" alt="Schéma"> -->
+          </article>
+      <aside>
+        <h2>Linked pages</h2>
+        <ul>
+          <li><a href="#">Explications fichier de configuration</a></li>
+          <li><a href="#">Explications Epoll</a></li>
+
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <p>©Copyright 2023 Webserv by CFA </p>
+    </footer>
+
+  </body>
+</html>
