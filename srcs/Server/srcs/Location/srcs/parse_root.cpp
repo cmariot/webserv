@@ -27,6 +27,6 @@ int	Location::parse_root(std::vector<std::string> & vector, size_t & i)
 	root = vector[++i];
 	if (vector[++i] != ";")
 		return (error("Syntax error : the root directive doesn't ends by ';'."));
-	std::cout << "\t\troot\t\t" << root << ";" << std::endl;
+	std::cout << "\t\troot\t\t\t" << root << ";" << std::endl;
 	return (0);
 };

@@ -10,13 +10,20 @@ class Location
 	public:
 
 		std::string				uri;
+
 		bool					get_method_allowed;
 		bool					post_method_allowed;
 		bool					delete_method_allowed;
-		std::vector<void *>		redirections;
+
+		bool					redirection;
+		size_t					redirection_code;
+		std::string				redirection_path;
+
 		std::string				root;
+
 		bool					directory_listing;
 		std::string				directory_file;
+
 		bool					accept_uploads;
 		std::string				upload_path;
 
