@@ -8,7 +8,7 @@ Location::Location(std::string & uri) :
 	redirection(false),
 	redirection_code(0),
 	directory_listing(false),
-	accept_uploads(false)
+	upload(false)
 {
 	return ;
 };

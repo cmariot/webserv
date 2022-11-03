@@ -24,7 +24,9 @@ class Location
 		bool					directory_listing;
 		std::string				directory_file;
 
-		bool					accept_uploads;
+		std::string				cgi;
+
+		bool					upload;
 		std::string				upload_path;
 
 		Location(std::string & uri);
@@ -40,6 +42,8 @@ class Location
 		int		parse_directory_listing(std::vector<std::string> &, size_t &);
 		int		parse_directory_file(std::vector<std::string> &, size_t &);
 		int		parse_cgi(std::vector<std::string> &, size_t &);
+		int		parse_upload(std::vector<std::string> &, size_t &);
+		int		parse_upload_path(std::vector<std::string> &, size_t &);
 
 		int		error(std::string error);
 		int		error(std::string error, std::string complement);

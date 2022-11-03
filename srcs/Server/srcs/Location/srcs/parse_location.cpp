@@ -34,6 +34,16 @@ int	Location::parse_location(std::vector<std::string> & vector)
 			if (parse_cgi(vector, i))
 				return (1);
 		}
+		else if (vector[i] == "upload")
+		{
+			if (parse_upload(vector, i))
+				return (1);
+		}
+		else if (vector[i] == "upload_path")
+		{
+			if (parse_upload_path(vector, i))
+				return (1);
+		}
 		else
 			return (error("Syntax error : Invalid directive in the location context :", vector[i]));
 	}

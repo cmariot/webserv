@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/11/03 09:04:50 by cmariot          ###   ########.fr        #
+#    Updated: 2022/11/03 14:01:33 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,9 @@ LOCATION		= constructor.cpp \
 				  parse_directory_listing.cpp \
 				  parse_location.cpp \
 				  parse_redirection.cpp \
-				  parse_root.cpp
+				  parse_root.cpp \
+				  parse_upload.cpp \
+				  parse_upload_path.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
