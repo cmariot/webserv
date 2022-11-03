@@ -14,5 +14,3 @@ int Server::listen_for_clients(void) const
 	}
 	return (0);
 };
-
-

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Directive_error_page.hpp                           :+:      :+:    :+:   */
+/*   Error_page.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 14:40:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/02 18:39:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/11/03 17:14:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class	Error_page
 	public:
 
 		Error_page(int &, bool &, bool &, int &, std::string &);
-		~Error_page();
+		~Error_page(void);
 
 		void			set_error(int error);
 		void			set_change_response(bool change);

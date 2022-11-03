@@ -18,4 +18,3 @@ int	Server::bind_server_address()
 	}
 	return (0);
 };
-
