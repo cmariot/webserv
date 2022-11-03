@@ -27,14 +27,16 @@ class Location
 
 	private:
 
-		int	parse_allow_methods(std::vector<std::string> &, size_t &);
-		int	parse_redirection(std::vector<std::string> &, size_t &);
-		int	parse_root(std::vector<std::string> &, size_t &);
-		int	parse_directory_listing(std::vector<std::string> &, size_t &);
-		int	parse_directory_file(std::vector<std::string> &, size_t &);
-		int	parse_cgi(std::vector<std::string> &, size_t &);
+		int		parse_allow_methods(std::vector<std::string> &, size_t &);
+		int		parse_redirection(std::vector<std::string> &, size_t &);
+		int		parse_root(std::vector<std::string> &, size_t &);
+		int		parse_directory_listing(std::vector<std::string> &, size_t &);
+		int		parse_directory_file(std::vector<std::string> &, size_t &);
+		int		parse_cgi(std::vector<std::string> &, size_t &);
 
-		int	error(std::string error, std::string complement);
+		int		error(std::string error);
+		int		error(std::string error, std::string complement);
+		bool	invalid_directive_len(std::vector<std::string> &, size_t, std::string, size_t, size_t);
 };
 
 # endif
