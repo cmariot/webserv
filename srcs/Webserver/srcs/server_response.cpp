@@ -1,6 +1,38 @@
 #include "Webserver.hpp"
+// get the body of the response which is the html file
+string	 Webserver::stored_file(string path)
+{
+	string infile(path);										// The file we open
+	std::ifstream fin;											//infile stream -> fichier de flux d'entree
+	fin.open(infile.c_str(), std::ios::in);
+	if (!fin)
+	{
+		std::cerr << "Error : while opening the file " << infile << endl;
+		exit(1);
+	}
 
-void parse_response(std::vector<std::string> & data, char *request)
+	string tmp = "";
+   	string input = "";
+	while (!fin.eof())
+	{
+		getline(fin, tmp);
+		input += tmp;
+		if (!fin.eof())
+			input += '\n';
+	}
+	fin.close();													// Closing the infile
+	return input;
+}
+
+
+string	 Webserver::create_http_response(string method, string path)
+{
+	string response;
+	response = server_http_header_response(method, path);
+	return response;
+}
+
+void parse_request(std::vector<std::string> & data, char *request)
 {
     std::string tmp(request);
     int pos = 0;
@@ -23,27 +55,23 @@ void parse_response(std::vector<std::string> & data, char *request)
 int Webserver::server_response(int fd, char *request)
 {
     std::vector<std::string>    data;
-    char response[1024];
-    std::string GET;
-    std::string METHOD;
+    string                      response;
+    string                      method;
+    string                      path;
 
-    parse_response(data, request);
-    METHOD = data[0];
+
+    parse_request(data, request);
+    method = data[0];
     for (size_t i = 0 ; i < data.size() ; ++i)
     {
-        if (data[i] == METHOD)
+        if (data[i] == method)
         {
-            GET = data[i + 1];
+            path = data[i + 1];
             break;
         }
     }
-    
-    strcpy(response, "basic response\n"); 
-    
-    if (GET == "/index")
-        strcpy(response, "HTTP/1.1 200 OK\nContent-Type:text/html\nContent-Length: 16\n\n<h1>testing</h1>");
 
-	
-    send(fd, response, strlen(response), 0);
-    return (0); 
+    response = create_http_response(method, path);
+    send(fd, response.c_str(), response.size(), 0);
+    return (0);
 }

@@ -3,13 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
+#    By: abensett <abensett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/03 17:27:05 by cmariot          ###   ########.fr        #
+=======
+#    Updated: 2022/11/03 16:11:22 by abensett         ###   ########.fr        #
+>>>>>>> f1d27cc (response)
 #                                                                              #
 # **************************************************************************** #
 
+# **************************************************************************** #
+#                           	   COLORS  			                           #
+# **************************************************************************** #
+
+
+GREEN		= \033[32;1m
+RED			= \033[31;1m
+YELLOW		= \033[33;1m
+CYAN		= \033[36;1m
+RESET		= \033[0m
+WHITE 		= \033[0;m
+CLEAR		= \033[2K\r
 
 # **************************************************************************** #
 #                              EXECUTABLE'S NAME                               #
@@ -99,7 +115,9 @@ WEBSERVER		= accept_connexion.cpp \
 				  signals.cpp \
 				  split_strings.cpp \
 				  usage.cpp \
-				  wait_event.cpp 
+				  wait_event.cpp \
+				  header_response.cpp
+
 
 SERVER			= bind_server_address.cpp \
 				  constructor.cpp \
@@ -112,7 +130,7 @@ SERVER			= bind_server_address.cpp \
 				  parse_error_page_directive.cpp \
 				  parse_location_context.cpp \
 				  parse_server_names_directive.cpp \
-				  set_server_arguments.cpp
+				  set_server_arguments.cpp \
 
 DIRECTIVE_ERROR	= constructor.cpp \
 				  destructor.cpp \
@@ -177,13 +195,14 @@ all : 			header $(NAME) footer
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
-				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+				@printf "$(YELLOW)Compiling $(END)⌛ $< \n"
+				@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
 #@printf "[$(CYAN)✓$(RESET)] $< \n"
 
-$(NAME)	: 		$(OBJS)
+$(NAME)	:		$(OBJS)
 				@printf "\n"
-				$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
+				@$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
 				@printf "\n"
 
 leaks :			$(NAME)
@@ -219,6 +238,7 @@ header :
 footer :
 				@printf "$(CYAN)"
 				@printf "➤ COMPILATION SUCCESS\n"
+				@printf "[$(GREEN)OK$(WHITE)] webserv generated. \n"
 				@printf "\nUSAGE :\n"
 				@printf "$(RESET)"
 				@printf "./$(NAME) [configuration file]\n"

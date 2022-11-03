@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Webserver.hpp                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/18 17:04:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/03 16:03:20 by cmariot          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef WEBSERVER_HPP
 # define WEBSERVER_HPP
@@ -44,6 +33,10 @@
 # define FAILURE	1
 
 # include "Server.hpp"
+
+using std::string;
+using std::cout;
+using std::endl;
 
 class Webserver
 {
@@ -88,6 +81,9 @@ class Webserver
 		int		remove_client(int, int, struct epoll_event *);
 
 		// reponse
+		string	stored_file(string path);
+		string	create_http_response(string method, string path);
+		string	server_http_header_response(string method, string path);
 		int 	server_response(int ,char *);
 
 		//	error
