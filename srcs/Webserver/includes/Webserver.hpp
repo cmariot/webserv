@@ -33,6 +33,7 @@
 # define FAILURE	1
 
 # include "Server.hpp"
+# include "Utils.hpp"
 
 using std::string;
 using std::cout;
@@ -88,8 +89,6 @@ class Webserver
 
 		//	error
 		int		usage(void) const;
-		int		error(const char *, const char *) const;
-		int		error(const char *error) const;
 
 		// signal catcher
 		int		catch_signal(void);

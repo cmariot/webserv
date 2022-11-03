@@ -1,0 +1,8 @@
+[ ] - Tests parsing
+[ ] - Revoir noms de fonctions / classes / fichiers pour le parsing : besoin de simplification,
+	  creer de nouvelles fonctions si besoin
+[ ] - Verifications parsing, gestion d'erreurs, try/catch des exceptions
+
+
+// Quand le parsing est a 99% OK :
+Creer une fonction qui prend en parametre la requete d'un client et qui renvoie un pointeur sur le premier serveur correspondant a la paire host:port de la requete

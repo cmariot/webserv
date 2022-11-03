@@ -23,6 +23,7 @@ LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 INCLUDES		 = -I includes
 
 INCLUDES		+= -I srcs/Webserver/includes
+INCLUDES		+= -I srcs/Utils/includes
 INCLUDES		+= -I srcs/Server/includes
 INCLUDES		+= -I srcs/Error_page/includes
 INCLUDES		+= -I srcs/Location/includes
@@ -57,6 +58,7 @@ SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
+				  $(addprefix Utils/srcs/, $(UTILS)) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
 				  $(addprefix Error_page/srcs/, $(DIRECTIVE_ERROR)) \
 				  $(addprefix Location/srcs/, $(LOCATION))
@@ -70,31 +72,31 @@ WEBSERVER		= accept_connexion.cpp \
 				  constructor.cpp \
 				  create_epoll_socket.cpp \
 				  destructor.cpp \
-				  error.cpp \
 				  exit_webserv.cpp \
 				  init_sockets.cpp \
 				  server_response.cpp \
 				  launch.cpp \
-				  parse.cpp \
-				  parse_configuration_file.cpp \
-				  parse_server.cpp \
+				  parsing/parse.cpp \
+				  parsing/parse_configuration_file.cpp \
+				  parsing/parse_server.cpp \
 				  remove_client.cpp \
-				  remove_commentaries.cpp \
-				  replace_blank_characters.cpp \
-				  separate_braces.cpp \
-				  separate_semicolon.cpp \
+				  parsing/remove_commentaries.cpp \
+				  parsing/replace_blank_characters.cpp \
+				  parsing/separate_braces.cpp \
+				  parsing/separate_semicolon.cpp \
 				  signals.cpp \
-				  split_strings.cpp \
-				  usage.cpp \
+				  parsing/split_strings.cpp \
+				  parsing/usage.cpp \
 				  wait_event.cpp \
 				  header_response.cpp
 
+UTILS			= error.cpp \
+				  invalid_directive_len.cpp
 
 SERVER			= bind_server_address.cpp \
 				  constructor.cpp \
 				  create_server_socket.cpp \
 				  destructor.cpp \
-				  error.cpp \
 				  listen_for_clients.cpp \
 				  parse_listen_directive.cpp \
 				  parse_client_max_body_size_directive.cpp \
@@ -105,21 +107,20 @@ SERVER			= bind_server_address.cpp \
 
 DIRECTIVE_ERROR	= constructor.cpp \
 				  destructor.cpp \
-				  getters.cpp \
-				  setters.cpp
+				  getters.cpp
 
 LOCATION		= constructor.cpp \
 				  destructor.cpp \
-				  error.cpp \
-				  parse_allow_methods.cpp \
-				  parse_cgi.cpp \
-				  parse_directory_file.cpp \
-				  parse_directory_listing.cpp \
-				  parse_location.cpp \
-				  parse_redirection.cpp \
-				  parse_root.cpp \
-				  parse_upload.cpp \
-				  parse_upload_path.cpp
+				  getters.cpp \
+				  set_allow_methods.cpp \
+				  set_cgi.cpp \
+				  set_directory_file.cpp \
+				  set_directory_listing.cpp \
+				  parse.cpp \
+				  set_redirection.cpp \
+				  set_root.cpp \
+				  set_upload.cpp \
+				  set_upload_path.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
@@ -168,7 +169,7 @@ all : 			header $(NAME) footer
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
-				@printf "$(YELLOW)Compiling $(END)⌛ $< \n"
+				@printf "Compiling ⌛ $< \n"
 				@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
 #@printf "[$(CYAN)✓$(RESET)] $< \n"

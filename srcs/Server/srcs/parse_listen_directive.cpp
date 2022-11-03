@@ -101,26 +101,6 @@ int	Server::set_ip_and_port(std::vector<std::string> & token_vector, size_t & i)
 	return (0);
 };
 
-bool	Server::invalid_directive_len(std::vector<std::string> & vector, size_t begin_index, std::string untill,
-		size_t min_len, size_t max_len)
-{
-	size_t	line_len = 0;
-
-	while (begin_index + line_len < vector.size())
-	{
-		if (vector[begin_index + line_len]  == untill)
-		{
-			++line_len;
-			break ;
-		}
-		++line_len;
-	}
-	if (line_len >= min_len && line_len <= max_len)
-		return (false);
-	else
-		return (true);
-}
-
 int	Server::parse_listen_directive(std::vector<std::string> & token_vector, size_t & i)
 {
 	if (invalid_directive_len(token_vector, i, ";", 3, 3))

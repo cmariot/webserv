@@ -1,19 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Error_page.hpp                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/30 14:40:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/11/03 17:14:23 by cmariot          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef ERROR_PAGE_HPP
 # define ERROR_PAGE_HPP
 
 #include <string>
+
+/* Classe pour stocker la directive 'error_page' du fichier de configuration.
+ * Construit dans les blocs 'location' a partir de la forme :
+ *	error_page	404 =200 ./html/error/404.html */
 
 class	Error_page
 {
@@ -23,12 +15,6 @@ class	Error_page
 		Error_page(int &, bool &, bool &, int &, std::string &);
 		~Error_page(void);
 
-		void			set_error(int error);
-		void			set_change_response(bool change);
-		void			set_specified_response(bool specified);
-		void			set_redirection(int redirection);
-		void			set_path(std::string path);
-
 		int				get_error(void) const;
 		bool			get_change_response(void) const;
 		bool			get_specified_response(void) const;
@@ -37,11 +23,11 @@ class	Error_page
 
 	private:
 
-		int				_error;
-		bool			_change_response;
-		bool			_specified_response;
-		int				_redirection;
-		std::string		_path;
+		int				_error;					// The error code to treat
+		bool			_change_response;		// If we need to create a redirection
+		bool			_specified_response;	// If we know the redirection code
+		int				_redirection;			// If _specified_response is true change the response with this code
+		std::string		_path;					// The path of the file
 
 };
 

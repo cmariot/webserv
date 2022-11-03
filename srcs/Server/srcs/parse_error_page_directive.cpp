@@ -38,17 +38,8 @@ int	get_response(std::vector<std::string> & token_vector, size_t & j, bool & cha
 		--j;
 	}
 	return (0);
-}
+};
 
-int	Server::no_semicolon(std::vector<std::string> & token_vector, size_t & j)
-{
-	while (j < token_vector.size() && token_vector[j] != ";")
-		++j;
-	if (j == token_vector.size())
-		return (1);
-	j--;
-	return (0);
-}
 // error_page 404             /404.html;
 // error_page 500 502 503 504 /50x.html;
 // error_page 404 =200 /empty.gif;
