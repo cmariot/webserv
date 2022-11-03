@@ -5,7 +5,7 @@
 
 /* Classe pour stocker la directive 'error_page' du fichier de configuration.
  * Construit dans les blocs 'location' a partir de la forme :
- *	error_page	404 =200 ./html/error/404.html */
+ * error_page code ... [=[response]] uri; */
 
 class	Error_page
 {
