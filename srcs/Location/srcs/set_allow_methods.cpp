@@ -13,21 +13,21 @@ int	Location::set_allow_methods(std::vector<std::string> & vector, size_t & i)
 	{
 		if (vector[i] == "GET")
 		{
-			if (_get_method_allowed == false)
+			if (_get_allowed == false)
 				std::cout << "\t\tallow_methods\t\tGET;" << std::endl;
-			_get_method_allowed = true;
+			_get_allowed = true;
 		}
 		else if (vector[i] == "POST")
 		{
-			if (_post_method_allowed == false)
+			if (_post_allowed == false)
 				std::cout << "\t\tallow_methods\t\tPOST;" << std::endl;
-			_post_method_allowed = true;
+			_post_allowed = true;
 		}
 		else if (vector[i] == "DELETE")
 		{
-			if (_delete_method_allowed == false)
+			if (_delete_allowed == false)
 				std::cout << "\t\tallow_methods\t\tDELETE;" << std::endl;
-			_delete_method_allowed = true;
+			_delete_allowed = true;
 		}
 		else
 			return (error("Syntax error : invalid allow_methods directive."));

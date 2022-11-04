@@ -1,6 +1,3 @@
-[ ] - Tests parsing
-[ ] - Revoir noms de fonctions / classes / fichiers pour le parsing : besoin de simplification,
-	  creer de nouvelles fonctions si besoin
 [ ] - Utiliser des structures de donnees plus optimisees
 [ ] - Verifications parsing, gestion d'erreurs, try/catch des exceptions
 

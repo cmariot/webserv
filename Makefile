@@ -94,6 +94,7 @@ SERVER			= constructor.cpp \
 				  set_client_max_body_size.cpp \
 				  set_error_page.cpp \
 				  set_location.cpp \
+				  getters.cpp \
 				  create_server_socket.cpp \
 				  bind_server_address.cpp \
 				  listen_for_clients.cpp \
@@ -163,14 +164,14 @@ all : 			header $(NAME) footer
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
-				@printf "Compiling ⌛ $< \n"
 				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
+#@printf "Compiling ⌛ $< \n"
 #@printf "[$(CYAN)✓$(RESET)] $< \n"
 
 $(NAME)	:		$(OBJS)
 				@printf "\n"
-				@$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
+				$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
 				@printf "\n"
 
 leaks :			$(NAME)
@@ -206,7 +207,7 @@ header :
 footer :
 				@printf "$(CYAN)"
 				@printf "➤ COMPILATION SUCCESS\n"
-				@printf "[$(GREEN)OK$(WHITE)] webserv generated. \n"
+				@printf "[$(RESET)OK$(CYAN)]$(RESET) webserv generated.$(CYAN)\n"
 				@printf "\nUSAGE :\n"
 				@printf "$(RESET)"
 				@printf "./$(NAME) [configuration file]\n"

@@ -14,7 +14,7 @@ int		Webserver::init_sockets(void)
 			return (1);
 		if (add_to_interest_list(&server[i]))
 			return (1);
-		std::cout << "Server " << server[i]._server_socket << " is listening on " << server[i]._address.first << ":" << server[i]._address.second << std::endl;
+		std::cout << "Server " << server[i]._server_socket << " is listening on " << server[i].get_address().first << ":" << server[i].get_address().second << std::endl;
 	}
 	return (0);
 };

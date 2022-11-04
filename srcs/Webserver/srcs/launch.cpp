@@ -9,11 +9,11 @@
 void display(int level, std::string message)
 {
 	if (level == INFO)
-		std::cout << "[webserv:info] : "; 
+		std::cout << "[webserv:info] : ";
 	else if (level == ERROR)
-		std::cout << "[webserv:debug] : "; 
+		std::cout << "[webserv:error] : ";
 	else if (level == DEBUG)
-		std::cout << "[webserv:debug] : "; 
+		std::cout << "[webserv:debug] : ";
 	std::cout << message << std::endl;
 	return ;
 };
@@ -38,7 +38,7 @@ int		Webserver::launch(void)
 		{
 			if (client_connexion(&index, events[i]))
 			{
-				std::cout << "A client has just connected to the server " << server[index]._address.first << ":" << server[index]._address.second << std::endl;
+				std::cout << "A client has just connected to the server " << server[index].get_address().first << ":" << server[index].get_address().second << std::endl;
 				if (accept_connexion(&client_socket, server[index]))
 					return (exit_webserv());
 				if (add_client(client_socket, events))

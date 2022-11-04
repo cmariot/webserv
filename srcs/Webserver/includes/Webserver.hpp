@@ -58,7 +58,7 @@ class Webserver
 	private:
 
 		//	parsing
-		int		get_file(const char *argv[], std::vector<std::string> &);
+		int		get_file(const char *, std::vector<std::string> &);
 		int		parse_configuration_file(std::vector<std::string> &);
 		int		remove_commentaries(std::vector<std::string> &) const;
 		int		replace_blank_characters(std::vector<std::string> &) const;

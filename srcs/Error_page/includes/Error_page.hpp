@@ -5,7 +5,8 @@
 
 /* Classe pour stocker la directive 'error_page' du fichier de configuration.
  * Construit dans les blocs 'location' a partir de la forme :
- * error_page code ... [=[response]] uri; */
+ * error_page	code ... [=[response]] uri;
+ */
 
 class	Error_page
 {

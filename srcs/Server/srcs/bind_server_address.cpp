@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 // Assigns the server_address specified by addr to the socket referred to by the file descriptor server_socket.
-int	Server::bind_server_address()
+int	Server::bind_server_address(void)
 {
 	const sockaddr	*addr		= (const sockaddr *)&_server_address;	// Pointer on server_address
 	socklen_t		addrlen		= sizeof(_server_address);				// Size, in bytes, of the server_address

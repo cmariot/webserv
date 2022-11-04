@@ -5,19 +5,19 @@ std::string		Location::get_uri(void) const
 	return (_uri);
 };
 
-bool	Location::get_get_method_allowed(void) const
+bool	Location::get_method_get(void) const
 {
-	return (_get_method_allowed);
+	return (_get_allowed);
 };
 
-bool	Location::get_post_method_allowed(void) const
+bool	Location::get_method_post(void) const
 {
-	return (_post_method_allowed);
+	return (_post_allowed);
 };
 
-bool	Location::get_delete_method_allowed(void) const
+bool	Location::get_method_delete(void) const
 {
-	return (_delete_method_allowed);
+	return (_delete_allowed);
 };
 
 bool	Location::get_redirection(void) const

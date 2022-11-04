@@ -15,25 +15,25 @@ int	check_extension(const char *filename, const char *extension)
 	return (0);
 }
 
-int	Webserver::get_file(const char *argv[], std::vector<std::string> & string_vector)
+int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 {
 	std::ifstream	configuration_file;
 	std::string		line;
 
-	configuration_file.open(argv[1], std::ios_base::in);
+	configuration_file.open(filename, std::ios_base::in);
 	if (configuration_file.is_open() == false)
-		return (error("Could not open the file", argv[1]));
+		return (error("Could not open the file", filename));
 	try
 	{
 		while (std::getline(configuration_file, line))
-			string_vector.push_back(line);
+			vector.push_back(line);
 		if (configuration_file.eof() == false)
 		{
 			configuration_file.close();
-			return (error("while reading the file", argv[1]));
+			return (error("while reading the file", filename));
 		}
 		configuration_file.close();
-		if (string_vector.size() == 0)
+		if (vector.size() == 0)
 			return (error("The configuration file is empty.", NULL));
 	}
 	catch (std::ios_base::failure & exception)
@@ -53,7 +53,7 @@ int	Webserver::get_file(const char *argv[], std::vector<std::string> & string_ve
 // Next -> Get the server blocks
 int	Webserver::parse(int argc, const char *argv[])
 {
-	std::vector<std::string>	string_vector;
+	std::vector<std::string>	vector;
 
 	if (argc > 2)
 		return (usage());
@@ -61,9 +61,9 @@ int	Webserver::parse(int argc, const char *argv[])
 		argv[1] = "configuration_files/default.conf";
 	else if (check_extension(argv[1], ".conf"))
 		return (error("The configuration file must have the '.conf' extension.", NULL));
-	if (get_file(argv, string_vector))
+	if (get_file(argv[1], vector))
 		return (1);
-	if (parse_configuration_file(string_vector))
+	if (parse_configuration_file(vector))
 		return (1);
 	return (0);
 };

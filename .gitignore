@@ -8,3 +8,4 @@ objs/
 .DS_Store
 docs/
 docs/*
+todo.list
