@@ -2,33 +2,14 @@
 
 #define SIGNAL_CAUGHT nb_events == -2
 
-#define INFO	0
-#define ERROR	1
-#define DEBUG	2
-
-void display(int level, std::string message)
-{
-	if (level == INFO)
-		std::cout << "[webserv:info] : ";
-	else if (level == ERROR)
-		std::cout << "[webserv:error] : ";
-	else if (level == DEBUG)
-		std::cout << "[webserv:debug] : ";
-	std::cout << message << std::endl;
-	return ;
-};
-
 int		Webserver::launch(void)
 {
-	ssize_t				nb_events;
-	struct epoll_event	events[MAX_EVENTS];
-	int					client_socket;
-	ssize_t				index;
+	int			client_socket;
+	ssize_t		index;
 	
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
-	display(INFO, "Waiting for new events ..."); 
 	while (true)
 	{
 		nb_events = wait_event(events);
@@ -46,13 +27,13 @@ int		Webserver::launch(void)
 			}
 			else
 			{
-				char request[1024];
-				memset(request, 0, 1024);
-				recv(events[i].data.fd, request, 1024, 0);
-				std::cout << request;
-				// Parser la requete pour trouver le serveur qui va etre utilise.
+				// Obtenir la requete du client
+				_request.get_client_request(events[i].data.fd);
+				std::cout << _request.request << std::endl;
+				// Parser la requete pour trouver le serveur qui va etre utilise pour repondre
+				// Envoyer la reponse au client
 
-				if (server_response(events[i].data.fd, request))
+				if (server_response(events[i].data.fd, (char *)_request.request.c_str())) // invalid read
 				{
 					std::cout << "response failure" << std::endl;
 					return (exit_webserv());

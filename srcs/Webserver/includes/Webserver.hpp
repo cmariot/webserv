@@ -33,6 +33,7 @@
 
 # include "Server.hpp"
 # include "Utils.hpp"
+# include "Request.hpp"
 
 using std::string;
 using std::cout;
@@ -47,10 +48,15 @@ class Webserver
 		static ssize_t			nb_of_servers;
 		int						epoll_socket;
 
+		Request					_request;
+
 	public:
 
 		Webserver(void);
 		~Webserver(void);
+
+		ssize_t				nb_events;
+		struct epoll_event	events[MAX_EVENTS];
 
 		int		parse(int argc, const char *argv[]);
 		int		launch(void);

@@ -62,11 +62,11 @@ int Webserver::server_response(int fd, char *request)
 
     parse_request(data, request);
     method = data[0];
-    for (size_t i = 0 ; i < data.size() ; ++i)
+    for (size_t i = 0 ; i < data.size() ; ++i) // possible invalid read
     {
         if (data[i] == method)
         {
-            path = data[i + 1];
+            path = data[i + 1]; // a cause du i + 1
             break;
         }
     }

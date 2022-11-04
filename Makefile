@@ -55,6 +55,7 @@ SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
 				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
 				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Request/srcs/, $(REQUEST)) \
 				  $(addprefix Utils/srcs/, $(UTILS))
 
 MAIN			= main.cpp
@@ -117,6 +118,10 @@ LOCATION		= constructor.cpp \
 				  set_upload.cpp \
 				  set_upload_path.cpp
 
+REQUEST			= constructor.cpp \
+				  get_client_request.cpp \
+				  destructor.cpp
+
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
 
@@ -161,6 +166,7 @@ CLEAR		= \033[2K\r
 .SILENT : 		all
 
 all : 			header $(NAME) footer
+				@valgrind $(VALGRIND_FLAGS) ./$(NAME) $(CONFIG_FILE)
 
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
