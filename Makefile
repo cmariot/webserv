@@ -74,6 +74,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
 				  parsing/parse_server.cpp \
+				  get_server.cpp \
 				  remove_client.cpp \
 				  parsing/remove_commentaries.cpp \
 				  parsing/replace_blank_characters.cpp \
@@ -86,7 +87,8 @@ WEBSERVER		= accept_connexion.cpp \
 				  header_response.cpp
 
 UTILS			= error.cpp \
-				  invalid_directive_len.cpp
+				  invalid_directive_len.cpp \
+				  set_ip_and_port.cpp
 
 SERVER			= constructor.cpp \
 				  parse.cpp \

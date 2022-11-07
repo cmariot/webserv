@@ -27,6 +27,8 @@ class	Request
 		std::string		_http_version;
 		std::string		_host;
 
+		std::pair<std::string, int>		_request_address;
+
 		int	get_client_request(int);
 		int	interpret(void);
 
@@ -37,6 +39,7 @@ class	Request
 		int get_request_uri(std::string &, size_t &);
 		int	get_http_version(std::string &, size_t &);
 		int	get_host(void);
+		int	host_to_address(void);
 
 };
 

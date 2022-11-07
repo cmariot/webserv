@@ -38,10 +38,12 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 	}
 	catch (std::ios_base::failure & exception)
 	{
+		configuration_file.close();
 		return (error(exception.what(), "(getline in parse)"));
 	}
 	catch (std::bad_alloc & exception)
 	{
+		configuration_file.close();
 		return (error(exception.what(), "(push_back in parse)"));
 	}
 	return (0);
@@ -50,7 +52,6 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
-// Next -> Get the server blocks
 int	Webserver::parse(int argc, const char *argv[])
 {
 	std::vector<std::string>	vector;

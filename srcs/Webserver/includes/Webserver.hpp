@@ -89,6 +89,8 @@ class Webserver
 		int		wait_event(struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
+		int		get_server(void);
+
 		// reponse
 		string	stored_file(string path);
 		string	create_http_response(string method, string path);

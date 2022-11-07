@@ -13,15 +13,15 @@
  * The rest of a line after the # sign is considered a comment
  */
 
-int		Webserver::parse_configuration_file(std::vector<std::string> & string_vector)
+int		Webserver::parse_configuration_file(std::vector<std::string> & vector)
 {
 	std::vector<std::string>	tokens_vector;
 
-	if (remove_commentaries(string_vector))
+	if (remove_commentaries(vector))
 		return (1);
-	if (replace_blank_characters(string_vector))
+	if (replace_blank_characters(vector))
 		return (1);
-	if (split_strings(string_vector, tokens_vector))
+	if (split_strings(vector, tokens_vector))
 		return (1);
 	if (separate_braces(tokens_vector))
 		return (1);

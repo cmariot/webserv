@@ -1,0 +1,24 @@
+#include "Webserver.hpp"
+
+// Parser /etc/hosts ??
+
+int	Webserver::get_server(void)
+{
+	for (size_t i = 0 ; i < server.size() ; ++i)
+	{
+		for (size_t j = 0 ; j < server[i].get_server_names().size() ; ++j)
+		{
+			if (server[i].get_server_names()[j] == _request._host)
+			{
+				std::cout << "This request will be used by the server[" << i << "] !" << std::endl;
+				return (0);
+			}
+		}
+		if (server[i].get_address() == _request._request_address)
+		{
+			std::cout << "This request will be used by the server[" << i << "] !" << std::endl;
+			return (0);
+		}
+	}
+	return (1);
+};

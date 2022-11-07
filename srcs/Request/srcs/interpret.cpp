@@ -79,12 +79,38 @@ int	Request::get_host(void)
 		++pos;
 	while (pos < request.size())
 	{
-		if (request[pos] == '\n' || request[pos] == ' ')
+		if (request[pos] == '\n' || request[pos] == '\r' || request[pos] == ' ')
 			break ;
 		_host += request[pos++];
 	}
 	if (_host.empty())
 		return (error("No Host in the request"));
+	return (0);
+};
+
+int	Request::host_to_address(void)
+{
+	size_t	pos;
+
+	pos = _host.find(":");
+	if (pos != std::string::npos)
+	{
+		_request_address.first = set_ip(_host.substr(0, pos));
+		_request_address.second = set_port(_host.substr(pos + 1));
+	}
+	else
+	{
+		if (_host.find(".") != std::string::npos || _host == "*" || _host == "localhost")
+		{
+			_request_address.first = set_ip(_host);
+			_request_address.second = 8080;
+		}
+		else
+		{
+			_request_address.first = "127.0.0.1";
+			_request_address.second = set_port(_host);
+		}
+	}
 	return (0);
 };
 
@@ -105,6 +131,9 @@ int	Request::interpret(void)
 		return (1);
 	else if (get_host())
 		return (1);
+	else if (host_to_address())
+		return (1);
+
 
 	std::cout << "REQUEST METHOD      = " << _method << std::endl;
 	std::cout << "REQUEST REQUEST_URI = " << _request_uri << std::endl;

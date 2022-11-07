@@ -41,7 +41,6 @@ class	Server
 		int							set_client_max_body_size(std::string &);
 		int							set_location(std::vector<std::string> &, size_t &);
 		int							set_ip_and_port(std::vector<std::string> &, size_t &);
-		std::string					set_ip(std::string);
 
 	public:
 

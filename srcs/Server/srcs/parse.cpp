@@ -2,6 +2,8 @@
 
 int	Server::parse(std::vector<std::string> & vector)
 {
+	if (vector.empty())
+		return (error("Syntax error : empty server in the configuration file."));
 	std::cout << std::endl << "server" << std::endl << "{" << std::endl;
 	for (size_t i = 0 ; i < vector.size() ; i++)
 	{
