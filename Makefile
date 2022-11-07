@@ -120,6 +120,7 @@ LOCATION		= constructor.cpp \
 
 REQUEST			= constructor.cpp \
 				  get_client_request.cpp \
+				  interpret.cpp \
 				  destructor.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

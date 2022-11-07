@@ -29,7 +29,7 @@ int		Webserver::launch(void)
 			{
 				// Obtenir la requete du client
 				_request.get_client_request(events[i].data.fd);
-				std::cout << _request.request << std::endl;
+				_request.interpret();
 				// Parser la requete pour trouver le serveur qui va etre utilise pour repondre
 				// Envoyer la reponse au client
 

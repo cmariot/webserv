@@ -20,7 +20,21 @@ class	Request
 
 		std::string		request;
 
+		std::string		_method;
+		std::string		_request_uri;
+		std::string		_http_version;
+		std::string		_host;
+
 		int	get_client_request(int);
+		int	interpret(void);
+
+	private:
+
+		int	get_request_line(std::string &);
+		int	get_method(std::string &, size_t &);
+		int get_request_uri(std::string &, size_t &);
+		int	get_http_version(std::string &, size_t &);
+		int	get_host(void);
 
 };
 
