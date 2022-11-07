@@ -37,10 +37,10 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 
 	for (size_t i = 0 ; i < vector_size ; ++i)
 	{
-		server.push_back(Server());
 		if (get_server_directives(vector, i, begin, end))
 			return (1);
 		server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
+		server.push_back(Server());
 		if (server[nb_of_servers++].parse(server_directives))
 			return (1);
 	}

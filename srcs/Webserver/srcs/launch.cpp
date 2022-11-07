@@ -29,11 +29,16 @@ int		Webserver::launch(void)
 			{
 				// Obtenir la requete du client
 				_request.get_client_request(events[i].data.fd);
-				_request.interpret();
-				// Parser la requete pour trouver le serveur qui va etre utilise pour repondre
-				// Envoyer la reponse au client
 
-				if (server_response(events[i].data.fd, (char *)_request.request.c_str())) // invalid read
+				// Parser la requete pour trouver les informations utiles pour la reponse
+				_request.interpret();
+
+				// Determiner a quel serveur on va envoyer la reponse :
+				// On a l'host de la requete, il faut le faire correpondre a un seveur via la directive listen et/ou server_names
+				//get_client_server();
+
+				// Envoyer la reponse au client
+				if (server_response(events[i].data.fd, (char *)_request.request.c_str()))
 				{
 					std::cout << "response failure" << std::endl;
 					return (exit_webserv());

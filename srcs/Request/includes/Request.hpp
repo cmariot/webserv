@@ -10,6 +10,8 @@
 # include <sys/socket.h>
 # include <cstdio>
 
+// Reference : https://www.rfc-editor.org/rfc/rfc2616#section-5
+
 class	Request
 {
 

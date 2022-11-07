@@ -9,9 +9,9 @@ int	Server::set_location(std::vector<std::string> & token_vector, size_t & i)
 	std::string		uri;
 
 	if (i + 1 >= vector_size || token_vector[i + 1] == "{")
-		return (error("Syntax error : No uri for the location block.", NULL));
+		return (error("Syntax error : No uri for the location block."));
 	else if (i + 2 >= vector_size || token_vector[i + 2] != "{")
-		return (error("Syntax error : location contexts must have an opening brace after the URI.", NULL));
+		return (error("Syntax error : location contexts must have an opening brace after the URI."));
 	uri = token_vector[i + 1];
 	i += 3;
 	begin = i;
@@ -26,10 +26,10 @@ int	Server::set_location(std::vector<std::string> & token_vector, size_t & i)
 		if (nb_open_braces != 0)
 			++i;
 		if (nb_open_braces == INT_MAX || nb_open_braces == INT_MIN)
-			return (error("int overflow.", NULL));
+			return (error("int overflow."));
 	}
 	if (i >= vector_size)
-		return (error("Syntax error : unclosed brace in the location block of the configuration file.", NULL));
+		return (error("Syntax error : unclosed brace in the location block of the configuration file."));
 	std::cout << "\tlocation " << uri << std::endl << "\t{" << std::endl;
 	Location	location(uri);
 	std::vector<std::string> tmp_vector(token_vector.begin() + begin, token_vector.begin() + end);

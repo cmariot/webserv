@@ -76,6 +76,9 @@ class Webserver
 		int		parse_server(std::vector<std::string> &);
 		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
+		// signal catcher
+		int		catch_signal(void);
+
 		// launch
 		int		init_sockets(void);
 		int		create_epoll_socket(void);
@@ -94,9 +97,6 @@ class Webserver
 
 		//	error
 		int		usage(void) const;
-
-		// signal catcher
-		int		catch_signal(void);
 
 		// exit
 		int		exit_webserv(void);
