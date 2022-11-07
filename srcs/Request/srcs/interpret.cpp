@@ -95,14 +95,14 @@ int	Request::host_to_address(void)
 	pos = _host.find(":");
 	if (pos != std::string::npos)
 	{
-		_request_address.first = set_ip(_host.substr(0, pos));
+		_request_address.first = _host.substr(0, pos);
 		_request_address.second = set_port(_host.substr(pos + 1));
 	}
 	else
 	{
 		if (_host.find(".") != std::string::npos || _host == "*" || _host == "localhost")
 		{
-			_request_address.first = set_ip(_host);
+			_request_address.first = _host;
 			_request_address.second = 8080;
 		}
 		else
