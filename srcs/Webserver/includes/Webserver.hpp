@@ -89,7 +89,7 @@ class Webserver
 		int		wait_event(struct epoll_event *);
 		int		remove_client(int, int, struct epoll_event *);
 
-		int		get_server(void);
+		int		get_server(Server &);
 
 		// reponse
 		string	stored_file(string path);

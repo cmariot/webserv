@@ -56,6 +56,7 @@ SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
 				  $(addprefix Location/srcs/, $(LOCATION)) \
 				  $(addprefix Request/srcs/, $(REQUEST)) \
+				  $(addprefix Response/srcs/, $(RESPONSE)) \
 				  $(addprefix Utils/srcs/, $(UTILS))
 
 MAIN			= main.cpp
@@ -124,6 +125,9 @@ REQUEST			= constructor.cpp \
 				  get_client_request.cpp \
 				  interpret.cpp \
 				  destructor.cpp
+
+RESPONSE		= Response.cpp \
+				  Response_structors.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

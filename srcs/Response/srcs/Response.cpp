@@ -59,7 +59,7 @@ int		Response::stored_file(string path)
 	fin.open(infile.c_str(), std::ios::in);
 	if (!fin)
 	{
-		std::cerr << "Error : while opening the file " << infile << endl;
+		std::cerr << "Error : while opening the file " << infile << std::endl;
 		return(1);
 	}
 
@@ -77,7 +77,7 @@ int		Response::stored_file(string path)
 };
 
 // depending of request implementation
-int 	Response::get_response(
+/*int 	Response::get_response(void)
 {
 
 	if (check_file_existance(request::get_path()) == false)
@@ -97,4 +97,4 @@ int 	Response::get_response(
 		_status_code = 404;
 	}
 	return 0;
-}
+}*/

@@ -6,6 +6,7 @@ int		Webserver::launch(void)
 {
 	int			client_socket;
 	ssize_t		index;
+	Server		request_server;
 	
 	if (init_sockets())
 		return (exit_webserv());
@@ -35,7 +36,7 @@ int		Webserver::launch(void)
 
 				// Determiner a quel serveur on va envoyer la reponse :
 				// On a l'host de la requete, il faut le faire correpondre a un seveur via la directive listen et/ou server_names
-				get_server();
+				get_server(request_server);
 
 				// Envoyer la reponse au client
 				if (server_response(events[i].data.fd, (char *)_request.request.c_str()))
