@@ -30,8 +30,6 @@ size_t	set_port(std::string port)
 
 std::string	set_ip(std::string ip)
 {
-	size_t	i = 0;
-
 	if (ip.empty())
 		return ("");
 	else if (ip == "*")
@@ -43,10 +41,11 @@ std::string	set_ip(std::string ip)
 		int	digit_len = 0;
 		int	digit = 0;
 		int	nb_blocks = 0;
+		size_t	i = 0;
 
 		while (i < ip.size())
 		{
-			while (i < ip.size() && isdigit(ip[i]) == true)
+			while (i < ip.size() && ip[i] >= '0' && ip[i] <= '9')
 			{
 				digit = digit * 10 + ip[i++] - '0';
 				++digit_len;
