@@ -61,7 +61,7 @@ int	Webserver::parse(int argc, const char *argv[])
 	else if (argc == 1)
 		argv[1] = "configuration_files/default.conf";
 	else if (check_extension(argv[1], ".conf"))
-		return (error("The configuration file must have the '.conf' extension.", NULL));
+		return (error("The configuration file must have the '.conf' extension."));
 	if (get_file(argv[1], vector))
 		return (1);
 	if (parse_configuration_file(vector))
