@@ -1,7 +1,30 @@
 #include "Response.hpp"
 
+#include "Response.hpp"
 
-// basic h
+// Basic setter for status code
+void	Response::set_status_code(int status_code)
+{
+	_status_code = status_code;
+};
+
+
+// used to know which method to apply
+void	Response::init_response(Request request)
+{
+
+	if (request._method == "GET")
+		get_response(request);
+	// else if (request._method == "POST")
+	// 	post_response(request);
+	// else if (request._method == "DELETE")
+	// 	delete_response(request);
+	else
+		set_status_code(501);
+};
+
+
+// basic http response status code
 void 	Response::init_status_code_map(void)
 {
 	_status_code_map.insert(pair<int, string>(200, "OK"));
@@ -44,11 +67,11 @@ void 	Response::init_status_code_map(void)
 	_status_code_map.insert(pair<int, string>(505, "HTTP Version not supported"));
 }
 
-// inline is to make a quicker 
+// inline is to make a quicker
 // This function is to verify if the file exists or not (quicker execution than fopen)
 inline bool Response::check_file_existance(string &file) {
-  struct stat buffer; 
-  return (stat (file.c_str(), &buffer) == 0); 
+  struct stat buffer;
+  return (stat (file.c_str(), &buffer) == 0);
 }
 
 // get the body of the response which is the html file
@@ -64,37 +87,59 @@ int		Response::stored_file(string path)
 	}
 
 	string tmp = "";
-   	string input = "";
+   	_response_body = "";
 	while (!fin.eof())
 	{
 		getline(fin, tmp);
-		input += tmp;
+		_response_body += tmp;
 		if (!fin.eof())
-			input += '\n';
+			_response_body += '\n';
 	}
 	fin.close();													// Closing the infile
 	return 0;
 };
 
-// depending of request implementation
-/*int 	Response::get_response(void)
+void 	Response::get_response(Request request)
 {
-
-	if (check_file_existance(request::get_path()) == false)
+	if (request._request_uri == "/" || request._request_uri == "/index.html" ||
+		request._request_uri== "/index.html/" )
 	{
-		// 404
-	}
-	else
-	{
-		// 200
-	}
-	{
-		stored_file(path);
+		stored_file("./html/index.html");
 		_status_code = 200;
+		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
+
+	}
+	else if (check_file_existance(request._request_uri))
+	{
+		if(stored_file(request._request_uri))
+		{
+			_status_code = 500;
+		}
+		_status_code = 200;
+		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
 	}
 	else
 	{
 		_status_code = 404;
+		_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 bish get";
 	}
-	return 0;
-}*/
+};
+
+void	Response::build_http_response(void)
+{
+	if (_status_code == 200)
+	{
+		_full_response = _response_header + _response_body;
+	}
+};
+
+
+// main function used to send the response to the client
+void		Response::send_response(int fd,	Request request)
+{
+	init_response(request);
+	build_http_response();
+	// cout << _full_response << endl;
+	send(fd, _full_response.c_str(), _full_response.size(), 0);
+}
+
