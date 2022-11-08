@@ -7,7 +7,7 @@ int		Webserver::launch(void)
 	int			client_socket;
 	ssize_t		index;
 	Server		request_server;
-	
+
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
@@ -31,7 +31,7 @@ int		Webserver::launch(void)
 				_request.get_client_request(events[i].data.fd);
 				_request.interpret();
 				get_server(request_server);
-				response.send_response(events[i].data.fd, _request, request_server);
+				_response.send_response(events[i].data.fd, _request, request_server);
 				if (remove_client(epoll_socket, client_socket, events))
 					return (exit_webserv());
 			}
@@ -39,3 +39,4 @@ int		Webserver::launch(void)
 	}
 	return (0);
 };
+
