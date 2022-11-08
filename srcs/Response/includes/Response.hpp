@@ -68,6 +68,8 @@ class	Response
 		string						_response_body;
 		string						_full_response;
 
+		int							default_error(int code);
+
 };
 
 #endif

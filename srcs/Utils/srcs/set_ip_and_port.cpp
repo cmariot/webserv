@@ -30,18 +30,16 @@ size_t	set_port(std::string port)
 
 std::string	set_ip(std::string ip)
 {
-	if (ip.empty())
-		return ("");
-	else if (ip == "*")
+	if (ip == "*")
 		return ("0.0.0.0");
 	else if (ip == "localhost")
 		return ("127.0.0.1");
 	else
 	{
-		int	digit_len = 0;
-		int	digit = 0;
-		int	nb_blocks = 0;
 		size_t	i = 0;
+		int		digit = 0;
+		int		digit_len = 0;
+		int		nb_blocks = 0;
 
 		while (i < ip.size())
 		{
