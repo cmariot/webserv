@@ -135,8 +135,9 @@ void	Response::build_http_response(void)
 
 
 // main function used to send the response to the client
-void		Response::send_response(int fd,	Request request)
+void		Response::send_response(int fd,	Request request, Server & server)
 {
+	(void)server;
 	init_response(request);
 	build_http_response();
 	// cout << _full_response << endl;

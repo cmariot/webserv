@@ -8,6 +8,8 @@
 #include <fstream>
 #include <map>
 
+#include "Server.hpp"
+
 using std::map;
 using std::string;
 using std::vector;
@@ -49,7 +51,7 @@ class	Response
 		// Response(Request request);
 		~Response(void);
 
-		void					send_response(int fd, Request request);
+		void					send_response(int, Request, Server &);
 		void					init_response(Request request);
 
 		void 					get_response(Request request);

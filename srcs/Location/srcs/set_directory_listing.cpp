@@ -7,12 +7,10 @@ int	Location::set_directory_listing(std::vector<std::string> & vector, size_t & 
 	++i;
 	if (vector[i] == "on")
 	{
-		std::cout << "\t\tdirectory_listing\ton;" << std::endl;
 		_directory_listing = true;
 	}
 	else if (vector[i] == "off")
 	{
-		std::cout << "\t\tdirectory_listing\toff;" << std::endl;
 		_directory_listing = false;
 	}
 	else

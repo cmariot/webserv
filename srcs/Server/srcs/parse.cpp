@@ -4,7 +4,6 @@ int	Server::parse(std::vector<std::string> & vector)
 {
 	if (vector.empty())
 		return (error("Syntax error : empty server in the configuration file."));
-	std::cout << std::endl << "server" << std::endl << "{" << std::endl;
 	for (size_t i = 0 ; i < vector.size() ; i++)
 	{
 		if (vector[i] == "listen")
@@ -35,6 +34,5 @@ int	Server::parse(std::vector<std::string> & vector)
 		else
 			return (error("Syntax error : Unknown directive :", vector[i].c_str()));
 	}
-	std::cout << "}" << std::endl << std::endl;
 	return (0);
 };

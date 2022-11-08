@@ -67,27 +67,13 @@ int	Server::set_error_pages(std::vector<std::string> & token_vector, size_t & i)
 		return (error("Syntax error : invalid response code in the error_page directive."));
 	while (i != j)
 	{
-		++i;
-		if (get_error(code, token_vector, i))
+		if (get_error(code, token_vector, ++i))
 			return (error("Syntax error : invalid error code in the error_page directive."));
 		Error_page	directive(code, change_response, specified_response, response, path);
 		_error_pages.push_back(directive);
-
-		// Display infos
-		std::vector<Error_page>::iterator last = _error_pages.end() - 1;
-		std::cout << "\terror_pages\t\t" << last->get_error() << " ";
-		if (last->get_change_response() == true)
-		{
-			std::cout << "=";
-			if (last->get_specified_response())
-				std::cout << last->get_redirection() << " ";
-			else
-				std::cout << " ";
-		}
-		std::cout << last->get_path() << ";" << std::endl;
-		// Display end
 	}
 	while (token_vector[i] != ";")
 		++i;
+	error_page_set = true;
 	return (0);
 };

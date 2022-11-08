@@ -2,7 +2,12 @@
 
 Server::Server(void) :
 	_address(std::make_pair<std::string, size_t>("", 0)),
-	_client_max_body_size(0)
+	_client_max_body_size(0),
+	address_set(false),
+	server_names_set(false),
+	client_max_body_size_set(false),
+	error_page_set(false),
+	locations_set(false)
 {
 	return ;
 };

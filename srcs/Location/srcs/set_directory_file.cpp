@@ -7,6 +7,5 @@ int	Location::set_directory_file(std::vector<std::string> & vector, size_t & i)
 	_directory_file = vector[++i];
 	if (vector[++i] != ";")
 		return (error("Syntax error : the directory_file directive doesn't ends by ';'."));
-	std::cout << "\t\tdirectory_file\t\t" << _directory_file << ";" << std::endl;
 	return (0);
 };

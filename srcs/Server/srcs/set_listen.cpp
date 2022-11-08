@@ -42,6 +42,6 @@ int	Server::set_listen(std::vector<std::string> & vector, size_t & i)
 		return (1);
 	else if (vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
-	std::cout << "\tlisten\t\t\t" << _address.first << ":" << _address.second << ";" << std::endl;
+	address_set = true;
 	return (0);
 };

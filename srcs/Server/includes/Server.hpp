@@ -34,6 +34,12 @@ class	Server
 		std::vector<Error_page>		_error_pages;
 		std::vector<Location>		_locations;
 
+		bool						address_set;
+		bool						server_names_set;
+		bool						client_max_body_size_set;
+		bool						error_page_set;
+		bool						locations_set;
+
 		int							set_listen(std::vector<std::string> &, size_t &);
 		int							set_server_names(std::vector<std::string> &, size_t &);
 		int							set_error_pages(std::vector<std::string> &, size_t &);

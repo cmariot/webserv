@@ -70,7 +70,6 @@ WEBSERVER		= accept_connexion.cpp \
 				  destructor.cpp \
 				  exit_webserv.cpp \
 				  init_sockets.cpp \
-				  server_response.cpp \
 				  launch.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
@@ -84,8 +83,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  signals.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
-				  wait_event.cpp \
-				  header_response.cpp
+				  wait_event.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \

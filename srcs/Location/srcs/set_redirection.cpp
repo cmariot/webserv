@@ -24,6 +24,5 @@ int	Location::set_redirection(std::vector<std::string> & vector, size_t & i)
 		return (error("Syntax error : Invalid redirection code"));
 	_redirection_path = vector[++i];
 	++i;
-	std::cout << "\t\tredirection\t\t" << _redirection_code << " " << _redirection_path << ";" << std::endl;
 	return (0);
 };

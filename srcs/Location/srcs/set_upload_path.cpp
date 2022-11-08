@@ -7,6 +7,5 @@ int		Location::set_upload_path(std::vector<std::string> & vector, size_t & i)
 	_upload_path = vector[++i];
 	if (vector[++i] != ";")
 		return (error("Syntax error : the upload_path directive doesn't ends by ';'."));
-	std::cout << "\t\tupload_path\t\t" << _upload_path << ";" << std::endl;
 	return (0);
 };
