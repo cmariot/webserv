@@ -34,6 +34,7 @@
 # include "Server.hpp"
 # include "Utils.hpp"
 # include "Request.hpp"
+# include "Response.hpp"
 
 using std::string;
 using std::cout;
@@ -49,7 +50,7 @@ class Webserver
 		int						epoll_socket;
 
 		Request					_request;
-
+		Response				_response;
 	public:
 
 		Webserver(void);
