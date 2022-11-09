@@ -4,7 +4,7 @@ int		Webserver::init_sockets(void)
 {
 	if (create_epoll_socket())
 		return (1);
-	for (int i = 0 ; i < nb_of_servers ; ++i)
+	for (size_t i = 0 ; i < nb_of_servers ; ++i)
 	{
 		if (server[i].create_server_socket())
 			return (1);
@@ -14,7 +14,9 @@ int		Webserver::init_sockets(void)
 			return (1);
 		if (add_to_interest_list(&server[i]))
 			return (1);
-		std::cout << "Server " << server[i]._server_socket << " is listening on " << server[i].get_address().first << ":" << server[i].get_address().second << std::endl;
+		std::cout << "Server " << server[i]._server_socket
+			<< " is listening on " << server[i].get_address().first
+			<< ":" << server[i].get_address().second << std::endl;
 	}
 	return (0);
 };

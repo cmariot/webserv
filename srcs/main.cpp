@@ -7,7 +7,6 @@ int	main(int argc, const char *argv[], const char *env[])
 	(void)env;
 	if (webserv.parse(argc, argv))
 		return (0);
-	if (webserv.launch())
-		return (0);
+	webserv.launch();
 	return (0);
 }

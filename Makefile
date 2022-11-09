@@ -62,7 +62,6 @@ SRC_SUBDIR	    = $(MAIN) \
 MAIN			= main.cpp
 
 WEBSERVER		= accept_connexion.cpp \
-				  add_client.cpp \
 				  add_to_interest_list.cpp \
 				  client_connexion.cpp \
 				  constructor.cpp \

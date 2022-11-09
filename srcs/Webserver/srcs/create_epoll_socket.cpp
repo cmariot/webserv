@@ -2,7 +2,7 @@
 
 int	Webserver::create_epoll_socket(void)
 {
-	const int	flags = 0;	// Just create an epoll fd
+	const int	flags = 0;
 
 	epoll_socket = epoll_create1(flags);
 	if (epoll_socket == -1)

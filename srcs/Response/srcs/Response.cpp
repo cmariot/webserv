@@ -44,18 +44,18 @@ int		Response::stored_file(string path)
 	return 0;
 };
 
-void 	Response::get_method(Request request)
+void 	Response::get(void)
 {
-	if (request._request_uri == "/" || request._request_uri == "/index.html" ||
-		request._request_uri== "/index.html/" )
+	if (_request.uri == "/" || _request.uri == "/index.html" ||
+		_request.uri== "/index.html/" )
 	{
 		stored_file("./html/index.html");
 		_status_code = 200;
 		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
 	}
-	else if (check_file_existance(request._request_uri))
+	else if (check_file_existance(_request.uri))
 	{
-		if(stored_file(request._request_uri))
+		if (stored_file(_request.uri))
 		{
 			_status_code = 500;
 		}
@@ -73,15 +73,21 @@ void 	Response::get_method(Request request)
 // main function used to send the response to the client
 void	Response::create(int fd)
 {
-	if (_request._method == "GET")
-		get_method(_request);
-	// else if (request._method == "POST")
-	// 	post_response(request);
-	// else if (request._method == "DELETE")
-	// 	delete_response(request);
+	if (_request.method == "GET")
+	{
+		get();
+	}
+	else if (_request.method == "POST")
+	{
+		//post();
+	}
+	else if (_request.method == "DELETE")
+	{
+		//delete();
+	}
 	else
+	{
 		set_status_code(501);
-	
-	cout << _full_response << endl;
+	}
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 };

@@ -3,7 +3,7 @@
 int	Webserver::add_to_interest_list(Server *server)
 {
 	struct epoll_event	event;
-	
+
 	bzero(&event, sizeof(event));
 	event.data.fd = server->_server_socket;
 	event.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;

@@ -12,24 +12,25 @@
 
 // Reference : https://www.rfc-editor.org/rfc/rfc2616#section-5
 
+using	namespace std;
+
 class	Request
 {
+
 
 	public:
 
 		Request(void);
 		~Request(void);
 
-		std::string		request;
+		std::string			request;
+		std::string			method;
+		std::string			uri;
+		std::string			http_version;
+		std::string			host;
+		pair<string, int>	request_address;
 
-		std::string		_method;
-		std::string		_request_uri;
-		std::string		_http_version;
-		std::string		_host;
-
-		std::pair<std::string, int>		_request_address;
-
-		int	get_client_request(int);
+		int	get(int);
 		int	interpret(void);
 
 	private:

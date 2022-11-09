@@ -47,6 +47,8 @@ class Response
 		void					update(Request &, Server &);
 		void					create(int);
 
+		void 					get(void);
+
 	private:
 
 		Request					_request;
@@ -59,7 +61,6 @@ class Response
 
 		void					init_response(Request request);
 
-		void 					get_method(Request request);
 		void					post_response(Request request);
 		void 					delete_response(Request request);
 

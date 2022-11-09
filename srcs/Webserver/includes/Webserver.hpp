@@ -46,7 +46,7 @@ class Webserver
 	private:
 
 		std::vector<Server>		server;
-		static ssize_t			nb_of_servers;
+		static size_t			nb_of_servers;
 		int						epoll_socket;
 
 		Request					_request;
@@ -56,7 +56,7 @@ class Webserver
 		Webserver(void);
 		~Webserver(void);
 
-		ssize_t				nb_events;
+		size_t				nb_events;
 		struct epoll_event	events[MAX_EVENTS];
 
 		int		parse(int argc, const char *argv[]);
@@ -84,10 +84,10 @@ class Webserver
 		int		init_sockets(void);
 		int		create_epoll_socket(void);
 		int		add_to_interest_list(Server *);
-		bool	client_connexion(ssize_t *, struct epoll_event &);
-		int		accept_connexion(int *, Server &);
+		bool	client_connexion(size_t *, struct epoll_event &);
+		int		accept_connexion(int *, Server &, struct epoll_event *);
 		int		add_client(int, struct epoll_event *);
-		int		wait_event(struct epoll_event *);
+		int		wait_event(struct epoll_event *, size_t &);
 		int		remove_client(int, int, struct epoll_event *);
 
 		int		get_server(Server &);

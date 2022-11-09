@@ -22,16 +22,16 @@ int	Request::get_request_line(std::string & request_line)
 // 1ere partie de la Request-line : Methode
 int	Request::get_method(std::string & request_line, size_t & i)
 {
-	_method.clear();
+	method.clear();
 	while (i < request_line.size())
 	{
 		if (request_line[i] == ' ')
 			break ;
-		_method += request_line[i++];
+		method += request_line[i++];
 	}
 	while (request_line[i] == ' ')
 		i++;
-	if (_method.empty() || (_method != "GET" && _method != "POST" && _method != "DELETE"))
+	if (method.empty() || (method != "GET" && method != "POST" && method != "DELETE"))
 		return (error("Invalid method in the request line."));
 	return (0);
 }
@@ -39,16 +39,16 @@ int	Request::get_method(std::string & request_line, size_t & i)
 // 2nde partie de la Request-line : l'URI
 int	Request::get_request_uri(std::string & request_line, size_t & i)
 {
-	_request_uri.clear();
+	uri.clear();
 	while (i < request_line.size())
 	{
 		if (request_line[i] == ' ')
 			break ;
-		_request_uri += request_line[i++];
+		uri += request_line[i++];
 	}
 	while (request_line[i] == ' ')
 		i++;
-	if (_request_uri.empty())
+	if (uri.empty())
 		return (error("Invalid request_uri in the request line."));
 	return (0);
 }
@@ -56,10 +56,10 @@ int	Request::get_request_uri(std::string & request_line, size_t & i)
 // 3eme partie de la Request-line : Version HTTP
 int	Request::get_http_version(std::string & request_line, size_t & i)
 {
-	_http_version.clear();
+	http_version.clear();
 	while (i < request_line.size() && request_line[i] != '\n')
-		_http_version += request_line[i++];
-	if (_request_uri.empty())
+		http_version += request_line[i++];
+	if (uri.empty())
 		return (error("Invalid _http_version in the request line."));
 	return (0);
 }
@@ -70,7 +70,7 @@ int	Request::get_host(void)
 {
 	size_t	pos = 0;
 
-	_host.clear();
+	host.clear();
 	pos = request.find("Host:");
 	if (pos == std::string::npos)
 		return (error("No Host in the request"));
@@ -81,9 +81,9 @@ int	Request::get_host(void)
 	{
 		if (request[pos] == '\n' || request[pos] == '\r' || request[pos] == ' ')
 			break ;
-		_host += request[pos++];
+		host += request[pos++];
 	}
-	if (_host.empty())
+	if (host.empty())
 		return (error("No Host in the request"));
 	return (0);
 };
@@ -92,23 +92,23 @@ int	Request::host_to_address(void)
 {
 	size_t	pos;
 
-	pos = _host.find(":");
+	pos = host.find(":");
 	if (pos != std::string::npos)
 	{
-		_request_address.first = _host.substr(0, pos);
-		_request_address.second = set_port(_host.substr(pos + 1));
+		request_address.first = host.substr(0, pos);
+		request_address.second = set_port(host.substr(pos + 1));
 	}
 	else
 	{
-		if (_host.find(".") != std::string::npos || _host == "*" || _host == "localhost")
+		if (host.find(".") != std::string::npos || host == "*" || host == "localhost")
 		{
-			_request_address.first = _host;
-			_request_address.second = 8080;
+			request_address.first = host;
+			request_address.second = 8080;
 		}
 		else
 		{
-			_request_address.first = "127.0.0.1";
-			_request_address.second = set_port(_host);
+			request_address.first = "127.0.0.1";
+			request_address.second = set_port(host);
 		}
 	}
 	return (0);
@@ -121,6 +121,7 @@ int	Request::interpret(void)
 	size_t			i = 0;
 
 	//std::cout << request << std::endl;
+
 	if (get_request_line(request_line))
 		return (1);
 	else if (get_method(request_line, i))
@@ -134,11 +135,10 @@ int	Request::interpret(void)
 	else if (host_to_address())
 		return (1);
 
-
-	std::cout << "REQUEST METHOD      = " << _method << std::endl;
-	std::cout << "REQUEST REQUEST_URI = " << _request_uri << std::endl;
-	std::cout << "REQUEST HTTPVERSION = " << _http_version << std::endl;
-	std::cout << "REQUEST HOST        = " << _host << std::endl << std::endl;
+	std::cout << "REQUEST METHOD      = " << method << std::endl;
+	std::cout << "REQUEST REQUEST_URI = " << uri << std::endl;
+	std::cout << "REQUEST HTTPVERSION = " << http_version << std::endl;
+	std::cout << "REQUEST HOST        = " << host << std::endl << std::endl;
 
 	return (0);
 };

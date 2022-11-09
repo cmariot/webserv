@@ -17,7 +17,7 @@
 // Sec-Fetch-Site: none
 // Sec-Fetch-User: ?1
 
-int	Request::get_client_request(int fd)
+int	Request::get(int fd)
 {
 	char			buffer[BUFFER_SIZE + 1];
 	int				recv_return = BUFFER_SIZE + 1;
@@ -36,5 +36,6 @@ int	Request::get_client_request(int fd)
 		if (recv_return < BUFFER_SIZE)
 			break ;
 	}
+	interpret();
 	return (0);
 };
