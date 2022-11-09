@@ -31,7 +31,8 @@ int		Webserver::launch(void)
 				_request.get_client_request(events[i].data.fd);
 				_request.interpret();
 				get_server(request_server);
-				_response.send_response(events[i].data.fd, _request, request_server);
+				_response.update(_request, request_server);
+				_response.send_response(events[i].data.fd);
 				if (remove_client(epoll_socket, client_socket, events))
 					return (exit_webserv());
 			}

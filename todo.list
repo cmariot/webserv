@@ -1,5 +1,5 @@
 [ ] - Revoir sujet
 [ ] - Code review : Voir parsing, gestion d'erreurs, exceptions, optimisations (etape par etape pour voir ce qui pourrait planter)
-[ ] - Verifications sur la partie launch, voir si on a tous les trois compris de la meme maniere le fonctionnement de webserv + voir gestion d'erreur (quitter si erreur ?)
+[ ] - Verifications sur la partie launch, voir si on a tous les trois compris de la meme maniere le fonctionnement de webserv + voir gestion d'erreur (quitter si erreur ? Non)
 [ ] - Structures de donnees a optimiser
-[ ] - Objectif de la nuit : Afficher les fichiers respectifs des serveurs 
+[ ] - Afficher les fichiers respectifs des serveurs

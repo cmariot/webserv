@@ -124,8 +124,10 @@ REQUEST			= constructor.cpp \
 				  interpret.cpp \
 				  destructor.cpp
 
-RESPONSE		= Response.cpp \
-				  Response_structors.cpp
+RESPONSE		= constructor.cpp \
+				  update.cpp \
+				  Response.cpp \
+				  destructor.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
