@@ -45,12 +45,13 @@ class Response
 
 		map<int, string>		init_status_code_map(void) const;
 		void					update(Request &, Server &);
-		void					send_response(int);
+		void					create(int);
 
 	private:
 
 		Request					_request;
 		Server					_server;
+		Location				_location;
 
 
 
@@ -58,7 +59,7 @@ class Response
 
 		void					init_response(Request request);
 
-		void 					get_response(Request request);
+		void 					get_method(Request request);
 		void					post_response(Request request);
 		void 					delete_response(Request request);
 
