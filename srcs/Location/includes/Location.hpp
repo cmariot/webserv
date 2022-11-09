@@ -12,6 +12,7 @@ class Location
 
 	public:
 
+		Location(void);
 		Location(std::string & uri);
 		~Location(void);
 
