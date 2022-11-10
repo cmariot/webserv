@@ -10,7 +10,7 @@ int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 {
 	size_t	pos;
 
-	pos = vector[++i].find(":");
+	pos = vector[++i].rfind(":");
 	if (pos != std::string::npos)
 	{
 		_address.first = set_ip(vector[i].substr(0, pos));
@@ -25,7 +25,7 @@ int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 		}
 		else
 		{
-			_address.first = "127.0.0.1";
+			_address.first = "0.0.0.0";
 			_address.second = set_port(vector[i]);
 		}
 	}

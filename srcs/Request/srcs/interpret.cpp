@@ -31,7 +31,7 @@ int	Request::get_method(std::string & request_line, size_t & i)
 	}
 	while (request_line[i] == ' ')
 		i++;
-	if (method.empty() || (method != "GET" && method != "POST" && method != "DELETE"))
+	if (method.empty())
 		return (error("Invalid method in the request line."));
 	return (0);
 }
@@ -107,7 +107,7 @@ int	Request::host_to_address(void)
 		}
 		else
 		{
-			request_address.first = "127.0.0.1";
+			request_address.first = "0.0.0.0";
 			request_address.second = set_port(host);
 		}
 	}
@@ -119,8 +119,6 @@ int	Request::interpret(void)
 {
 	std::string		request_line;
 	size_t			i = 0;
-
-	//std::cout << request << std::endl;
 
 	if (get_request_line(request_line))
 		return (1);
@@ -134,11 +132,6 @@ int	Request::interpret(void)
 		return (1);
 	else if (host_to_address())
 		return (1);
-
-	std::cout << "REQUEST METHOD      = " << method << std::endl;
-	std::cout << "REQUEST REQUEST_URI = " << uri << std::endl;
-	std::cout << "REQUEST HTTPVERSION = " << http_version << std::endl;
-	std::cout << "REQUEST HOST        = " << host << std::endl << std::endl;
-
+	print(INFO, "The request seems to be valid.");
 	return (0);
 };

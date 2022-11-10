@@ -11,6 +11,7 @@ int		Webserver::launch(void)
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
+	print(INFO, "Webserv is waiting for client connexions ...");
 	while (true)
 	{
 		if (wait_event(events, nb_events) == SIGNAL_CAUGHT)
@@ -25,10 +26,9 @@ int		Webserver::launch(void)
 				get_server(request_server);
 				_response.update(_request, request_server);
 				_response.create(events[i].data.fd);
-				remove_client(epoll_socket, client_socket, events);
+				remove_client(main_socket, client_socket, events);
 			}
 		}
 	}
 	return (0);
 };
-

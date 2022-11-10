@@ -7,7 +7,8 @@ int	Webserver::usage(void) const
 	const char	*reset		= "\033[0m";
 
 	std::cerr << red_color
+		<< "[webserv] " << reset
 		<< "Usage: ./webserv [configuration_file]"
-		<< reset << std::endl;
+		<< std::endl;
 	return (1);
 };

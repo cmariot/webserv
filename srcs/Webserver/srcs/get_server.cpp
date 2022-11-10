@@ -11,14 +11,14 @@ int	Webserver::get_server(Server & request_server)
 			if (server[i].get_server_names()[j] == _request.request_address.first
 				&& server[i].get_address().second == _request.request_address.second)
 			{
-				std::cout << "This request will be treated by the server[" << i << "] !" << std::endl;
+				print(INFO, ("This request will be treated by the server[" + itostring(i) + "] !").c_str());
 				request_server = server[i];
 				return (0);
 			}
 		}
 		if (server[i].get_address() == _request.request_address)
 		{
-			std::cout << "This request will be treated by the server[" << i << "] !" << std::endl;
+			print(INFO, ("This request will be treated by the server[" + itostring(i) + "].").c_str());
 			request_server = server[i];
 			return (0);
 		}

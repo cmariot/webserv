@@ -2,7 +2,10 @@
 
 int		Webserver::init_sockets(void)
 {
-	if (create_epoll_socket())
+	std::string str;
+
+	print(INFO, "Opening the sockets for the servers communication.");
+	if (create_main_socket())
 		return (1);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
 	{
@@ -14,9 +17,13 @@ int		Webserver::init_sockets(void)
 			return (1);
 		if (add_to_interest_list(&server[i]))
 			return (1);
-		std::cout << "Server " << server[i]._server_socket
-			<< " is listening on " << server[i].get_address().first
-			<< ":" << server[i].get_address().second << std::endl;
+		str = "Server ";
+		str += itostring(i);
+		str += " is listening on ";
+		str += server[i].get_address().first;
+		str += ":";
+		str += itostring(static_cast<int>(server[i].get_address().second));
+		print(INFO, str.c_str());
 	}
 	return (0);
 };

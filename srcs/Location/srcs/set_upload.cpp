@@ -3,7 +3,7 @@
 int		Location::set_upload(std::vector<std::string> & vector, size_t & i)
 {
 	if (invalid_directive_len(vector, i, ";", 3, 3))
-		return (error("Syntax error : invalid upload directive."));
+		return (error("Syntax error : invalid upload directive len."));
 	++i;
 	if (vector[i] == "on")
 		_upload = true;

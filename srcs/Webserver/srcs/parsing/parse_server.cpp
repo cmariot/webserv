@@ -18,10 +18,10 @@ int		Webserver::get_server_directives(std::vector<std::string> & vector, size_t 
 			++nb_open_braces;
 		else if (vector[i] == "}")
 			--nb_open_braces;
-		if (nb_open_braces != 0)
-			++i;
 		if (nb_open_braces == INT_MAX || nb_open_braces == INT_MIN)
 			return (error("int overflow."));
+		if (nb_open_braces != 0)
+			++i;
 	}
 	if (i >= vector_size)
 		return (error("unclosed brace in the configuration file."));
@@ -35,11 +35,13 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 	size_t						end = 0;
 	std::vector<std::string>	server_directives;
 
+	print(INFO, "Looking for 'server' blocks in the configuration file.");
 	for (size_t i = 0 ; i < vector_size ; ++i)
 	{
 		if (get_server_directives(vector, i, begin, end))
 			return (1);
 		server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
+		print(INFO, "Creating a new server context");
 		server.push_back(Server());
 		if (server[nb_of_servers++].parse(server_directives))
 			return (1);

@@ -7,7 +7,7 @@ int	Webserver::add_to_interest_list(Server *server)
 	bzero(&event, sizeof(event));
 	event.data.fd = server->_server_socket;
 	event.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server->_server_socket, &event) == -1)
+	if (epoll_ctl(main_socket, EPOLL_CTL_ADD, server->_server_socket, &event) == -1)
 	{
 		error("epoll_ctl() failed.", NULL);
 		perror("epoll_ctl: server_socket");

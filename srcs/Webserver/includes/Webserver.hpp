@@ -31,6 +31,8 @@
 # define SUCCESS	0
 # define FAILURE	1
 
+# define INFO 0
+
 # include "Server.hpp"
 # include "Utils.hpp"
 # include "Request.hpp"
@@ -47,10 +49,11 @@ class Webserver
 
 		std::vector<Server>		server;
 		static size_t			nb_of_servers;
-		int						epoll_socket;
+		int						main_socket;
 
 		Request					_request;
 		Response				_response;
+
 	public:
 
 		Webserver(void);
@@ -65,6 +68,7 @@ class Webserver
 	private:
 
 		//	parsing
+		int		check_arguments(int argc, const char *argv[]);
 		int		get_file(const char *, std::vector<std::string> &);
 		int		parse_configuration_file(std::vector<std::string> &);
 		int		remove_commentaries(std::vector<std::string> &) const;
@@ -82,7 +86,7 @@ class Webserver
 
 		// launch
 		int		init_sockets(void);
-		int		create_epoll_socket(void);
+		int		create_main_socket(void);
 		int		add_to_interest_list(Server *);
 		bool	client_connexion(size_t *, struct epoll_event &);
 		int		accept_connexion(int *, Server &, struct epoll_event *);

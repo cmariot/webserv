@@ -22,6 +22,7 @@ int	Request::get(int fd)
 	char			buffer[BUFFER_SIZE + 1];
 	int				recv_return = BUFFER_SIZE + 1;
 
+	print(INFO, "Getting the client's request");
 	request = std::string();
 	while (true)
 	{

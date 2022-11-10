@@ -20,6 +20,7 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 	std::ifstream	configuration_file;
 	std::string		line;
 
+	print(INFO, "Opening the file", filename);
 	configuration_file.open(filename, std::ios_base::in);
 	if (configuration_file.is_open() == false)
 		return (error("Could not open the file", filename));
@@ -34,7 +35,7 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 		}
 		configuration_file.close();
 		if (vector.size() == 0)
-			return (error("The configuration file is empty.", NULL));
+			return (error("The configuration file is empty."));
 	}
 	catch (std::ios_base::failure & exception)
 	{
@@ -49,6 +50,18 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 	return (0);
 };
 
+int	Webserver::check_arguments(int argc, const char *argv[])
+{
+	print(INFO, "Checking the webserv's arguments");
+	if (argc > 2)
+		return (usage());
+	else if (argc == 1)
+		argv[1] = "configuration_files/default.conf";
+	else if (check_extension(argv[1], ".conf"))
+		return (error("The configuration file must have the '.conf' extension."));
+	return (0);
+}
+
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
@@ -56,15 +69,14 @@ int	Webserver::parse(int argc, const char *argv[])
 {
 	std::vector<std::string>	vector;
 
-	if (argc > 2)
-		return (usage());
-	else if (argc == 1)
-		argv[1] = "configuration_files/default.conf";
-	else if (check_extension(argv[1], ".conf"))
-		return (error("The configuration file must have the '.conf' extension."));
+	print(INFO, "Webserv is starting ...");
+	if (check_arguments(argc, argv))
+		return (1);
 	if (get_file(argv[1], vector))
 		return (1);
 	if (parse_configuration_file(vector))
 		return (1);
+	// verifs a ajouter ici
+	print(INFO, "The configuration file seems to be ok.");
 	return (0);
 };
