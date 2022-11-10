@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <vector>
+# include <map>
 # include <string>
 # include <climits>
 # include <cstdio>
@@ -31,7 +32,7 @@ class	Server
 		std::pair<std::string, int>	_address;
 		std::vector<std::string>	_server_names;
 		double						_client_max_body_size;
-		std::vector<Error_page>		_error_pages;
+		std::map<int, Error_page>	_error_pages;
 		std::vector<Location>		_locations;
 
 		bool						address_set;
@@ -53,7 +54,7 @@ class	Server
 		std::pair<std::string, int>	get_address(void)				const;
 		std::vector<std::string>	get_server_names(void)			const;
 		double						get_client_max_body_size(void)	const;
-		std::vector<Error_page>		get_error_pages(void)			const;
+		std::map<int, Error_page>	get_error_pages(void)			const;
 		std::vector<Location>		get_locations(void)				const;
 		int							get_server_socket(void)			const;
 		struct sockaddr_in			get_server_address(void)		const;

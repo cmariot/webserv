@@ -36,6 +36,8 @@ int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 
 int	Server::set_listen(std::vector<std::string> & vector, size_t & i)
 {
+	if (address_set)
+		return (error("Syntax error, multiple listen directives."));
 	if (invalid_directive_len(vector, i, ";", 3, 3))
 		return (error("Syntax error : invalid listen directive."));
 	else if (set_ip_and_port(vector, i))

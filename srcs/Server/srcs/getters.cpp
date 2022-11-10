@@ -15,7 +15,7 @@ double	Server::get_client_max_body_size(void)	const
 	return (_client_max_body_size);
 };
 
-std::vector<Error_page>	Server::get_error_pages(void)	const
+std::map<int, Error_page>	Server::get_error_pages(void)	const
 {
 	return (_error_pages);
 };

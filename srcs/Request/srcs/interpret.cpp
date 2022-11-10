@@ -92,7 +92,7 @@ int	Request::host_to_address(void)
 {
 	size_t	pos;
 
-	pos = host.find(":");
+	pos = host.rfind(":");
 	if (pos != std::string::npos)
 	{
 		request_address.first = host.substr(0, pos);
