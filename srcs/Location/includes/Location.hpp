@@ -22,7 +22,7 @@ class Location
 	private:
 
 		std::string		_uri;
-		std::set<std::string>	_index;
+		std::vector<std::string>	_index;
 		bool			_get_allowed;
 		bool			_post_allowed;
 		bool			_delete_allowed;
@@ -35,8 +35,6 @@ class Location
 		std::string		_cgi;
 		bool			_upload;
 		std::string		_upload_path;
-
-		bool			_index_set;
 
 		int				set_allow_methods(std::vector<std::string> &, size_t &);
 		int				set_redirection(std::vector<std::string> &, size_t &);
@@ -51,17 +49,18 @@ class Location
 	public:
 
 		std::string		get_uri(void)					const;
-		bool			get_method_get(void)			const;
-		bool			get_method_post(void)			const;
-		bool			get_method_delete(void)			const;
-		bool			get_redirection(void)			const;
+		bool			get_allowed(void)				const;
+		bool			post_allowed(void)				const;
+		bool			delete_allowed(void)			const;
+		bool			redirection(void)				const;
 		size_t			get_redirection_code(void)		const;
 		std::string		get_redirection_path(void)		const;
-		std::string		get_root(void)					const;
-		bool			get_directory_listing(void)		const;
+		std::string		root(void)						const;
+		std::vector<std::string>	index(void)			const;
+		bool			directory_listing(void)			const;
 		std::string		get_directory_file(void)		const;
-		std::string		get_cgi(void)					const;
-		bool			get_upload(void)				const;
+		std::string		cgi(void)					const;
+		bool			upload_allowed(void)				const;
 		std::string		get_upload_path(void)			const;
 
 };

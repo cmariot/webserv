@@ -76,7 +76,7 @@ int	Webserver::parse(int argc, const char *argv[])
 		return (1);
 	if (parse_configuration_file(vector))
 		return (1);
-	// verifs a ajouter ici
 	print(INFO, "The configuration file seems to be ok.");
+	print_config();
 	return (0);
 };

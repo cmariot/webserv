@@ -61,7 +61,7 @@ int	Location::parse(std::vector<std::string> & vector)
 		else
 			return (error("Syntax error : Invalid directive in the location context :", vector[i]));
 	}
-	if (_index_set == false)
-		_index.insert("index.html");
+	if (_index.size() == 0)
+		_index.push_back("index.html");
 	return (0);
 };

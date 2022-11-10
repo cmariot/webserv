@@ -82,6 +82,8 @@ class Webserver
 		int		parse_server(std::vector<std::string> &);
 		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
+		void	print_config(void) const;
+
 		// signal catcher
 		int		catch_signal(void);
 

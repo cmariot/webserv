@@ -11,9 +11,10 @@ int	Location::set_index(std::vector<std::string> & vector, size_t & i)
 	++i;
 	while (i < vector.size() && vector[i] != ";")
 	{
-		if (_index.insert(vector[i++]).second == false)
-			return (error("Syntax error : Trying to add the same index"));;
+		for (j = 0 ; j < _index.size() ; ++j)
+			if (_index[j] == vector[i])
+				return (error("Syntax error : Trying to add the same index"));;
+		_index.push_back(vector[i++]);
 	}
-	_index_set = true;
 	return (0);
 };

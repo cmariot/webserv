@@ -73,6 +73,7 @@ WEBSERVER		= accept_connexion.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
 				  parsing/parse_server.cpp \
+				  parsing/print_config.cpp \
 				  get_server.cpp \
 				  remove_client.cpp \
 				  parsing/remove_commentaries.cpp \

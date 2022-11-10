@@ -5,12 +5,22 @@ std::pair<std::string, int>	Server::get_address(void)	const
 	return (_address);
 };
 
+std::string	Server::get_host(void) const
+{
+	return (_address.first);
+};
+
+int		Server::get_port(void) const
+{
+	return (_address.second);
+};
+
 std::set<std::string>	Server::get_server_names(void)	const
 {
 	return (_server_names);
 };
 
-double	Server::get_client_max_body_size(void)	const
+double	Server::get_max_size(void)	const
 {
 	return (_client_max_body_size);
 };

@@ -53,8 +53,10 @@ class	Server
 	public:
 
 		std::pair<std::string, int>		get_address(void)				const;
+		std::string						get_host(void)					const;
+		int								get_port(void)					const;
 		std::set<std::string>			get_server_names(void)			const;
-		double							get_client_max_body_size(void)	const;
+		double							get_max_size(void)				const;
 		std::map<int, Error_page>		get_error_pages(void)			const;
 		std::map<std::string, Location>	get_locations(void)				const;
 		int								get_server_socket(void)			const;

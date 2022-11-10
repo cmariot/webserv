@@ -1,26 +1,26 @@
 #include "Error_page.hpp"
 
-int			Error_page::get_error(void)					const
+int	Error_page::get_code(void) const
 {
-	return (_error);
+	return (_code);
 };
 
-bool		Error_page::get_change_response(void)		const
+bool	Error_page::change_response(void) const
 {
 	return (_change_response);
 };
 
-bool		Error_page::get_specified_response(void)	const
+bool	Error_page::specified_response(void) const
 {
 	return (_specified_response);
 };
 
-int			Error_page::get_redirection(void)			const
+int	Error_page::get_changed_code(void) const
 {
-	return (_redirection);
+	return (_changed_response);
 };
 
-std::string	Error_page::get_path(void)					const
+std::string	Error_page::get_path(void) const
 {
 	return (_path);
 };
