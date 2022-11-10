@@ -70,17 +70,18 @@ class Response
 		int						stored_file(string path);
 
 		void 					build_http_response(void);
+
 	private:
 
 		// Which status code are mandatory ?
-		const map<int, string>		_status_code_map;
-		int 						_status_code;
-		string						_status_line;
-		string						_response_header;
-		string						_response_body;
-		string						_full_response;
+		const map<int, string>	_status_code_map;
+		int 					_status_code;
+		string					_status_line;
+		string					_response_header;
+		string					_response_body;
+		string					_full_response;
 
-		int							default_error(int code);
+		int						default_error(int code);
 
 };
 

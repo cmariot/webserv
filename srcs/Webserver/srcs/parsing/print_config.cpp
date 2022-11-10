@@ -6,9 +6,9 @@ static void	print(std::string str)
 	const char	*reset		= "\033[0m";
 
 	std::cout << cyan << "[webserv] (conf)  " << reset << str << std::endl;
-}
+};
 
-void	print_upload(Location location)
+static void	print_upload(Location location)
 {
 	if (location.upload_allowed() == true)
 	{
@@ -17,17 +17,17 @@ void	print_upload(Location location)
 	}
 };
 
-void	print_cgi(Location location)
+static void	print_cgi(Location location)
 {
 	print("\t\tcgi\t\t" + location.cgi() + ";");
 };
 
-void	print_answer_directory(Location location)
+static void	print_answer_directory(Location location)
 {
 	print("\t\tdir_file\t" + location.get_directory_file() + ";");
 };
 
-void	print_directory_listing(Location location)
+static void	print_directory_listing(Location location)
 {
 	if (location.directory_listing())
 		print("\t\tdir_listing\ton;");
@@ -35,25 +35,24 @@ void	print_directory_listing(Location location)
 		print("\t\tdir_listing\toff;");
 };
 
-
-void	print_index(Location location)
+static void	print_index(Location location)
 {
 	for (size_t i = 0 ; i < location.index().size() ; ++i)
 		print("\t\tindex\t\t" + location.index()[i] + ";");
 };
 
-void	print_root(Location location)
+static void	print_root(Location location)
 {
 	print("\t\troot\t\t" + location.root() + ";");
 };
 
-void	print_redirections(Location location)
+static void	print_redirections(Location location)
 {
 	if (location.redirection() == true)
 		print("\t\tredirection\t" + itostring(location.get_redirection_code()) + " " + location.get_redirection_path() + ";");
 };
 
-void	print_allowed_methods(Location location)
+static void	print_allowed_methods(Location location)
 {
 	if (location.get_allowed())
 		print("\t\tallowed_method\tget;");
@@ -61,9 +60,9 @@ void	print_allowed_methods(Location location)
 		print("\t\tallowed_method\tpost;");
 	if (location.delete_allowed())
 		print("\t\tallowed_method\tdelete;");
-}
+};
 
-void	print_locations(std::map<std::string, Location> locations)
+static void	print_locations(std::map<std::string, Location> locations)
 {
 	for (std::map<std::string, Location>::iterator i = locations.begin() ; i != locations.end() ; ++i)
 	{
@@ -81,12 +80,12 @@ void	print_locations(std::map<std::string, Location> locations)
 	}
 };
 
-void	print_max_body_size(double max_body_size)
+static void	print_max_body_size(double max_body_size)
 {
 	print("\tmax_body_size\t" + itostring(static_cast<int>(max_body_size)) + ";");
-}
+};
 
-void	print_error_pages(std::map<int, Error_page> error_pages)
+static void	print_error_pages(std::map<int, Error_page> error_pages)
 {
 	for (std::map<int, Error_page>::iterator i = error_pages.begin() ; i != error_pages.end() ; ++i)
 	{
@@ -99,13 +98,13 @@ void	print_error_pages(std::map<int, Error_page> error_pages)
 	}
 };
 
-void	print_server_names(std::set<std::string> server_names)
+static void	print_server_names(std::set<std::string> server_names)
 {
 	for (set<std::string>::iterator i = server_names.begin() ; i != server_names.end() ; ++i)
 		print("\tserver_name\t" + *i + ";");
 };
 
-void	print_listen(std::string host, int port)
+static void	print_listen(std::string host, int port)
 {
 	std::string	listen = "\tlisten\t\t" + host + ":" + itostring(port) + ";";
 	print(listen);
