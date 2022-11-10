@@ -10,7 +10,10 @@ int	Server::set_server_names(std::vector<std::string> & vector, size_t & i)
 		return (error("Syntax error : invalid server_names directive len."));
 	++i;
 	while (i < vector.size() && vector[i] != ";")
-		_server_names.push_back(vector[i++]);
+	{
+		if (_server_names.insert(vector[i++]).second == false)
+			return (error("Syntax error : Trying to add the same server_name"));;
+	}
 	server_names_set = true;
 	return (0);
 };

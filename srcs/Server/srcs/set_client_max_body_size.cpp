@@ -41,6 +41,8 @@ int	Server::set_client_max_body_size(std::string & str)
 
 int	Server::set_client_max_body_size(std::vector<std::string> & token_vector, size_t & i)
 {
+	if (client_max_body_size_set)
+		return (error("Syntax error : Multiples client_max_body_size declaractions in the same server"));
 	if (invalid_directive_len(token_vector, i, ";", 3, 3))
 		return (error("Syntax error : invalid client_max_body_size directive."));
 	else if (set_client_max_body_size(token_vector[++i]))

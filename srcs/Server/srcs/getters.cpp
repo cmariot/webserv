@@ -5,7 +5,7 @@ std::pair<std::string, int>	Server::get_address(void)	const
 	return (_address);
 };
 
-std::vector<std::string>	Server::get_server_names(void)	const
+std::set<std::string>	Server::get_server_names(void)	const
 {
 	return (_server_names);
 };
