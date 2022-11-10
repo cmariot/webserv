@@ -180,9 +180,6 @@ $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
 				$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
-#@printf "Compiling ⌛ $< \n"
-#@printf "[$(CYAN)✓$(RESET)] $< \n"
-
 $(NAME)	:		$(OBJS)
 				@printf "\n"
 				$(CC) $(LFLAGS) $(OBJS) -o $(NAME)

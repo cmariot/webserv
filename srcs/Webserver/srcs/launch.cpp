@@ -11,7 +11,7 @@ int		Webserver::launch(void)
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
-	print(INFO, "Webserv is waiting for client connexions ...");
+	print(INFO, "Webserv is waiting for clients connexion ...");
 	while (true)
 	{
 		if (wait_event(events, nb_events) == SIGNAL_CAUGHT)
