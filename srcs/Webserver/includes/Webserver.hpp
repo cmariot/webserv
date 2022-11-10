@@ -23,7 +23,8 @@
 # include <fcntl.h>
 # include <signal.h>
 
-# define MAX_EVENTS	10
+# define MAX_EVENTS	100
+
 # define STDIN		0
 # define STDOUT		1
 # define STDERR		2

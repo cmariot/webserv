@@ -114,6 +114,7 @@ LOCATION		= constructor.cpp \
 				  set_cgi.cpp \
 				  set_directory_file.cpp \
 				  set_directory_listing.cpp \
+				  set_index.cpp \
 				  parse.cpp \
 				  set_redirection.cpp \
 				  set_root.cpp \

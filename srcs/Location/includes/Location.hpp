@@ -4,6 +4,7 @@
 # include <iostream>
 # include <vector>
 # include <string>
+# include <set>
 
 # include "Utils.hpp"
 
@@ -21,6 +22,7 @@ class Location
 	private:
 
 		std::string		_uri;
+		std::set<std::string>	_index;
 		bool			_get_allowed;
 		bool			_post_allowed;
 		bool			_delete_allowed;
@@ -34,8 +36,11 @@ class Location
 		bool			_upload;
 		std::string		_upload_path;
 
+		bool			_index_set;
+
 		int				set_allow_methods(std::vector<std::string> &, size_t &);
 		int				set_redirection(std::vector<std::string> &, size_t &);
+		int				set_index(std::vector<std::string> &, size_t &);
 		int				set_root(std::vector<std::string> &, size_t &);
 		int				set_directory_listing(std::vector<std::string> &, size_t &);
 		int				set_directory_file(std::vector<std::string> &, size_t &);

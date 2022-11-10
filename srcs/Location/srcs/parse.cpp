@@ -22,6 +22,12 @@ int	Location::parse(std::vector<std::string> & vector)
 			if (set_root(vector, i))
 				return (1);
 		}
+		else if (vector[i] == "index")
+		{
+			print(INFO, "Parsing of the index directive in the server's location context.");
+			if (set_index(vector, i))
+				return (1);
+		}
 		else if (vector[i] == "directory_listing")
 		{
 			print(INFO, "Parsing of the directory_listing directive in the server's location context.");
@@ -55,5 +61,7 @@ int	Location::parse(std::vector<std::string> & vector)
 		else
 			return (error("Syntax error : Invalid directive in the location context :", vector[i]));
 	}
+	if (_index_set == false)
+		_index.insert("index.html");
 	return (0);
 };
