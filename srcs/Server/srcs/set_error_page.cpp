@@ -70,9 +70,8 @@ int	Server::set_error_pages(std::vector<std::string> & token_vector, size_t & i)
 		if (get_error(code, token_vector, ++i))
 			return (error("Syntax error : invalid error code in the error_page directive."));
 		Error_page	directive(code, change_response, specified_response, response, path);
-		if (_error_pages.find(directive.get_error()) != _error_pages.end())
+		if (_error_pages.insert(std::pair<int, Error_page>(directive.get_error(), directive)).second == false)
 			return (error("Syntax error : Multiple declarations for the same error code in the error_page directives."));
-		_error_pages.insert(std::pair<int, Error_page>(directive.get_error(), directive));
 	}
 	while (token_vector[i] != ";")
 		++i;
