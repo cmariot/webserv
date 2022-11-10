@@ -88,6 +88,7 @@ UTILS			= error.cpp \
 				  invalid_directive_len.cpp \
 				  print.cpp \
 				  itostring.cpp \
+				  only_digit.cpp \
 				  set_ip_and_port.cpp
 
 SERVER			= constructor.cpp \

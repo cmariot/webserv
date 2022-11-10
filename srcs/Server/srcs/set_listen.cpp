@@ -18,15 +18,15 @@ int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 	}
 	else
 	{
-		if (vector[i].find(".") != std::string::npos || vector[i] == "*" || vector[i] == "localhost")
-		{
-			_address.first = set_ip(vector[i]);
-			_address.second = 8080;
-		}
-		else
+		if (only_digit(vector[i]))
 		{
 			_address.first = "0.0.0.0";
 			_address.second = set_port(vector[i]);
+		}
+		else
+		{
+			_address.first = set_ip(vector[i]);
+			_address.second = 8080;
 		}
 	}
 	if (_address.first == "" || _address.second == -1)

@@ -100,15 +100,15 @@ int	Request::host_to_address(void)
 	}
 	else
 	{
-		if (host.find(".") != std::string::npos || host == "*" || host == "localhost")
-		{
-			request_address.first = host;
-			request_address.second = 8080;
-		}
-		else
+		if (only_digit(host))
 		{
 			request_address.first = "0.0.0.0";
 			request_address.second = set_port(host);
+		}
+		else
+		{
+			request_address.first = host;
+			request_address.second = 8080;
 		}
 	}
 	return (0);

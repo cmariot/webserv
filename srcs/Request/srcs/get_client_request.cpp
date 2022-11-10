@@ -19,11 +19,11 @@
 
 int	Request::get(int fd)
 {
-	char			buffer[BUFFER_SIZE + 1];
-	int				recv_return = BUFFER_SIZE + 1;
+	char	buffer[BUFFER_SIZE + 1];
+	int		recv_return = BUFFER_SIZE + 1;
 
 	print(INFO, "Getting the client's request");
-	request = std::string();
+	request.clear();
 	while (true)
 	{
 		bzero(buffer, recv_return);

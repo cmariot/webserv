@@ -25,5 +25,6 @@ void		print(int, const char *);
 void		print(int code, const char *, const char *);
 
 std::string	itostring(int);
+bool		only_digit(std::string str);
 
 #endif
