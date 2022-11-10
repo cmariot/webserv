@@ -34,7 +34,9 @@ int	Server::set_location(std::vector<std::string> & token_vector, size_t & i)
 	std::vector<std::string> tmp_vector(token_vector.begin() + begin, token_vector.begin() + end);
 	if (location.parse(tmp_vector))
 		return (1);
-	_locations.push_back(location);
+	if (_locations.find(location.get_uri()) != _locations.end())
+		return (error("Syntax error : Multiple Location declarations for the same location uri."));
+	_locations.insert(std::pair<std::string, Location>(location.get_uri(), location));
 	locations_set = true;
 	return (0);
 };

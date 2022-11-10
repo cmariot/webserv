@@ -33,7 +33,7 @@ class	Server
 		std::vector<std::string>	_server_names;
 		double						_client_max_body_size;
 		std::map<int, Error_page>	_error_pages;
-		std::vector<Location>		_locations;
+		std::map<std::string, Location>	_locations;
 
 		bool						address_set;
 		bool						server_names_set;
@@ -55,7 +55,7 @@ class	Server
 		std::vector<std::string>	get_server_names(void)			const;
 		double						get_client_max_body_size(void)	const;
 		std::map<int, Error_page>	get_error_pages(void)			const;
-		std::vector<Location>		get_locations(void)				const;
+		std::map<std::string, Location>		get_locations(void)				const;
 		int							get_server_socket(void)			const;
 		struct sockaddr_in			get_server_address(void)		const;
 

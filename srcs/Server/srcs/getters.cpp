@@ -20,7 +20,7 @@ std::map<int, Error_page>	Server::get_error_pages(void)	const
 	return (_error_pages);
 };
 
-std::vector<Location>	Server::get_locations(void)		const
+std::map<std::string, Location>	Server::get_locations(void)		const
 {
 	return (_locations);
 };
