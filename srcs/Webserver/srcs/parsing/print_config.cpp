@@ -82,7 +82,10 @@ static void	print_locations(std::map<std::string, Location> locations)
 
 static void	print_max_body_size(double max_body_size)
 {
-	print("\tmax_body_size\t" + itostring(static_cast<int>(max_body_size)) + ";");
+	const char	*cyan		= "\033[36;1m";
+	const char	*reset		= "\033[0m";
+
+	std::cout << cyan << "[webserv] (conf)  " << reset << "\tmax_body_size\t" << max_body_size << ";" << std::endl;
 };
 
 static void	print_error_pages(std::map<int, Error_page> error_pages)

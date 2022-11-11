@@ -4,6 +4,8 @@ int	Location::parse(std::vector<std::string> & vector)
 {
 	for (size_t i = 0 ; i < vector.size() ; i++)
 	{
+		// Peut etre faire un truc plus propre :
+		// pointeur sur fonctions + boucle a la place de la foret de if ?
 		if (vector[i] == "allow_methods")
 		{
 			print(INFO, "Parsing of the allow_methods directive in the server's location context.");
@@ -61,7 +63,10 @@ int	Location::parse(std::vector<std::string> & vector)
 		else
 			return (error("Syntax error : Invalid directive in the location context :", vector[i]));
 	}
+	// Ajout de valeurs si non precisees
+	if (_root.empty())
+		_root = "/var/www/";
 	if (_index.size() == 0)
-		_index.push_back("index.html");
+		_index.push_back("index.html"); // default
 	return (0);
 };

@@ -12,7 +12,7 @@ int	Server::bind_server_address(void)
 	_server_address.sin_port			= htons(_address.second);				// PORT
 	if (bind(_server_socket, addr, addrlen) == -1)
 	{
-		error("bind() failed.");
+		error("bind() failed, please check your permissions. (Are you root ?)");
 		perror("bind");
 		return (1);
 	}
