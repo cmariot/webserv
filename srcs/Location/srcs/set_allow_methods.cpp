@@ -12,11 +12,23 @@ int	Location::set_allow_methods(std::vector<std::string> & vector, size_t & i)
 	while (vector[i] != ";")
 	{
 		if (vector[i] == "GET")
+		{
+			if (_get_allowed)
+				return (error("Syntax error : Multiple allow_methods GET in the same location context."));
 			_get_allowed = true;
+		}
 		else if (vector[i] == "POST")
+		{
+			if (_post_allowed)
+				return (error("Syntax error : Multiple allow_methods POST in the same location context."));
 			_post_allowed = true;
+		}
 		else if (vector[i] == "DELETE")
+		{
+			if (_delete_allowed)
+				return (error("Syntax error : Multiple allow_methods DELETE in the same location context."));
 			_delete_allowed = true;
+		}
 		else
 			return (error("Syntax error : invalid allow_methods directive."));
 		++i;

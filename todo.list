@@ -1,0 +1,11 @@
+- [ ] Verifs sur les directives des blocs Location + Amelioration parsing
+
+- [ ] Tests directive root.conf
+- [ ] Tests directive index.conf
+- [X] Tests directive allow_methods.conf
+- [ ] Tests directive redirection.conf
+- [ ] Tests directive directory_listing.conf
+- [ ] Tests directive directory_file.conf
+- [ ] Tests directive cgi.conf -> a corriger
+- [ ] Tests directive upload.conf
+- [ ] Tests directive upload_path.conf
