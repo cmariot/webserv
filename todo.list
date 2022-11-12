@@ -1,5 +1,6 @@
 - [ ] Verifs sur les directives des blocs Location + Amelioration parsing
 
 - [ ] Tests directive redirection.conf
-- [ ] Tests directive cgi.conf
 - [ ] Tests directive upload_path.conf
+- [ ] Tests directive cgi.conf
+- [ ] Utiliser au maximum des references dans les prototypes de fonctions pour eviter copies inutiles + meilleur temps d'execution

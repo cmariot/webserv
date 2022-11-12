@@ -16,11 +16,11 @@ class	Error_page
 		Error_page(int &, bool &, bool &, int &, std::string &);
 		~Error_page(void);
 
-		int				get_code(void) const;
-		bool			change_response(void) const;
-		bool			specified_response(void) const;
-		int				get_changed_code(void) const;
-		std::string		get_path(void) const;
+		const int &			get_code(void) const;
+		const bool &		change_response(void) const;
+		const bool &		specified_response(void) const;
+		const int &			get_changed_code(void) const;
+		const std::string &	get_path(void) const;
 
 	private:
 

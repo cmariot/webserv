@@ -2,7 +2,7 @@
 
 int	Location::set_directory_listing(std::vector<std::string> & vector, size_t & i)
 {
-	if (_directory_listing_set == true)
+	if (directory_listing_set == true)
 		return (error("Syntax error : multiple directory_listing directives in the same location context."));
 	if (invalid_directive_len(vector, i, ";", 3, 3))
 		return (error("Syntax error : invalid directory_listing directive."));
@@ -15,6 +15,6 @@ int	Location::set_directory_listing(std::vector<std::string> & vector, size_t & 
 		return (error("Syntax error : invalid directory_listing directive."));
 	if (vector[++i] != ";")
 		return (error("Syntax error : the root directive doesn't ends by ';'."));
-	_directory_listing_set = true;
+	directory_listing_set = true;
 	return (0);
 };

@@ -52,15 +52,15 @@ class	Server
 
 	public:
 
-		std::pair<std::string, int>		get_address(void)				const;
-		std::string						get_host(void)					const;
-		int								get_port(void)					const;
-		std::set<std::string>			get_server_names(void)			const;
-		double							get_max_size(void)				const;
-		std::map<int, Error_page>		get_error_pages(void)			const;
-		std::map<std::string, Location>	get_locations(void)				const;
-		int								get_server_socket(void)			const;
-		struct sockaddr_in				get_server_address(void)		const;
+		const std::pair<std::string, int> &		get_address(void)				const;
+		const std::string &						get_host(void)					const;
+		const int &								get_port(void)					const;
+		const std::set<std::string> &			get_server_names(void)			const;
+		const double &							get_max_size(void)				const;
+		const std::map<int, Error_page> &		get_error_pages(void)			const;
+		const std::map<std::string, Location> &	get_locations(void)				const;
+		const int &								get_server_socket(void)			const;
+		const struct sockaddr_in &				get_server_address(void)		const;
 
 		int						_server_socket;
 		struct sockaddr_in		_server_address;

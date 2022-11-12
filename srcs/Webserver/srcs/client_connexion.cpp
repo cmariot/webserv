@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-static	void connexion_log(Server & server)
+static	void connexion_log(const Server & server)
 {
 	std::string str = "A client try to connect to the server ";
 	str += server.get_address().first;

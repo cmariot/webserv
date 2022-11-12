@@ -48,25 +48,25 @@ class Location
 
 	public:
 
-		std::string					get_uri(void)				const;
-		bool						get_allowed(void)			const;
-		bool						post_allowed(void)			const;
-		bool						delete_allowed(void)		const;
-		bool						redirection(void)			const;
-		size_t						get_redirection_code(void)	const;
-		std::string					get_redirection_path(void)	const;
-		std::string					root(void)					const;
-		std::vector<std::string>	index(void)					const;
-		bool						directory_listing(void)		const;
-		std::string					get_directory_file(void)	const;
-		std::string					cgi(void)					const;
-		bool						upload_allowed(void)		const;
-		std::string					get_upload_path(void)		const;
+		const std::string &					get_uri(void)				const;
+		const bool &						get_allowed(void)			const;
+		const bool &						post_allowed(void)			const;
+		const bool &						delete_allowed(void)		const;
+		const bool &						redirection(void)			const;
+		const size_t &						get_redirection_code(void)	const;
+		const std::string &					get_redirection_path(void)	const;
+		const std::string &					root(void)					const;
+		const std::vector<std::string> &	index(void)					const;
+		const bool &						directory_listing(void)		const;
+		const std::string &					get_directory_file(void)	const;
+		const std::string &					cgi(void)					const;
+		const bool &			   			upload_allowed(void)		const;
+		const std::string &					get_upload_path(void)		const;
 
-		bool						_root_set;
+		bool						root_set;
 		bool						directory_file_set;
-		bool						_directory_listing_set;
-		bool						_upload_set;
+		bool						directory_listing_set;
+		bool						upload_set;
 };
 
 # endif
