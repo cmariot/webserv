@@ -10,10 +10,17 @@ static void	print(std::string str)
 
 static void	print_upload(Location location)
 {
-	if (location.upload_allowed() == true)
+	if (location._upload_set)
 	{
-		print("\t\tupload\t\ton;");
-		print("\t\tupload_path\t" + location.get_upload_path() + ";");
+		if (location.upload_allowed() == true)
+		{
+			print("\t\tupload\t\ton;");
+			print("\t\tupload_path\t" + location.get_upload_path() + ";");
+		}
+		else
+		{
+			print("\t\tupload\t\toff;");
+		}
 	}
 };
 
@@ -24,15 +31,19 @@ static void	print_cgi(Location location)
 
 static void	print_answer_directory(Location location)
 {
-	print("\t\tdir_file\t" + location.get_directory_file() + ";");
+	if (location.directory_file_set == true)
+		print("\t\tdir_file\t" + location.get_directory_file() + ";");
 };
 
 static void	print_directory_listing(Location location)
 {
-	if (location.directory_listing())
-		print("\t\tdir_listing\ton;");
-	else
-		print("\t\tdir_listing\toff;");
+	if (location._directory_listing_set)
+	{
+		if (location.directory_listing())
+			print("\t\tdir_listing\ton;");
+		else
+			print("\t\tdir_listing\toff;");
+	}
 };
 
 static void	print_index(Location location)

@@ -1,5 +1,8 @@
 #include "Location.hpp"
 
+// Questions : Allow multiple cgi ? If yes -> set<std::string> !
+// CGI syntax ?
+
 int	Location::set_cgi(std::vector<std::string> & vector, size_t & i)
 {
 	if (invalid_directive_len(vector, i, ";", 3, 3))

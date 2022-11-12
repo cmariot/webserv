@@ -36,7 +36,7 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 	std::vector<std::string>	server_directives;
 
 	print(INFO, "Looking for 'server' blocks in the configuration file.");
-	for (size_t i = 0 ; i < vector_size ; ++i)
+	for (size_t i = 0 ; i < vector_size && nb_of_servers < server.max_size() ; ++i)
 	{
 		if (get_server_directives(vector, i, begin, end))
 			return (1);

@@ -63,6 +63,10 @@ class Location
 		bool						upload_allowed(void)		const;
 		std::string					get_upload_path(void)		const;
 
+		bool						_root_set;
+		bool						directory_file_set;
+		bool						_directory_listing_set;
+		bool						_upload_set;
 };
 
 # endif
