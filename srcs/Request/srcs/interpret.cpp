@@ -1,93 +1,5 @@
 #include "Request.hpp"
 
-// La request line est la 1ere ligne de la requete,
-// Request-Line = Method SP Request-URI SP HTTP-Version CRLF
-int	Request::get_request_line(std::string & request_line)
-{
-	size_t			i = 0;
-
-	request_line.clear();
-	while (i < request.size())
-	{
-		request_line += request[i];
-		if (request[i] == '\n')
-			break ;
-		++i;
-	}
-	if (request_line.empty())
-		return (error("Invalid request line."));
-	return (0);
-}
-
-// 1ere partie de la Request-line : Methode
-int	Request::get_method(std::string & request_line, size_t & i)
-{
-	method.clear();
-	while (i < request_line.size())
-	{
-		if (request_line[i] == ' ')
-			break ;
-		method += request_line[i++];
-	}
-	while (request_line[i] == ' ')
-		i++;
-	if (method.empty())
-		return (error("Invalid method in the request line."));
-	return (0);
-}
-
-// 2nde partie de la Request-line : l'URI
-int	Request::get_request_uri(std::string & request_line, size_t & i)
-{
-	uri.clear();
-	while (i < request_line.size())
-	{
-		if (request_line[i] == ' ')
-			break ;
-		uri += request_line[i++];
-	}
-	while (request_line[i] == ' ')
-		i++;
-	if (uri.empty())
-		return (error("Invalid request_uri in the request line."));
-	return (0);
-}
-
-// 3eme partie de la Request-line : Version HTTP
-int	Request::get_http_version(std::string & request_line, size_t & i)
-{
-	http_version.clear();
-	while (i < request_line.size() && request_line[i] != '\n')
-		http_version += request_line[i++];
-	if (uri.empty())
-		return (error("Invalid _http_version in the request line."));
-	return (0);
-}
-
-// 2eme ligne de la requete,
-// nous donne des informations sur le serveur auquel on va envoyer la reponse 
-int	Request::get_host(void)
-{
-	size_t	pos = 0;
-
-	host.clear();
-	pos = request.find("Host:");
-	if (pos == std::string::npos)
-		return (error("No Host in the request"));
-	pos += strlen("Host:");
-	while (pos < request.size() && request[pos] == ' ')
-		++pos;
-	while (pos < request.size())
-	{
-		if (request[pos] == '\n' || request[pos] == '\r' || request[pos] == ' ')
-			break ;
-		host += request[pos++];
-	}
-	if (host.empty())
-		return (error("No Host in the request"));
-	return (0);
-};
-
 int	Request::host_to_address(void)
 {
 	size_t	pos;
@@ -114,6 +26,94 @@ int	Request::host_to_address(void)
 	return (0);
 };
 
+// 2eme ligne de la requete,
+// nous donne des informations sur le serveur auquel on va envoyer la reponse 
+int	Request::get_host(void)
+{
+	size_t	pos = 0;
+
+	host.clear();
+	pos = request.find("Host:");
+	if (pos == std::string::npos)
+		return (error("No Host in the request"));
+	pos += strlen("Host:");
+	while (pos < request.size() && request[pos] == ' ')
+		++pos;
+	while (pos < request.size())
+	{
+		if (request[pos] == '\n' || request[pos] == '\r' || request[pos] == ' ')
+			break ;
+		host += request[pos++];
+	}
+	if (host.empty())
+		return (error("No Host in the request"));
+	return (0);
+};
+
+// 3eme partie de la Request-line : Version HTTP
+int	Request::get_http_version(std::string & request_line, size_t & i)
+{
+	http_version.clear();
+	while (i < request_line.size() && request_line[i] != '\n')
+		http_version += request_line[i++];
+	if (uri.empty())
+		return (error("Invalid _http_version in the request line."));
+	return (0);
+};
+
+// 2nde partie de la Request-line : l'URI
+int	Request::get_request_uri(std::string & request_line, size_t & i)
+{
+	uri.clear();
+	while (i < request_line.size())
+	{
+		if (request_line[i] == ' ')
+			break ;
+		uri += request_line[i++];
+	}
+	while (request_line[i] == ' ')
+		i++;
+	if (uri.empty())
+		return (error("Invalid request_uri in the request line."));
+	return (0);
+};
+
+// 1ere partie de la Request-line : Methode
+int	Request::get_method(std::string & request_line, size_t & i)
+{
+	method.clear();
+	while (i < request_line.size())
+	{
+		if (request_line[i] == ' ')
+			break ;
+		method += request_line[i++];
+	}
+	while (request_line[i] == ' ')
+		i++;
+	if (method.empty())
+		return (error("Invalid method in the request line."));
+	return (0);
+};
+
+// La request line est la 1ere ligne de la requete,
+// Request-Line = Method SP Request-URI SP HTTP-Version CRLF
+int	Request::get_request_line(std::string & request_line)
+{
+	size_t			i = 0;
+
+	request_line.clear();
+	while (i < request.size())
+	{
+		if (request[i] == '\n')
+			break ;
+		request_line += request[i];
+		++i;
+	}
+	if (request_line.empty())
+		return (error("Invalid request line."));
+	return (0);
+};
+
 // Un peu de parsing sur la requete pour obtenir les informations qui nous interessent
 int	Request::interpret(void)
 {
@@ -132,6 +132,8 @@ int	Request::interpret(void)
 		return (1);
 	else if (host_to_address())
 		return (1);
+	print(INFO, ("Request_line : " + request_line).c_str());
+	print(INFO, ("Request_host : " + host).c_str());
 	print(INFO, "The request seems to be valid.");
 	return (0);
 };

@@ -3,4 +3,4 @@
 - [ ] Tests directive redirection.conf
 - [ ] Tests directive upload_path.conf
 - [ ] Tests directive cgi.conf
-- [ ] Utiliser au maximum des references dans les prototypes de fonctions pour eviter copies inutiles + meilleur temps d'execution
+- [ ] Utiliser au maximum des references dans les prototypes de fonctions pour eviter copies inutiles donc meilleur temps d'execution
