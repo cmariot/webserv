@@ -22,7 +22,7 @@ const bool &	Location::delete_allowed(void) const
 
 const bool &	Location::redirection(void) const
 {
-	return (_redirection);
+	return (redirection_set);
 };
 
 const size_t &	Location::get_redirection_code(void) const
