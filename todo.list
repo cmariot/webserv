@@ -1,2 +1,2 @@
-- [ ] Selection du bloc location
+- [ ] Selection du bloc location + gestion d'erreur si non trouve (404 ?)
 - [ ] Construction du file_path dans la reponse
