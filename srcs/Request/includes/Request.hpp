@@ -43,7 +43,8 @@ class	Request
 		int 	get_request_uri(std::string &, size_t &);
 		int		get_http_version(std::string &, size_t &);
 		int		get_host(void);
-		void 	get_content(void);
+		int 	get_content(void);
+		int     set_content(void);
 		int		host_to_address(void);
 
 };
