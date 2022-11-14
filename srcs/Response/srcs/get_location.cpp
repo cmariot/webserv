@@ -8,8 +8,14 @@ int	Response::get_location(void)
 	location = _server.get_locations().begin();
 	while (location != _server.get_locations().end())
 	{
-		std::cout << location->first << std::endl;
+		if (location->first == _request.uri)
+		{
+			print(INFO, "The location block corresponding to the request has been found.");
+			_location = location->second;
+			return (0);
+		}
 		++location;
 	}
-	return (0);
+	print(INFO, "No location block found.");
+	return (1);
 };
