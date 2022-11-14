@@ -70,6 +70,13 @@ void 	Response::get(void)
 	build_http_response();
 };
 
+void	Response::post(void)
+{
+	std::cout << _request.request << std::endl;
+	_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 POST FAILED";
+	build_http_response();
+}
+
 // main function used to send the response to the client
 void	Response::create(int fd)
 {
@@ -82,7 +89,7 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "POST")
 	{
-		//post();
+		post();
 	}
 	else if (_request.method == "DELETE")
 	{

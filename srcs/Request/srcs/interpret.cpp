@@ -1,5 +1,27 @@
 #include "Request.hpp"
 
+void Request::get_content(void)
+{
+	size_t pos;
+	std::string boundary;
+	std::string boundary_end;
+
+	pos = request.find("Content-Type: multipart/form-data; boundary=");
+	if (pos != std::string::npos)
+	{
+		while(request[pos] != '\r' && request[pos] != '\n')
+			boundary += request[pos++];
+		boundary = boundary.substr((boundary.find("=") + 1), pos);
+		boundary = "--" + boundary;
+		boundary_end = boundary + "--";
+	}
+	pos = request.find(boundary);
+	size_t pos2 = request.find(boundary_end);
+	if (pos != std::string::npos && pos2 != std::string::npos)
+		content = request.substr((pos + boundary.size() + 2), (pos2 - pos - boundary.size() - 4));
+	std::cout << "++++\n" << content << "++++" << std::endl;
+}
+
 int	Request::host_to_address(void)
 {
 	size_t	pos;
@@ -132,6 +154,8 @@ int	Request::interpret(void)
 		return (1);
 	else if (host_to_address())
 		return (1);
+	else if (method == "POST")
+		get_content();
 	print(INFO, ("Request_line : " + request_line).c_str());
 	print(INFO, ("Request_host : " + host).c_str());
 	print(INFO, "The request seems to be valid.");

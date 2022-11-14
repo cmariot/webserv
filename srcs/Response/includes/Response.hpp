@@ -48,6 +48,7 @@ class Response
 		void					create(int);
 
 		void 					get(void);
+		void					post(void);
 
 	private:
 
