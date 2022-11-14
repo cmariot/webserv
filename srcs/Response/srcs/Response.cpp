@@ -1,4 +1,5 @@
 #include "Response.hpp"
+
 // Basic setter for status code
 void	Response::set_status_code(int status_code)
 {
@@ -45,27 +46,9 @@ int		Response::stored_file(string path)
 
 void 	Response::get(void)
 {
-	//if (_request.uri == "/" || _request.uri == "/index.html" ||
-	//	_request.uri== "/index.html/" )
-	//{
-		stored_file("./html/index.html");
-		_status_code = 200;
-		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
-	//}
-	//else if (check_file_existance(_request.uri))
-	//{
-	//	if (stored_file(_request.uri))
-	//	{
-	//		_status_code = 500;
-	//	}
-	//	_status_code = 200;
-	//	_response_header = "HTTP/1.1 200 OK\r\n\r\n";
-	//}
-	//else
-	//{
-	//	_status_code = 404;
-	//	_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 BOUM";
-	//}
+	stored_file(_file_path);
+	_status_code = 200;
+	_response_header = "HTTP/1.1 200 OK\r\n\r\n";
 	build_http_response();
 };
 
@@ -83,7 +66,7 @@ void	Response::create(int fd)
 	if (_request.method == "GET")
 	{
 		get_location();
-		// path_construction()
+		path_construction();
 		get();
 	}
 	else if (_request.method == "POST")
