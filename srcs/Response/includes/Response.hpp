@@ -46,6 +46,7 @@ class Response
 		map<int, string>		init_status_code_map(void) const;
 		void					update(Request &, Server &);
 		void					create(int);
+		int						get_location(void);
 
 		void 					get(void);
 		void					post(void);

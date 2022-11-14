@@ -1,5 +1,4 @@
 #include "Response.hpp"
-
 // Basic setter for status code
 void	Response::set_status_code(int status_code)
 {
@@ -46,27 +45,27 @@ int		Response::stored_file(string path)
 
 void 	Response::get(void)
 {
-	if (_request.uri == "/" || _request.uri == "/index.html" ||
-		_request.uri== "/index.html/" )
-	{
+	//if (_request.uri == "/" || _request.uri == "/index.html" ||
+	//	_request.uri== "/index.html/" )
+	//{
 		stored_file("./html/index.html");
 		_status_code = 200;
 		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
-	}
-	else if (check_file_existance(_request.uri))
-	{
-		if (stored_file(_request.uri))
-		{
-			_status_code = 500;
-		}
-		_status_code = 200;
-		_response_header = "HTTP/1.1 200 OK\r\n\r\n";
-	}
-	else
-	{
-		_status_code = 404;
-		_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 BOUM";
-	}
+	//}
+	//else if (check_file_existance(_request.uri))
+	//{
+	//	if (stored_file(_request.uri))
+	//	{
+	//		_status_code = 500;
+	//	}
+	//	_status_code = 200;
+	//	_response_header = "HTTP/1.1 200 OK\r\n\r\n";
+	//}
+	//else
+	//{
+	//	_status_code = 404;
+	//	_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 BOUM";
+	//}
 	build_http_response();
 };
 
@@ -81,10 +80,10 @@ void	Response::post(void)
 void	Response::create(int fd)
 {
 	print(INFO, "Creating the server's response");
-	// Trouver le bloc Location (dans _server) correspondant a _request.uri
-	// Construire le path a partir de pwd + uri + index
 	if (_request.method == "GET")
 	{
+		get_location();
+		// path_construction()
 		get();
 	}
 	else if (_request.method == "POST")
@@ -97,7 +96,7 @@ void	Response::create(int fd)
 	}
 	else
 	{
-		set_status_code(501);
+		//set_status_code(501);
 	}
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 	print(INFO, "The response has been sent to the client");

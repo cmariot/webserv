@@ -131,6 +131,7 @@ REQUEST			= constructor.cpp \
 RESPONSE		= constructor.cpp \
 				  update.cpp \
 				  Response.cpp \
+				  get_location.cpp \
 				  destructor.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

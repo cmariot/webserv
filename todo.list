@@ -1,6 +1,3 @@
-- [ ] Verifs sur les directives des blocs Location + Amelioration parsing
-
-- [ ] Tests directive redirection.conf
-- [ ] Tests directive upload_path.conf
-- [ ] Tests directive cgi.conf
-- [ ] Utiliser au maximum des references dans les prototypes de fonctions pour eviter copies inutiles donc meilleur temps d'execution
+- [ ] Selection du bloc location + gestion d'erreur si non trouve (404 ?)
+- [ ] Construction du file_path dans la reponse
+- [ ] Structure de launch : Modifier ouverture/fermeture socket pour faire des connexions persistantes

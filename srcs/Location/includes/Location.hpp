@@ -26,7 +26,6 @@ class Location
 		bool						_get_allowed;
 		bool						_post_allowed;
 		bool						_delete_allowed;
-		bool						_redirection;
 		size_t						_redirection_code;
 		std::string					_redirection_path;
 		std::string					_root;
@@ -67,6 +66,9 @@ class Location
 		bool						directory_file_set;
 		bool						directory_listing_set;
 		bool						upload_set;
+		bool						cgi_set;
+		bool						upload_path_set;
+		bool						redirection_set;
 };
 
 # endif
