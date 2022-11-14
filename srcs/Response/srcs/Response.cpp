@@ -73,9 +73,10 @@ void 	Response::get(void)
 // main function used to send the response to the client
 void	Response::create(int fd)
 {
-	print(INFO, "Creating the server's response");
 	// Trouver le bloc Location (dans _server) correspondant a _request.uri
+	get_location();
 	// Construire le path a partir de pwd + uri + index
+	print(INFO, "Creating the server's response");
 	if (_request.method == "GET")
 	{
 		get();

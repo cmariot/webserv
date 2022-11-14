@@ -29,7 +29,8 @@ static void	print_upload(const Location & location)
 
 static void	print_cgi(const Location & location)
 {
-	print("\t\tcgi\t\t" + location.cgi() + ";");
+	if (location.cgi_set == true)
+		print("\t\tcgi\t\t" + location.cgi() + ";");
 };
 
 static void	print_answer_directory(const Location & location)
