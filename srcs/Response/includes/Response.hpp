@@ -47,6 +47,7 @@ class Response
 		void					update(Request &, Server &);
 		void					create(int);
 		int						get_location(void);
+		int						path_construction(void);
 
 		void 					get(void);
 		void					post(void);
@@ -57,7 +58,7 @@ class Response
 		Server					_server;
 		Location				_location;
 
-
+		std::string				_file_path;
 
 	public:
 

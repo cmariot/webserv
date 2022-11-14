@@ -132,6 +132,7 @@ RESPONSE		= constructor.cpp \
 				  update.cpp \
 				  Response.cpp \
 				  get_location.cpp \
+				  path_construction.cpp \
 				  destructor.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
