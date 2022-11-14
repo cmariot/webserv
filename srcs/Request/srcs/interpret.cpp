@@ -120,6 +120,7 @@ int	Request::interpret(void)
 	std::string		request_line;
 	size_t			i = 0;
 
+	std::cout << request << std::endl;
 	if (get_request_line(request_line))
 		return (1);
 	else if (get_method(request_line, i))
