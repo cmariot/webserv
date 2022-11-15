@@ -1,12 +1,58 @@
 #include "Response.hpp"
 
+// 127.0.0.1:80
+// 127.0.0.1:80/index.html
+// 127.0.0.1:80/index.html/
+
+static	bool	is_a_file(std::string & path)
+{
+	struct stat path_stat;
+
+	bzero(&path_stat, sizeof(path_stat));
+	stat(path.c_str(), &path_stat);
+	return S_ISREG(path_stat.st_mode);
+};
+
 int	Response::path_construction(void)
 {
 	std::cout << "CONSTRUCTION DU PATH A PARTIR DE :" << std::endl;
+	std::cout << "- location.uri : " << _location.get_uri() << std::endl;
 	std::cout << "- location.root : " << _location.root() << std::endl;
 	std::cout << "- location.index : " << _location.index()[0] << std::endl;
 	std::cout << "- request.uri : " << _request.uri << std::endl;
-	_file_path = _location.root() + _location.index()[0];
+
+	std::string	path;
+
+	_file_path = _request.uri;
+	_file_path.replace(0, _location.get_uri().size(), _location.root());
+	if (is_a_file(_file_path) == true)
+	{
+		print(INFO, "GET will try the file", _file_path.c_str());
+		return (0);
+	}
+	else
+	{
+		for (size_t i = 0 ; i < _location.index().size() ; ++i)
+		{
+			path = _file_path + _location.index()[i];
+			if (is_a_file(path) == true)
+			{
+				_file_path = path;
+				print(INFO, "GET will try the file", _file_path.c_str());
+				return (0);
+			}
+		}
+	}
+	if (_file_path.size() > 0 && _file_path[_file_path.size() - 1] == '/')
+	{
+		path = _file_path.substr(0, _file_path.size() - 1);
+		if (is_a_file(path) == true)
+		{
+			_file_path = path;
+			print(INFO, "GET will try the file", _file_path.c_str());
+			return (0);
+		}
+	}
 	std::cout << _file_path << std::endl;
 	return (0);
 };

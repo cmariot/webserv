@@ -8,7 +8,7 @@ void	Response::set_status_code(int status_code)
 
 // inline is to make a quicker
 // This function is to verify if the file exists or not (quicker execution than fopen)
-inline bool Response::check_file_existance(string &file)
+bool Response::check_file_existance(string &file)
 {
 	struct stat	buffer;
 
@@ -65,9 +65,11 @@ void	Response::create(int fd)
 	print(INFO, "Creating the server's response");
 	if (_request.method == "GET")
 	{
-		get_location();
-		path_construction();
-		get();
+		if (get_location() == 0)
+		{
+			path_construction();
+			get();
+		}
 	}
 	else if (_request.method == "POST")
 	{

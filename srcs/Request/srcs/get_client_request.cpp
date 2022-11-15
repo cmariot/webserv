@@ -24,7 +24,6 @@ int	Request::get(int fd)
 
 	print(INFO, "Getting the client's request");
 	request.clear();
-	//memset(buffer, 0, BUFFER_SIZE + 1);
 	while (true)
 	{
 		bzero(buffer, recv_return);

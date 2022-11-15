@@ -8,7 +8,7 @@ int	Response::get_location(void)
 	location = _server.get_locations().begin();
 	while (location != _server.get_locations().end())
 	{
-		if (location->first == _request.uri)
+		if (_request.uri.find(location->first) == 0)
 		{
 			print(INFO, "The location block corresponding to the request has been found.");
 			_location = location->second;
@@ -16,6 +16,6 @@ int	Response::get_location(void)
 		}
 		++location;
 	}
-	print(INFO, "No location block found.");
+	error("No location block found.");
 	return (1);
 };
