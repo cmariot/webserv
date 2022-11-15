@@ -105,7 +105,7 @@ int	Request::get_request_line(std::string & request_line)
 	request_line.clear();
 	while (i < request.size())
 	{
-		if (request[i] == '\n')
+		if (request[i] == '\r' || request[i] == '\n')
 			break ;
 		request_line += request[i];
 		++i;

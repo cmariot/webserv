@@ -131,6 +131,7 @@ REQUEST			= constructor.cpp \
 
 RESPONSE		= constructor.cpp \
 				  update.cpp \
+				  get.cpp \
 				  Response.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \

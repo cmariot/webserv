@@ -62,10 +62,10 @@ class Response
 		void					post_response(Request request);
 		void 					delete_response(Request request);
 
-		void 					set_status_code(int status_code);
+		int 					set_status_code(const int & status_code);
 		// used for get_response
-		bool  					check_file_existance(string &path);
-		int						stored_file(string path);
+		bool  					check_file_existance(string & path);
+		int						stored_file(string & path);
 
 		void 					build_http_response(void);
 
@@ -80,6 +80,7 @@ class Response
 		string					_full_response;
 
 		int						default_error(int code);
+		int						create_response_header(void);
 
 };
 

@@ -1,9 +1,10 @@
 #include "Response.hpp"
 
 // Basic setter for status code
-void	Response::set_status_code(int status_code)
+int	Response::set_status_code(const int & status_code)
 {
 	_status_code = status_code;
+	return (status_code);
 };
 
 // inline is to make a quicker
@@ -15,41 +16,23 @@ bool Response::check_file_existance(string &file)
 	return (stat(file.c_str(), &buffer) == 0);
 };
 
+int		Response::create_response_header(void)
+{
+	std::string	code;
+
+	code = itostring(_status_code);
+	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	std::cout << "Response_header = " << _response_header << std::endl;
+	return (0);
+};
+
 void	Response::build_http_response(void)
 {
-	if (_status_code == 200)
-	{
-		_full_response = _response_header + _response_body;
-	}
-};
-
-// get the body of the response which is the html file
-int		Response::stored_file(string path)
-{
-	string infile(path);										// The file we open
-	std::ifstream fin;											//infile stream -> fichier de flux d'entree
-	fin.open(infile.c_str(), std::ios::in);
-	if (fin.is_open() == false)
-		return (error("Error : while opening the file ", infile));
-	string tmp = "";
-	_response_body = "";
-	while (!fin.eof())
-	{
-		getline(fin, tmp);
-		_response_body += tmp;
-		if (!fin.eof())
-			_response_body += '\n';
-	}
-	fin.close();													// Closing the infile
-	return 0;
-};
-
-void 	Response::get(void)
-{
-	stored_file(_file_path);
-	_status_code = 200;
-	_response_header = "HTTP/1.1 200 OK\r\n\r\n";
-	build_http_response();
+	create_response_header();
+	//if (_status_code == 200)
+	//{
+	_full_response = _response_header + _response_body;
+	//}
 };
 
 void	Response::post(void)
@@ -76,11 +59,7 @@ void	Response::create(int fd)
 	print(INFO, "Creating the server's response");
 	if (_request.method == "GET")
 	{
-		if (get_location() == 0)
-		{
-			path_construction();
-			get();
-		}
+		get();
 	}
 	else if (_request.method == "POST")
 	{
