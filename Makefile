@@ -126,7 +126,8 @@ LOCATION		= constructor.cpp \
 REQUEST			= constructor.cpp \
 				  get_client_request.cpp \
 				  interpret.cpp \
-				  destructor.cpp
+				  destructor.cpp \
+				  get_content.cpp
 
 RESPONSE		= constructor.cpp \
 				  update.cpp \

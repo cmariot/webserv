@@ -8,12 +8,7 @@
 # include <fstream>
 # include <map>
 
-using std::map;
-using std::string;
-using std::vector;
-using std::cout;
-using std::pair;
-using std::endl;
+
 
 /*		Reference : https://www.rfc-editor.org/rfc/rfc2616#section-6
 **		- The Response class is used to store the response to the client

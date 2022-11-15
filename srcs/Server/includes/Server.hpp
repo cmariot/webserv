@@ -18,6 +18,11 @@
 # include "Error_page.hpp"
 # include "Location.hpp"
 
+using std::string;
+using std::vector;
+using std::cout;
+using std::endl;
+
 class	Server
 {
 

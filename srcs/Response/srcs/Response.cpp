@@ -54,9 +54,20 @@ void 	Response::get(void)
 
 void	Response::post(void)
 {
-	std::cout << _request.request << std::endl;
-	_full_response = "HTTP/1.1 404 Not Found\r\nContent-Length: 165\r\nContent-Type: text/html\r\n\n 404 POST FAILED";
-	build_http_response();
+	// std::cout << _request.request << std::endl;
+
+	string infile(_request.file_name);
+	std::ofstream fout;
+	fout.open(infile.c_str(), std::ios::out | std::ios::app);
+	if (fout.is_open() == false)
+	{
+		error("Error : while opening the file ", infile);
+		_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
+	}
+	// cout << "content added \n" << _request.body_content << cout;
+	fout << _request.body_content;
+	fout.close();
+	_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";;
 }
 
 // main function used to send the response to the client
@@ -81,7 +92,7 @@ void	Response::create(int fd)
 	}
 	else
 	{
-		//set_status_code(501);
+		set_status_code(501);
 	}
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 	print(INFO, "The response has been sent to the client");
