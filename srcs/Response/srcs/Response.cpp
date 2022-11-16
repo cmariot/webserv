@@ -40,7 +40,7 @@ void	Response::post(void)
 	// std::cout << _request.request << std::endl;
 	size_t i = 0;
 
-	while (i < _request.size())
+	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
