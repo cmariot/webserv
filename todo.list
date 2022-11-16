@@ -1,3 +1,2 @@
-- [ ] Selection du bloc location + gestion d'erreur si non trouve (404 ?)
-- [ ] Construction du file_path dans la reponse
-- [ ] Structure de launch : Modifier ouverture/fermeture socket pour faire des connexions persistantes
+- [ ] Parsing Location : Ajout du = pour faire seulement des matchs exacts avec la requete ?
+- [ ] Structure de launch : Modifier ouverture/fermeture socket pour faire des connexions persistantes ?

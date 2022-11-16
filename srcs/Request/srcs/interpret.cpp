@@ -1,6 +1,5 @@
 #include "Request.hpp"
 
-
 int	Request::host_to_address(void)
 {
 	size_t	pos;

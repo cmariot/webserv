@@ -79,7 +79,7 @@ class Response
 		string					_response_body;
 		string					_full_response;
 
-		int						default_error(int code);
+		void					generate_error_page(const int &);
 		int						create_response_header(void);
 
 };

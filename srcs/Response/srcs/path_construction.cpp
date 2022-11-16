@@ -15,11 +15,11 @@ static	bool	is_a_file(std::string & path)
 
 int	Response::path_construction(void)
 {
-	std::cout << "CONSTRUCTION DU PATH A PARTIR DE :" << std::endl;
-	std::cout << "- location.uri : " << _location.get_uri() << std::endl;
-	std::cout << "- location.root : " << _location.root() << std::endl;
-	std::cout << "- location.index : " << _location.index()[0] << std::endl;
-	std::cout << "- request.uri : " << _request.uri << std::endl;
+	//std::cout << "CONSTRUCTION DU PATH A PARTIR DE :" << std::endl;
+	//std::cout << "- location.uri : " << _location.get_uri() << std::endl;
+	//std::cout << "- location.root : " << _location.root() << std::endl;
+	//std::cout << "- location.index : " << _location.index()[0] << std::endl;
+	//std::cout << "- request.uri : " << _request.uri << std::endl;
 
 	std::string	path;
 
@@ -43,6 +43,7 @@ int	Response::path_construction(void)
 			}
 		}
 	}
+	// Faire une redirection 302 ici ? La requete de style/style.css est fausse dans ce cas
 	if (_file_path.size() > 0 && _file_path[_file_path.size() - 1] == '/')
 	{
 		path = _file_path.substr(0, _file_path.size() - 1);

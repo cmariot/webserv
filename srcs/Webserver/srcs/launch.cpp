@@ -23,7 +23,12 @@ int		Webserver::launch(void)
 			else
 			{
 				_request.get(events[i].data.fd);
-				get_server(request_server);
+				if (get_server(request_server))
+				{
+					// send 404
+					remove_client(main_socket, client_socket, events);
+					continue ;
+				}
 				_response.update(_request, request_server);
 				_response.create(events[i].data.fd);
 				remove_client(main_socket, client_socket, events);

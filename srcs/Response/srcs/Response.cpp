@@ -18,11 +18,9 @@ bool Response::check_file_existance(string &file)
 
 int		Response::create_response_header(void)
 {
-	std::string	code;
+	const std::string	code  = itostring(_status_code);
 
-	code = itostring(_status_code);
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
-	std::cout << "Response_header = " << _response_header << std::endl;
 	return (0);
 };
 
@@ -60,10 +58,15 @@ void	Response::create(int fd)
 	if (_request.method == "GET")
 	{
 		get();
+		print(INFO, ("Response =\n" + _full_response).c_str());
+		send(fd, _full_response.c_str(), _full_response.size(), 0);
+		print(INFO, "The response has been sent to the client");
+		return ;
 	}
 	else if (_request.method == "POST")
 	{
 		post();
+		build_http_response();
 	}
 	else if (_request.method == "DELETE")
 	{
@@ -72,7 +75,9 @@ void	Response::create(int fd)
 	else
 	{
 		set_status_code(501);
+		build_http_response();
 	}
+	print(INFO, ("Response =\n" + _full_response).c_str());
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 	print(INFO, "The response has been sent to the client");
 };
