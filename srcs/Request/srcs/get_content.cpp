@@ -86,8 +86,10 @@ int	Request::get_boundary_content(void)
 	}
 	// first_boundary = request.find(boundary);
 	// size_t pos2 = request.find(boundary_end);
-	
-	std::cout << "++++\n" << boundary_content[0] << "++++" << std::endl;
+	size_t i = 0;
+	while (i < boundary_content.size() - 1)
+		std::cout << "++++\n" << boundary_content[i++] << "++++" << std::endl;
+
 	return 0;
 
 }
