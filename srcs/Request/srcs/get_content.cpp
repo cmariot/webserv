@@ -56,26 +56,44 @@ int Request::get_body_content(void)
 	return (0);
 };
 
-int Request::get_content(void)
+int	Request::get_boundary_content(void)
 {
-	size_t pos;
+	size_t first_boundary;
+	size_t second_boundary;
+	size_t verif_last_boundary;
 	string boundary;
 	string boundary_end;
 
-	pos = request.find("Content-Type: multipart/form-data; boundary=");
-	if (pos != std::string::npos)
+	first_boundary = request.find("Content-Type: multipart/form-data; boundary=");
+	if (first_boundary != std::string::npos)
 	{
-		while(request[pos] != '\r' && request[pos] != '\n')
-			boundary += request[pos++];
-		boundary = boundary.substr((boundary.find("=") + 1), pos);
+		while(request[first_boundary] != '\r' && request[first_boundary] != '\n')
+			boundary += request[first_boundary++];
+		boundary = boundary.substr((boundary.find("=") + 1), first_boundary);
 		boundary = "--" + boundary;
 		boundary_end = boundary + "--";
 	}
-	pos = request.find(boundary);
-	size_t pos2 = request.find(boundary_end);
-	if (pos != std::string::npos && pos2 != std::string::npos)
-		content = request.substr((pos + boundary.size() + 2), (pos2 - pos - boundary.size() - 4));
-	// std::cout << "++++\n" << content << "++++" << std::endl;
+	while (request.find(boundary, first_boundary + 1) != std::string::npos)
+	{
+		first_boundary = request.find(boundary, first_boundary);
+		second_boundary = request.find(boundary, first_boundary + 1);
+		if (first_boundary != std::string::npos && second_boundary != std::string::npos)
+			boundary_content.push_back(request.substr((first_boundary + boundary.size() + 2), (second_boundary - first_boundary - boundary.size() - 4)));
+		verif_last_boundary = request.find(boundary_end);
+		if (second_boundary == verif_last_boundary)
+			break;
+		first_boundary = second_boundary;
+	}
+	// first_boundary = request.find(boundary);
+	// size_t pos2 = request.find(boundary_end);
+	
+	std::cout << "++++\n" << boundary_content[0] << "++++" << std::endl;
+
+}
+
+int Request::get_content(void)
+{
+	get_boundary_content();
 	get_content_type();
 	get_file_name();
 	get_body_content();

@@ -27,6 +27,7 @@ class	Request
 		pair<string, int>	request_address;
 
 		string 				boundary;
+		vector<string>		boundary_content;
 		string				body_content;
 		string				content_type;
 		string 				file_name;
@@ -44,6 +45,7 @@ class	Request
 		int		get_http_version(string &, size_t &);
 		int		get_host(void);
 
+		int		get_boundary_content(void);
 		int		get_body_content(void);
 		int 	get_content_type(void);
 		int 	get_file_name(void);
