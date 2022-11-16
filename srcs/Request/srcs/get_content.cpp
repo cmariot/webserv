@@ -52,7 +52,7 @@ int Request::get_body_content(size_t i)
 			body_content[i] += content[i][pos++];
 		}
 	}
-	cout << "This is our content " << body_content[i] << endl;
+	// cout << "This is our content " << body_content[i] << endl;
 	return (0);
 };
 
