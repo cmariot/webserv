@@ -4,12 +4,13 @@
 // 127.0.0.1:8080/index.html : OK
 // 127.0.0.1:8080/index.html/ : On le gere ? Peut etre avec une redirection ?
 
-static	bool	is_a_file(std::string & path)
+static	bool	is_a_file(const std::string & path)
 {
 	struct stat path_stat;
 
 	bzero(&path_stat, sizeof(path_stat));
-	stat(path.c_str(), &path_stat);
+	if (stat(path.c_str(), &path_stat) != 0)
+		return (false);
 	return (S_ISREG(path_stat.st_mode));
 };
 
@@ -54,6 +55,5 @@ int	Response::path_construction(void)
 			return (0);
 		}
 	}
-	std::cout << _file_path << std::endl;
-	return (0);
+	return (1);
 };

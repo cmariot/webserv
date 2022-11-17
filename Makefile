@@ -133,6 +133,7 @@ RESPONSE		= constructor.cpp \
 				  update.cpp \
 				  get.cpp \
 				  Response.cpp \
+				  generate_error_page.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \
 				  destructor.cpp
