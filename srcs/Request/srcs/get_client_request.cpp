@@ -37,6 +37,7 @@ int	Request::get(int fd)
 		if (recv_return < BUFFER_SIZE)
 			break ;
 	}
+	std::cout << "REQUEST = " << request << std::endl;
 	interpret();
 	return (0);
 };
