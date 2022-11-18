@@ -136,7 +136,8 @@ RESPONSE		= constructor.cpp \
 				  generate_error_page.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \
-				  destructor.cpp
+				  destructor.cpp \
+				  cgi_response.cpp 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

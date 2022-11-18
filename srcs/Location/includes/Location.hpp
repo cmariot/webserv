@@ -59,6 +59,7 @@ class Location
 		const bool &						directory_listing(void)		const;
 		const std::string &					get_directory_file(void)	const;
 		const std::string &					cgi(void)					const;
+		const bool &						is_cgi(void)				const; 	
 		const bool &			   			upload_allowed(void)		const;
 		const std::string &					get_upload_path(void)		const;
 

@@ -20,7 +20,7 @@ int	Response::path_construction(void)
 	//std::cout << "- location.uri : " << _location.get_uri() << std::endl;
 	//std::cout << "- location.root : " << _location.root() << std::endl;
 	//std::cout << "- location.index : " << _location.index()[0] << std::endl;
-	//std::cout << "- request.uri : " << _request.uri << std::endl;
+	std::cout << "- request.uri : " << _request.uri << std::endl;
 
 	std::string	path;
 
@@ -55,5 +55,6 @@ int	Response::path_construction(void)
 			return (0);
 		}
 	}
+	std::cout << "FILE PATH = " << _file_path << std::endl; 
 	return (1);
 };

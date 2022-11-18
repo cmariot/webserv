@@ -69,3 +69,8 @@ const std::string &		Location::get_upload_path(void) const
 {
 	return (_upload_path);
 };
+
+const bool &		Location::is_cgi(void) const
+{
+	return (cgi_set);
+};
