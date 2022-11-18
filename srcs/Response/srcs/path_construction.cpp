@@ -26,7 +26,7 @@ int	Response::path_construction(void)
 
 	_file_path = _request.uri;
 	_file_path.replace(0, _location.get_uri().size(), _location.root());
-	if (is_a_file(_file_path) == true)
+	if (is_a_file(_file_path) == true || is_a_directory(_file_path) == true)
 	{
 		print(INFO, "GET will try the file", _file_path.c_str());
 		return (0);

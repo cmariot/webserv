@@ -1,6 +1,6 @@
 #include "Response.hpp"
 
-static	bool	is_a_directory(const std::string & path)
+bool	Response::is_a_directory(const std::string & path)
 {
 	struct stat	path_stat;
 
@@ -72,11 +72,11 @@ void 	Response::get(void)
 		generate_error_page(404);
 		return ;
 	}
-	if (_file_path.empty() == false && is_a_directory(_file_path))
+	if (is_a_directory(_file_path))
 	{
 		if (_location.directory_listing() == true)
 		{
-			std::cout << "List directories" << std::endl;
+			list_directories();
 			return ;
 		}
 		else

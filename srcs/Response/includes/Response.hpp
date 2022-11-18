@@ -82,6 +82,8 @@ class Response
 		void					generate_error_page(const int &);
 		int						create_response_header(void);
 
+		bool					is_a_directory(const std::string & path);
+		int						list_directories(void);
 };
 
 #endif

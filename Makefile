@@ -130,6 +130,7 @@ REQUEST			= constructor.cpp \
 				  get_content.cpp
 
 RESPONSE		= constructor.cpp \
+				  directory_listing.cpp \
 				  update.cpp \
 				  get.cpp \
 				  Response.cpp \
