@@ -95,10 +95,11 @@ int Request::get_content(void)
 	size_t i = 0;
 
 	get_boundary_content();
-	cout << "segfault " << endl;
 	while (i < content.size())
 	{
 		get_file_name(i);
+		cout << "segfault " << endl;
+
 		get_content_type(i);
 		get_body_content(i);
 		i++;
