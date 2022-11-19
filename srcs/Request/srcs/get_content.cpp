@@ -6,7 +6,7 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
-	file_name[i] = "";
+	file_name.pushback("");
 
 	pos = content[i].find("filename=");
 	if (pos != std::string::npos)
@@ -23,7 +23,7 @@ int Request::get_file_name(size_t i)
 int Request::get_content_type(size_t i)
 {
 	size_t		pos;
-	content_type[i] = "";
+	content_type.pushback("");
 
 	pos = content[i].find("Content-Type: ");
 	if (pos != std::string::npos)
