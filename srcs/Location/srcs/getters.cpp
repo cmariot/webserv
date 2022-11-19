@@ -55,9 +55,9 @@ const std::string &		Location::get_directory_file(void) const
 	return (_directory_file);
 };
 
-const std::string &		Location::cgi(void) const
+const std::vector<std::string> &	Location::cgi_extensions(void) const
 {
-	return (_cgi);
+	return (_cgi_extensions);
 };
 
 const bool &	Location::upload_allowed(void) const
