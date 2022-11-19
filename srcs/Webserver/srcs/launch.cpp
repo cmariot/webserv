@@ -24,9 +24,9 @@ int		Webserver::launch(void)
 			{
 				_request.get(events[i].data.fd);
 				get_server(request_server);
-				_response.update(_request, request_server);
-				_response.create(events[i].data.fd);
-				remove_client(main_socket, client_socket, events);
+				// _response.update(_request, request_server);
+				// _response.create(events[i].data.fd);
+				// remove_client(main_socket, client_socket, events);
 			}
 		}
 	}
