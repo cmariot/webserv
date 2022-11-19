@@ -2,7 +2,7 @@
 
 # define SIGNAL_CAUGHT 1
 
-int		Webserver::launch(void)
+int		Webserver::launch(const char *env[])
 {
 	int			client_socket;
 	size_t		index;
@@ -29,7 +29,7 @@ int		Webserver::launch(void)
 					remove_client(main_socket, client_socket, events);
 					continue ;
 				}
-				_response.update(_request, request_server);
+				_response.update(_request, request_server, env);
 				_response.create(events[i].data.fd);
 				remove_client(main_socket, client_socket, events);
 			}

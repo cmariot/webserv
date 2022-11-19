@@ -22,6 +22,7 @@
 # include <poll.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <unistd.h>
 
 # define MAX_EVENTS	100
 
@@ -64,7 +65,7 @@ class Webserver
 		struct epoll_event	events[MAX_EVENTS];
 
 		int		parse(int argc, const char *argv[]);
-		int		launch(void);
+		int		launch(const char *env[]);
 
 	private:
 

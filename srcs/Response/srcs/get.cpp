@@ -85,6 +85,12 @@ void 	Response::get(void)
 			return ;
 		}
 	}
+	if (_location.cgi_set == true)
+	{
+		std::cout << "HOHO" <<std::endl;
+		if (!build_cgi_response())
+			return ;
+	}
 	stored_file(_file_path);
 	// CGI ?
 	if (_server.get_max_size() > 0)
