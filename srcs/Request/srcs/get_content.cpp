@@ -50,6 +50,7 @@ int Request::get_body_content(size_t i)
 		while (content[i][pos])
 		{
 			body_content[i] += content[i][pos++];
+			cout << body_content[i] << endl;
 		}
 	}
 	// cout << "This is our content " << body_content[i] << endl;
