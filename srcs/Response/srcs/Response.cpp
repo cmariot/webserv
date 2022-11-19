@@ -38,27 +38,27 @@ void	Response::build_http_response(void)
 void	Response::post(void)
 {
 	// std::cout << _request.request << std::endl;
-	size_t i = 0;
+	// size_t i = 0;
 
-	while (i < _request.content.size())
-	{
-		string infile(_request.file_name[i]);
-		std::ofstream fout;
-		fout.open(infile.c_str(), std::ios::out | std::ios::app);
+	// while (i < _request.content.size())
+	// {
+	// 	string infile(_request.file_name[i]);
+	// 	std::ofstream fout;
+	// 	fout.open(infile.c_str(), std::ios::out | std::ios::app);
 
-		cout << _request.body_content[i] << endl;
+	// 	cout << _request.body_content[i] << endl;
 
-		if (fout.is_open() == false)
-		{
-			error("Error : while opening the file ", infile);
-			_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
-		}
-		// cout << "content added \n" << _request.body_content << cout;
-		fout << _request.body_content[i];
-		fout.close();
-		_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";
-		i++;
-	}
+	// 	if (fout.is_open() == false)
+	// 	{
+	// 		error("Error : while opening the file ", infile);
+	// 		_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
+	// 	}
+	// 	// cout << "content added \n" << _request.body_content << cout;
+	// 	fout << _request.body_content[i];
+	// 	fout.close();
+	// 	_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";
+	// 	i++;
+	// }
 }
 
 // main function used to send the response to the client
