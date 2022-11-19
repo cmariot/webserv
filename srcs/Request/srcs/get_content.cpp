@@ -101,7 +101,11 @@ int Request::get_content(void)
 		cout << "segfault " << endl;
 
 		get_content_type(i);
+		cout << "segfault " << endl;
+
 		get_body_content(i);
+		cout << "segfault " << endl;
+
 		i++;
 	}
 	return (0);
