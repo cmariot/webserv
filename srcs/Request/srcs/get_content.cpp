@@ -93,14 +93,14 @@ int Request::get_content(void)
 {
 	size_t i = 0;
 
-	get_boundary_content();
-	while (i < content.size())
-	{
-		get_file_name(i);
-		get_content_type(i);
-		get_body_content(i);
-		i++;
-	}
+	// get_boundary_content();
+	// while (i < content.size())
+	// {
+	// 	get_file_name(i);
+	// 	get_content_type(i);
+	// 	get_body_content(i);
+	// 	i++;
+	// }
 	return (0);
 }
 
