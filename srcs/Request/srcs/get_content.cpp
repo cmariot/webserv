@@ -47,6 +47,7 @@ int Request::get_body_content(size_t i)
 
 	if (pos != std::string::npos)
 	{
+		body_content.push_back("");
 		while (content[i][pos])
 		{
 			body_content[i] += content[i][pos++];
