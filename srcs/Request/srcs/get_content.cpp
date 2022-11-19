@@ -98,17 +98,9 @@ int Request::get_content(void)
 
 	while (i < content.size())
 	{
-		cout << "segfault " << endl;
-
 		get_file_name(i);
-		cout << "segfault " << endl;
-
 		get_content_type(i);
-		cout << "segfault " << endl;
-
 		get_body_content(i);
-		cout << "segfault " << endl;
-
 		i++;
 	}
 	return (0);
