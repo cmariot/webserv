@@ -47,7 +47,7 @@ void	Response::post(void)
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 
 		cout << _request.body_content[i] << endl;
-
+	
 		if (fout.is_open() == false)
 		{
 			error("Error : while opening the file ", infile);
