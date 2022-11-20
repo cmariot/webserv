@@ -16,7 +16,7 @@ int Request::get_file_name(size_t i)
 			file_name[i] += content[i][pos++];
 	}
 	cout << "sseg in file name2" << endl ;
-	if (file_name[i].empty())
+	if (file_name[i] == "")
 		return (1);
 	cout << "sseg in file name3" << endl ;
 
