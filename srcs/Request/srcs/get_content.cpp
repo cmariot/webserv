@@ -19,7 +19,7 @@ int Request::get_file_name(size_t i)
 			content.erase(iterator);
 	}
 
-	// cout << "This is our file name " << file_name << endl;
+	cout << "This is our file name " << file_name << " et " <<i <<endl;
 	return (0);
 };
 
