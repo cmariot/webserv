@@ -19,7 +19,7 @@ int Request::get_file_name(size_t i)
 		{
 			content.erase(iterator);
 			// file_name.erase(iterator);
-			// cout << " on supp l'index :" << i << endl;
+			cout << " on supp l'index :" << i << endl;
 		}
 	}
 
