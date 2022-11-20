@@ -111,6 +111,7 @@ int Request::get_content(void)
 		{
 			content.erase(pos_iterator);
 			file_name.erase(pos_iterator);
+			continue;
 		}
 		get_content_type(i);
 		get_body_content(i);
