@@ -14,7 +14,7 @@ int Request::get_file_name(size_t i)
 		pos += 10;
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
-		cout << pos << endl;
+		cout << pos << endl
 		if (pos == 11)
 			return (1);
 	}
@@ -113,8 +113,6 @@ int Request::get_content(void)
 		pos_iterator = content.begin() + i ;
 
 		cout << "size = " << content.size() << " i = " << i<< endl ;
-		cout << "segfault" << endl;
-		get_file_name(i);
 		cout << "segfault" << endl;
 		if(get_file_name(i))
 		{
