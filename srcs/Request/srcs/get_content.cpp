@@ -109,8 +109,8 @@ int Request::get_content(void)
 		get_file_name(i);
 		if (!file_name[i])
 		{
-			content[i].erase(pos_iterator);
-			file_name[i].erase(pos_iterator)
+			content.erase(pos_iterator);
+			file_name.erase(pos_iterator)
 		}
 		get_content_type(i);
 		get_body_content(i);
