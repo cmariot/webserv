@@ -110,7 +110,7 @@ int Request::get_content(void)
 		if (!file_name[i])
 		{
 			content.erase(pos_iterator);
-			file_name.erase(pos_iterator)
+			file_name.erase(pos_iterator);
 		}
 		get_content_type(i);
 		get_body_content(i);
