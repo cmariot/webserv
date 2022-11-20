@@ -13,24 +13,19 @@ static void	print_upload(const Location & location)
 	if (location.upload_set)
 	{
 		if (location.upload_allowed() == true)
-		{
 			print("\t\tupload\t\ton;");
-		}
 		else
-		{
 			print("\t\tupload\t\toff;");
-		}
 	}
 	if (location.upload_path_set)
-	{
 		print("\t\tupload_path\t" + location.get_upload_path() + ";");
-	}
 };
 
 static void	print_cgi(const Location & location)
 {
 	if (location.cgi_set == true)
-		print("\t\tcgi\t\t" + location.cgi() + ";");
+		for (size_t i = 0 ; i < location.cgi_extensions().size() ; ++i)
+			print("\t\tcgi_extension\t" + location.cgi_extensions()[i] + ";");
 };
 
 static void	print_answer_directory(const Location & location)

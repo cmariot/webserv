@@ -16,7 +16,7 @@ CONFIG_FILE		 = configuration_files/main.conf
 
 CC				 = c++
 
-CFLAGS			 = -Wall -Wextra -Werror -std=c++98
+CFLAGS			 = -Wall -Wextra -Werror
 
 LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
@@ -33,9 +33,15 @@ DEBUG			 = true
 
 ifeq ($(DEBUG), true)
 
-	CFLAGS		+= -g3
+	CFLAGS		+= -g3 -std=c++98
 
-	LFLAGS		+= -g3
+	LFLAGS		+= -g3 -std=c++98
+
+else
+
+	CFLAGS		+= -O3
+
+	LFLAGS		+= -O3
 
 endif
 
@@ -198,7 +204,7 @@ $(NAME)	:		$(OBJS)
 leaks :			$(NAME)
 				@valgrind $(VALGRIND_FLAGS) ./$(NAME) $(CONFIG_FILE)
 
-test :			$(NAME)
+run :			$(NAME)
 				@./$(NAME) $(CONFIG_FILE)
 
 clean :

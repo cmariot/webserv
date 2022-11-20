@@ -1,6 +1,0 @@
-- [ ] Parsing Location : Ajout du = pour faire seulement des matchs exacts avec la requete ?
-- [ ] Structure de launch : Modifier ouverture/fermeture socket pour faire des connexions persistantes ?
-- [ ] Response (get) : Check des codes de redirections invalides en cas de location.redirection ?
-- [ ] Response (get) : Nouvelle page en cas de error_page directive
-- [ ] Directory listing
-

@@ -48,9 +48,8 @@ int	Response::list_directories(void)
 
 	while ((dir = readdir(d)) != NULL)
 	{
-		tmp = _request.uri;
+		tmp = _request.uri + "/";
 		tmp += dir->d_name;
-		tmp += "/";
 		std::cout << tmp << std::endl;
 		_response_body.insert(pos, ("<a href=\"" + tmp + "\">" + dir->d_name + "</a>"));
 	}
