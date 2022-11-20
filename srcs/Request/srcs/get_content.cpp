@@ -23,7 +23,7 @@ int Request::get_file_name(size_t i)
 		}
 	}
 
-	cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
+	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
 	return (0);
 };
 
