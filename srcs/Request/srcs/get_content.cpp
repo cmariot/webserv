@@ -119,7 +119,7 @@ int Request::get_content(void)
 		{
 			content.erase(pos_iterator);
 			file_name.erase(pos_iterator);
-			cout << "segfault" << endl;
+			cout << "segfault inside no file" << endl;
 			continue;
 		}
 		cout << "segfault3" << endl;
