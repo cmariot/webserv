@@ -14,6 +14,7 @@ int Request::get_file_name(size_t i)
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
 	}
+	cout << "sseg in file name" << cout ;
 	if (file_name[i].empty())
 		return (1);
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
