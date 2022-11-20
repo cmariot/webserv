@@ -4,6 +4,7 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
+	size_t 		tmp;
 	cout << "sseg in file name" << endl ;
 
 	file_name.push_back("");
@@ -12,9 +13,10 @@ int Request::get_file_name(size_t i)
 	if (pos != std::string::npos)
 	{
 		pos += 10;
+		tmp = pos;
 		while(content[i][pos] != '"')
 			file_name.back() += content[i][pos++];
-		if (file_name.back().empty())
+		if (pos == tmp))
 			return (1);
 	}
 	cout << "sseg in file name2" << endl ;
