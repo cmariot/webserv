@@ -109,7 +109,7 @@ int Request::get_content(void)
 
 	while (i < content.size())
 	{
-		pos_iterator = content.begin() + il 
+		pos_iterator = content.begin() + i;
 		get_file_name(i);
 		if (!file_name[i])
 		{
