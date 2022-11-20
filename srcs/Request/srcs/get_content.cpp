@@ -105,7 +105,6 @@ int Request::get_content(void)
 
 	while (i < content.size())
 	{
-		cout << "segfault" << endl;
 
 		pos_iterator = content.begin() + i;
 		get_file_name(i);
