@@ -17,6 +17,7 @@ int Request::get_file_name(size_t i)
 		if (file_name[i] == "")
 			return (1);
 	}
+	cout << "sseg in file name2" << endl ;
 
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
 	return (0);
