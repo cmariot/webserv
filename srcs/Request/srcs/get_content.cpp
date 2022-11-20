@@ -123,9 +123,8 @@ int Request::get_content(void)
 			cout << "segfault here" << endl;
 
 			content.erase(pos_iterator);
-				cout << "segfault here2" << endl;
-
-			file_name.erase(pos_iterator);
+			cout << "segfault here2" << endl;
+			file_name.pop();
 			cout << "segfault" << endl;
 			continue;
 		}
