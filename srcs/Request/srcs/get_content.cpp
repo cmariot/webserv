@@ -5,6 +5,8 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
+	vector<string>::iterator iterator = begin() + i;
+
 	file_name.push_back("");
 
 	pos = content[i].find("filename=");
@@ -14,7 +16,7 @@ int Request::get_file_name(size_t i)
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
 		if (file_name[i] == "")
-			content.erase(i);
+			content.erase(iterator);
 	}
 
 	// cout << "This is our file name " << file_name << endl;
