@@ -15,7 +15,7 @@ int Request::get_file_name(size_t i)
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
 		if (pos == 11)
-			retrun (1);
+			return (1);
 	}
 
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
