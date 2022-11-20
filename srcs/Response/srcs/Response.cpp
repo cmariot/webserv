@@ -45,18 +45,15 @@ void	Response::post(void)
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
-
-		cout << _request.body_content[i] << endl;
 	
 		if (fout.is_open() == false)
 		{
 			error("Error : while opening the file ", infile);
 			_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
 		}
-		// cout << "content added \n" << _request.body_content << cout;
 		fout << _request.body_content[i];
 		fout.close();
-		_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";
+		_full_response = "HTTP/1.1 201 Created\r\n\r\n Files uploaded";
 		i++;
 	}
 }

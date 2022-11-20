@@ -1,6 +1,6 @@
 #include "Request.hpp"
 
-// get the name of the different files and store them in file_name vector
+// get the name of the file and store it in file_name vector
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
@@ -18,9 +18,9 @@ int Request::get_file_name(size_t i)
 	}
 	else
 		return (1);
-	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
 };
 
+// store content type of the file in the vector
 int Request::get_content_type(size_t i)
 {
 	size_t		pos;
@@ -36,6 +36,7 @@ int Request::get_content_type(size_t i)
 	return (0);
 };
 
+// store body content of the file in the vector
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
@@ -105,9 +106,7 @@ int Request::get_content(void)
 
 	while (i < content.size())
 	{
-
 		pos_iterator = content.begin() + i ;
-
 		if(get_file_name(i))
 		{
 			content.erase(pos_iterator);
@@ -120,5 +119,3 @@ int Request::get_content(void)
 	}
 	return (0);
 }
-
-// to do multiple file creation
