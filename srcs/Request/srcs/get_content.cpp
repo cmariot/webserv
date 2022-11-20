@@ -4,7 +4,7 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
-	cout << "sseg in file name" << endl ;
+	// cout << "sseg in file name" << endl ;
 
 	file_name.push_back("");
 
@@ -15,7 +15,7 @@ int Request::get_file_name(size_t i)
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
 	}
-	cout << "sseg in file name" << endl ;
+	// cout << "sseg in file name" << endl ;
 	if (file_name[i].empty())
 		return (1);
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
@@ -112,9 +112,7 @@ int Request::get_content(void)
 		pos_iterator = content.begin() + i ;
 
 		cout << "size = " << content.size() << " i = " << i<< endl ;
-		cout << "segfault" << endl;
-		get_file_name(i);
-		cout << "segfault" << endl;
+	
 		if(get_file_name(i))
 		{
 			content.erase(pos_iterator);
