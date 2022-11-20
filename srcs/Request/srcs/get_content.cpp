@@ -54,7 +54,6 @@ int Request::get_body_content(size_t i)
 			body_content[i] += content[i][pos++];
 		}
 	}
-	cout << "This is our content : " << endl << body_content[i] << endl;
 	return (0);
 };
 
@@ -88,7 +87,6 @@ int	Request::get_boundary_content(void)
 			break;
 		first_boundary = second_boundary;
 	}
-	cout << "size = " << content.size() << endl;
 	return 0;
 }
 
@@ -110,7 +108,6 @@ int Request::get_content(void)
 
 		pos_iterator = content.begin() + i ;
 
-		cout << "size = " << content.size() << " i = " << i<< endl ;
 		if(get_file_name(i))
 		{
 			content.erase(pos_iterator);
