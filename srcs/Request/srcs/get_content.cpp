@@ -1,11 +1,9 @@
 #include "Request.hpp"
 
 // get the name of the different files and store them in file_name vector
-// if filename = NULL no file will be added, we remove 
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
-	vector<string>::iterator iterator = content.begin() + i;
 
 	file_name.push_back("");
 
@@ -18,7 +16,6 @@ int Request::get_file_name(size_t i)
 		if (file_name[i] == "")
 		{
 			content.erase(iterator);
-			// file_name.erase(iterator);
 			cout << " on supp l'index :" << i << endl;
 		}
 	}
@@ -97,15 +94,28 @@ int	Request::get_boundary_content(void)
 	return 0;
 }
 
+// This function stores the different infos of files in 3 vectors : name, type, content
+// 1 stored the different contents of the form divided by the boundaries in a vector
+// 2 get the name of the file 
+// 3 if name="" it means no file was uploaded => delete this content from the vector
+// 4 get the type of content 
+// 5 get the content of the file
 int Request::get_content(void)
 {
 	size_t i = 0;
+	vector<string>::iterator pos_iterator;
 
 	get_boundary_content();
 
 	while (i < content.size())
 	{
+		pos_iterator = content.begin() + il 
 		get_file_name(i);
+		if (!file_name[i])
+		{
+			content[i].erase(pos_iterator);
+			file_name[i].erase(pos_iterator)
+		}
 		get_content_type(i);
 		get_body_content(i);
 		cout<< i << ":" << endl << file_name[i] << ":"<< body_content[i] << endl;
