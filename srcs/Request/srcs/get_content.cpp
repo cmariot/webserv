@@ -91,6 +91,15 @@ int	Request::get_boundary_content(void)
 	return 0;
 }
 
+void Request::reset(void)
+{
+	content.clear();
+	file_name.clear();
+	content_type.clear();
+	body_content.clear();
+}
+
+
 // This function stores the different infos of files in 3 vectors : name, type, content
 // 1 stored the different contents of the form divided by the boundaries in a vector
 // 2 get the name of the file 
@@ -102,8 +111,8 @@ int Request::get_content(void)
 	size_t i = 0;
 	vector<string>::iterator pos_iterator;
 
+	reset();
 	get_boundary_content();
-
 	while (i < content.size())
 	{
 		pos_iterator = content.begin() + i ;
