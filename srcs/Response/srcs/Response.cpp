@@ -36,19 +36,23 @@ void	Response::build_http_response(void)
 void	Response::post(void)
 {
 	// std::cout << _request.request << std::endl;
+	size_t i = 0;
 
-	string infile(_request.file_name);
-	std::ofstream fout;
-	fout.open(infile.c_str(), std::ios::out | std::ios::app);
-	if (fout.is_open() == false)
+	while (i < _request.content.size())
 	{
-		error("Error : while opening the file ", infile);
-		_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
+		string infile(_request.file_name[i]);
+		std::ofstream fout;
+		fout.open(infile.c_str(), std::ios::out | std::ios::app);
+		if (fout.is_open() == false)
+		{
+			error("Error : while opening the file ", infile);
+			_full_response = "HTTP/1.1 201 OK\r\n\r\n";;
+		}
+		fout << _request.body_content[i];
+		fout.close();
+		_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";
+		i++;
 	}
-	// cout << "content added \n" << _request.body_content << cout;
-	fout << _request.body_content;
-	fout.close();
-	_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";;
 }
 
 // main function used to send the response to the client

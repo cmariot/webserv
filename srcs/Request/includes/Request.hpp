@@ -27,10 +27,10 @@ class	Request
 		pair<string, int>	request_address;
 
 		string 				boundary;
-		string				body_content;
-		string				content_type;
-		string 				file_name;
-		string				content;
+		vector<string>		content;
+		vector<string>		body_content;
+		vector<string>		content_type;
+		vector<string> 		file_name;
 
 
 		int	get(int);
@@ -44,13 +44,16 @@ class	Request
 		int		get_http_version(string &, size_t &);
 		int		get_host(void);
 
-		int		get_body_content(void);
-		int 	get_content_type(void);
-		int 	get_file_name(void);
+		int		get_boundary_content(void);
+		int		get_body_content(size_t i);
+		int 	get_content_type(size_t i);
+		int 	get_file_name(size_t i);
 		int 	get_content(void);
 
 		int		set_content(void);
 		int		host_to_address(void);
+
+		void	reset(void);
 
 };
 
