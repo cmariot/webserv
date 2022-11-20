@@ -111,7 +111,7 @@ int Request::get_content(void)
 		get_file_name(i);
 		cout << "segfault2" << endl;
 
-		if (file_name[i] == "")
+		if (file_name[i] && file_name[i] == "")
 		{
 			content.erase(pos_iterator);
 			file_name.erase(pos_iterator);
