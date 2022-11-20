@@ -18,8 +18,8 @@ int Request::get_file_name(size_t i)
 		if (file_name[i] == "")
 		{
 			content.erase(iterator);
-			file_name.erase(iterator);
-			cout << " on supp l'index :" << i << endl;
+			// file_name.erase(iterator);
+			// cout << " on supp l'index :" << i << endl;
 		}
 	}
 
