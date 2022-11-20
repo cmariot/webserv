@@ -20,7 +20,7 @@ int Request::get_file_name(size_t i)
 			file_name.back() += content[i][pos++];
 		cout << "sseg in file name4" << endl ;
 
-		if (pos == tmp))
+		if (pos == tmp)
 			return (1);
 	}
 	cout << "sseg in file name2" << endl ;
