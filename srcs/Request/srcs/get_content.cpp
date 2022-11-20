@@ -1,8 +1,7 @@
 #include "Request.hpp"
 
-// get the type of
-
-
+// get the name of the different files and store them in file_name vector
+// if filename = NULL no file will be added, we remove 
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
@@ -14,6 +13,8 @@ int Request::get_file_name(size_t i)
 		pos += 10;
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
+		if (file_name[i] == "")
+			content.erase(i);
 	}
 
 	// cout << "This is our file name " << file_name << endl;
@@ -51,10 +52,9 @@ int Request::get_body_content(size_t i)
 		while (content[i][pos])
 		{
 			body_content[i] += content[i][pos++];
-			cout << body_content[i] << endl;
 		}
 	}
-	// cout << "This is our content " << body_content[i] << endl;
+	cout << "This is our content : " << endl << body_content[i] << endl;
 	return (0);
 };
 
