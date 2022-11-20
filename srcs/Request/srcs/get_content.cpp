@@ -14,6 +14,7 @@ int Request::get_file_name(size_t i)
 		pos += 10;
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
+		cout << pos << endl;
 		if (pos == 11)
 			return (1);
 	}
