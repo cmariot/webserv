@@ -87,6 +87,7 @@ int	Request::get_boundary_content(void)
 			break;
 		first_boundary = second_boundary;
 	}
+	cout << "size = " << content.size() << endl;
 	return 0;
 }
 
@@ -106,11 +107,11 @@ int Request::get_content(void)
 	while (i < content.size())
 	{
 
-		pos_iterator = content.begin() + i - 1;
+		pos_iterator = content.begin() + i ;
 		get_file_name(i);
 		cout << "segfault2" << endl;
 
-		if (file_name[i].empty())
+		if (file_name[i] == "")
 		{
 			content.erase(pos_iterator);
 			file_name.erase(pos_iterator);
