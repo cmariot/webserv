@@ -4,27 +4,21 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
-	cout << "sseg in file name" << endl ;
 
 	file_name.push_back("");
-
 	pos = content[i].find("filename=");
 	if (pos != std::string::npos)
 	{
 		pos += 10;
-		cout << "sseg in file nam3" << endl ;
-
 		while(content[i][pos] != '"')
 			file_name.back() += content[i][pos++];
-		cout << "sseg in file name4" << endl ;
-		cout << "file :" << file_name.back().empty() <<endl;
 		if (file_name.back().empty())
 			return (1);
+		return (0);
 	}
-	cout << "sseg in file name2" << endl ;
-
+	else
+		return (1);
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
-	return (0);
 };
 
 int Request::get_content_type(size_t i)
@@ -117,19 +111,12 @@ int Request::get_content(void)
 		pos_iterator = content.begin() + i ;
 
 		cout << "size = " << content.size() << " i = " << i<< endl ;
-		cout << "segfault" << endl;
 		if(get_file_name(i))
 		{
-			cout << "segfault here" << endl;
-
 			content.erase(pos_iterator);
-			cout << "segfault here2" << endl;
 			file_name.pop_back();
-			cout << "segfault" << endl;
 			continue;
 		}
-		cout << "segfault3" << endl;
-
 		get_content_type(i);
 		get_body_content(i);
 		i++;
