@@ -10,9 +10,12 @@ git checkout nouvelle_branche
 
 #### Fusionner la nouvelle branche avec la branche main :
 git checkout main
+</br>
 git merge nouvelle_branche
 
 #### Supprimer une branche :
 git branch -d nouvelle_branche
+</br>
+git push origin --delete nouvelle_branche
 
 [![Compilation test](https://github.com/cmariot/webserv/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/cmariot/webserv/actions/workflows/c-cpp.yml)
