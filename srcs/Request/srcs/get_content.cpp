@@ -4,6 +4,7 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
+	cout << "sseg in file name" << cout ;
 
 	file_name.push_back("");
 
