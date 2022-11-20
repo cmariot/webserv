@@ -105,12 +105,15 @@ int Request::get_content(void)
 
 	while (i < content.size())
 	{
+		cout << "segfault" << endl;
+
 		pos_iterator = content.begin() + i;
 		get_file_name(i);
 		if (file_name[i] == "")
 		{
 			content.erase(pos_iterator);
 			file_name.erase(pos_iterator);
+			cout << "segfault" << endl;
 			continue;
 		}
 		get_content_type(i);
