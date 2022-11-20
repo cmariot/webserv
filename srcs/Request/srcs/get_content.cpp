@@ -120,7 +120,6 @@ int Request::get_content(void)
 		}
 		get_content_type(i);
 		get_body_content(i);
-		cout<< i << ":" << endl << file_name[i] << ":"<< body_content[i] << endl;
 		i++;
 	}
 	return (0);
