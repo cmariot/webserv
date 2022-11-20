@@ -113,7 +113,7 @@ int Request::get_content(void)
 
 		cout << "size = " << content.size() << " i = " << i<< endl ;
 		cout << "segfault" << endl;
-		get_file_name(i)
+		get_file_name(i);
 		cout << "segfault" << endl;
 		if(get_file_name(i))
 		{
