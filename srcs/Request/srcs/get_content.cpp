@@ -19,7 +19,7 @@ int Request::get_file_name(size_t i)
 		while(content[i][pos] != '"')
 			file_name.back() += content[i][pos++];
 		cout << "sseg in file name4" << endl ;
-		cout << "file :" << file_name.back() <<endl;
+		cout << "file :" << file_name.back().empty() <<endl;
 		if (pos == tmp)
 			return (1);
 	}
