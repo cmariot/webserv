@@ -13,11 +13,7 @@ int Request::get_file_name(size_t i)
 		pos += 10;
 		while(content[i][pos] != '"')
 			file_name[i] += content[i][pos++];
-		if (file_name[i] == "")
-		{
-			content.erase(iterator);
-			cout << " on supp l'index :" << i << endl;
-		}
+	
 	}
 
 	// cout << "This is our file name " << file_name[i] << " et " <<i <<endl;
