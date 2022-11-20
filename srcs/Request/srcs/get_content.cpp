@@ -112,7 +112,7 @@ int Request::get_content(void)
 		pos_iterator = content.begin() + i ;
 
 		cout << "size = " << content.size() << " i = " << i<< endl ;
-	
+		get_file_name(i);
 		if(get_file_name(i))
 		{
 			content.erase(pos_iterator);
