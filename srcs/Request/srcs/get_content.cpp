@@ -120,7 +120,11 @@ int Request::get_content(void)
 		cout << "segfault" << endl;
 		if(get_file_name(i))
 		{
+			cout << "segfault here" << endl;
+
 			content.erase(pos_iterator);
+				cout << "segfault here2" << endl;
+
 			file_name.erase(pos_iterator);
 			cout << "segfault" << endl;
 			continue;
