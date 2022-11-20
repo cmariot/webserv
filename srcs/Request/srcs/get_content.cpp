@@ -5,7 +5,7 @@
 int Request::get_file_name(size_t i)
 {
 	size_t		pos;
-	vector<string>::iterator iterator = begin() + i;
+	vector<string>::iterator iterator = content.begin() + i;
 
 	file_name.push_back("");
 
