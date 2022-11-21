@@ -23,7 +23,6 @@ int Response::build_cgi_response(void)
 //		if (execute(env))
 //			return (1);
 //	waitpid(pid, NULL, 0);
-sdakjlhsADNX//LKajbX=
 		
 	return (0);
 };
