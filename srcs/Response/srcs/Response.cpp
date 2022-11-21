@@ -72,9 +72,10 @@ int	Response::test_authorization(void)
 		return (0);
 	if (_request.method == "POST" && _location.post_allowed())
 		return (0);
-	cout << "post" << endl;
 	set_status_code(403);
 	build_http_response();
+	cout << "post" << endl;
+
 	return (1);
 }
 
