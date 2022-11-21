@@ -33,12 +33,10 @@ void	Response::build_http_response(void)
 	cout << "post2" << endl;
 
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) == _server.get_error_pages().end())
-		_response_body = _server.get_error_pages().find(_status_code)->second.get_path();
+		cout<< _server.get_error_pages().find(_status_code)->second.get_path();
 		
 	else if (_status_code >= 300)
-	{
-		cout << "post4" << endl;
-		generate_error_page(_status_code);
+	{		generate_error_page(_status_code);
 		return;
 	}
 
