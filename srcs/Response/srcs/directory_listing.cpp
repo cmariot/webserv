@@ -43,18 +43,42 @@ int	Response::list_directories(void)
 	_response_body += 	"</head>";
 	_response_body += 	"<body>";
 	_response_body +=		"<h1>Index of " + _file_path + "</h1>";
-
-	size_t	pos = _response_body.size();
-
 	while ((dir = readdir(d)) != NULL)
 	{
-		tmp = _request.uri + "/";
-		tmp += dir->d_name;
-		std::cout << tmp << std::endl;
-		_response_body.insert(pos, ("<a href=\"" + tmp + "\">" + dir->d_name + "</a>"));
+		if (memcmp(dir->d_name, ".", strlen(dir->d_name)) == 0)
+		{
+			_response_body += "<a href=\"" + _request.uri + "\">" + dir->d_name + "</a>";
+		}
+		else if (memcmp(dir->d_name, "..", strlen(dir->d_name)) == 0)
+		{
+			std::cout << "REQUEST URI : " << _request.uri << std::endl;
+			if (_request.uri.size())
+			{
+				size_t pos = _request.uri.size() - 1;
+				if (_request.uri[pos] == '/')
+					--pos;
+				while (pos)
+				{
+					if (_request.uri[pos] == '/')
+						break ;
+					--pos;
+				}
+				tmp = _request.uri.substr(0, pos);
+				tmp += "/";
+				_response_body += "<a href=\"" + tmp + "\">..</a>";
+			}
+		}
+		else
+		{
+			if (_request.uri.size() > 0 && _request.uri[_request.uri.size() - 1] != '/')
+				tmp = _request.uri + "/";
+			else
+				tmp = _request.uri;
+			tmp += dir->d_name;
+			_response_body += "<a href=\"" + tmp + "\">" + dir->d_name + "</a>";
+		}
 	}
 	closedir(d);
-
 	_response_body += 	"</body>";
 	_response_body += "</html>";
 

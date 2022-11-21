@@ -16,7 +16,6 @@ int	Location::set_cgi(std::vector<std::string> & vector, size_t & i)
 				return (error("Syntax error : Trying to add the same cgi"));;
 		if (vector[i].size() && vector[i][0] != '.')
 			return (error("Syntax error : Invalid extension for the cgi directive " + vector[i]));;
-
 		_cgi_extensions.push_back(vector[i++]);
 	}
 	cgi_set = true;

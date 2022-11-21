@@ -88,28 +88,25 @@ void 	Response::get(void)
 		generate_error_page(404);
 		return ;
 	}
-	if (is_a_directory(_file_path))
+	if (is_a_directory(_file_path) && _dir == true)
 	{
-		if (_location.directory_listing() == true)
+		if (_location.directory_file_set)
+		{
+			_status_code = 415;
+			const std::string	code  = "415";
+			const std::string	message = _status_code_map.find(_status_code)->second;
+			_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
+			_response_body = _location.get_directory_file();
+			_full_response = _response_header + _response_body;
+		}
+		else if (_location.directory_listing() == true)
 		{
 			list_directories();
 			return ;
 		}
 		else
-		{
-			if (_location.directory_file_set)
-			{
-				_status_code = 415;
-				const std::string	code  = itostring(_status_code);
-				const std::string	message = _status_code_map.find(_status_code)->second;
-				_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
-				_response_body = _location.get_directory_file();
-				_full_response = _response_header + _response_body;
-			}
-			else
-				generate_error_page(415);
-			return ;
-		}
+			generate_error_page(415);
+		return ;
 	}
 	if (_location.cgi_set == true && match_extension())
 	{

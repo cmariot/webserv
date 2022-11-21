@@ -20,10 +20,11 @@ int	Response::path_construction(void)
 	//std::cout << "- location.uri : " << _location.get_uri() << std::endl;
 	//std::cout << "- location.root : " << _location.root() << std::endl;
 	//std::cout << "- location.index : " << _location.index()[0] << std::endl;
-	std::cout << "- request.uri : " << _request.uri << std::endl;
+	// std::cout << "- request.uri : " << _request.uri << std::endl;
 
 	std::string	path;
 
+	_dir = false;
 	_file_path = _request.uri;
 	_file_path.replace(0, _location.get_uri().size(), _location.root());
 	if (is_a_file(_file_path) == true)
@@ -43,6 +44,7 @@ int	Response::path_construction(void)
 	}
 	if (is_a_directory(_file_path) == true)
 	{
+		_dir = true;
 		print(INFO, "GET will try the file", _file_path.c_str());
 		return (0);
 	}
