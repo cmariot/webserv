@@ -94,7 +94,7 @@ void	Response::create(int fd)
 		{
 			post();
 			build_http_response();
-			print(INFO, "Files were succesfully uploaded");
+			// print(INFO, "Files were succesfully uploaded");
 		}
 	}
 	else if (_request.method == "DELETE")
