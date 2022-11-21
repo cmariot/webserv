@@ -44,6 +44,7 @@ class Response
 		int						get_location(void);
 		int						path_construction(void);
 
+		int					test_authorization(void);
 		void 					get(void);
 		void					post(void);
 

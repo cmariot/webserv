@@ -16,21 +16,20 @@ bool Response::check_file_existance(string &file)
 	return (stat(file.c_str(), &buffer) == 0);
 };
 
-int		Response::create_response_header(void)
+// int		Response::create_response_header(void)
+// {
+// 	const std::string	code  = itostring(_status_code);
+
+// 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+// 	return (0);
+// };
+
+void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
 
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
-	return (0);
-};
-
-void	Response::build_http_response(void)
-{
-	create_response_header();
-	//if (_status_code == 200)
-	//{
 	_full_response = _response_header + _response_body;
-	//}
 };
 
 void	Response::post(void)
@@ -56,6 +55,20 @@ void	Response::post(void)
 	}
 }
 
+// Check if methods allowed in the location
+int	Reponse::test_authorization(void)
+{
+	if (_request.method == "GET" && _location.get_allowed())
+		return (0);
+	if (_request.method == "DELETE" && _location.delete_allowed())
+		return (0);
+	if (_request.method == "POST" && _location.post_allowed())
+		return (0);
+	set_status_code(403);
+	build_http_response();
+	return (1);
+}
+
 // main function used to send the response to the client
 void	Response::create(int fd)
 {
@@ -70,12 +83,16 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "POST")
 	{
-		post();
-		build_http_response();
+		if (!test_authorization())
+		{
+			post();
+			build_http_response();
+		}
 	}
 	else if (_request.method == "DELETE")
 	{
-		//delete();
+		// if (!test_authorization())
+			//delete();
 	}
 	else
 	{
