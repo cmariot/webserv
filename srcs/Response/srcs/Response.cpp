@@ -65,6 +65,7 @@ void	Response::post(void)
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
+	cout << "post" << endl;
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
 	if (_request.method == "DELETE" && _location.delete_allowed())
@@ -92,7 +93,6 @@ void	Response::create(int fd)
 	{
 		if (!test_authorization())
 		{
-			cout << "post" << endl;
 			post();
 			build_http_response();
 			// print(INFO, "Files were succesfully uploaded");
