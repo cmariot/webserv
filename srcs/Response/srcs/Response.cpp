@@ -29,6 +29,13 @@ void	Response::build_http_response(void)
 	const std::string	code  = itostring(_status_code);
 
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	
+	if (_status_code >= 300 && _server._error_pages.find(_status_code) == _server._error_pages.end())
+		_response_body = _server._error_pages.find(_status_code)->second;
+	else
+		_response_body = generate_error_page(_status_code);
+
+
 	_full_response = _response_header + _response_body;
 };
 
