@@ -67,7 +67,7 @@ class Response
 		int 					set_status_code(const int & status_code);
 		// used for get_response
 		bool  					check_file_existance(string & path);
-		int						stored_file(string & path);
+		int						stored_file(const string & path);
 		int						build_cgi_response(void);
 		const char				**get_env(void);
 		void 					build_http_response(void);
