@@ -29,7 +29,7 @@ char *const *Response::get_env(void)
 int Response::build_cgi_response(string & path)
 {
     int	pid;
-	char *(arg[3]);
+	char *arg[3];
 	int pipes[NUM_PIPES][2];
 
 	pipe(pipes[PARENT_READ_PIPE]);
