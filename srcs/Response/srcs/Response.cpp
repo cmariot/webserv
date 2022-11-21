@@ -31,7 +31,7 @@ void	Response::build_http_response(void)
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
 	
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) == _server.get_error_pages().end())
-		_response_body = _server.get_error_pages().find(_status_code)->second;
+		_response_body = _server.get_error_pages().find(_status_code).get_path();
 	else
 		generate_error_page(_status_code);
 
@@ -94,6 +94,7 @@ void	Response::create(int fd)
 		{
 			post();
 			build_http_response();
+			print(INFO, "Files were succesfully uploaded");
 		}
 	}
 	else if (_request.method == "DELETE")
