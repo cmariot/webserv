@@ -26,6 +26,8 @@ char *const *Response::get_env(void)
     return (_env);
 };
 
+# define BUFFER_SIZE 1024
+
 int Response::build_cgi_response(string & path)
 {
     int	pid;
@@ -54,23 +56,25 @@ int Response::build_cgi_response(string & path)
 	}
 	else
 	{
-		char buffer[7000000];
-		int count;
+		char	buffer[BUFFER_SIZE];
+		size_t	count = BUFFER_SIZE;
 
-		bzero(buffer, 7000000);
 		close(CHILD_READ_FD);
 		close(CHILD_WRITE_FD);
-		count = read(PARENT_READ_FD, buffer, 7000000 - 1);
-		if (count >= 0)
+		_response_body = "";
+		while (true)
 		{
+			bzero(buffer, count);
+			count = read(PARENT_READ_FD, buffer, BUFFER_SIZE - 1);
 			buffer[count] = 0;
+			if (count == 0)
+				break ;
+			_response_body += buffer;
 		}
 		const std::string	code = "200";
 		const std::string	message = _status_code_map.find(200)->second;
-
 		_status_code = 200;
 		_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
-		_response_body = buffer;
 		_response_body = _response_body.substr(39, _response_body.size());
 		_full_response = _response_header + _response_body;
 	}
