@@ -46,7 +46,7 @@ int		Response::stored_file(string & path)
 
 void 	Response::get(void)
 {
-	if (get_location()) // No location block found
+	if (get_location())
 	{
 		generate_error_page(404);
 		return ;
@@ -54,7 +54,6 @@ void 	Response::get(void)
 	if (_location.redirection() == true)
 	{
 		_status_code = _location.get_redirection_code();
-		// Check du redirection code ? (code < 200 || code > 400 = error ?)
 		const std::string	code  = itostring(_status_code);
 
 		_full_response = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
@@ -64,7 +63,6 @@ void 	Response::get(void)
 	if (_location.get_allowed() == false)
 	{
 		generate_error_page(405);
-		// check error_page redirection
 		return ;
 	}
 	if (path_construction())
@@ -81,7 +79,17 @@ void 	Response::get(void)
 		}
 		else
 		{
-			generate_error_page(415);
+			if (_location.directory_file_set)
+			{
+				_status_code = 415;
+				const std::string	code  = itostring(_status_code);
+				const std::string	message = _status_code_map.find(_status_code)->second;
+				_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
+				_response_body = _location.get_directory_file();
+				_full_response = _response_header + _response_body;
+			}
+			else
+				generate_error_page(415);
 			return ;
 		}
 	}

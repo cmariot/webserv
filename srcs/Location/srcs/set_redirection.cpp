@@ -1,5 +1,18 @@
 #include "Location.hpp"
 
+static int	invalid_redirection_code(const int & _redirection_code)
+{
+	if (_redirection_code != 301		// Moved permanently
+		&& _redirection_code != 308		// Permanent Redirect
+		&& _redirection_code != 302		// Found
+		&& _redirection_code != 303		// See other
+		&& _redirection_code != 307		// Temporary Redirect
+		&& _redirection_code != 300		// Multiple choices
+		&& _redirection_code != 304)	// Not modified
+		return (1);
+	return (0);
+};
+
 int	Location::set_redirection(std::vector<std::string> & vector, size_t & i)
 {
 	size_t	j = 0;
@@ -17,6 +30,8 @@ int	Location::set_redirection(std::vector<std::string> & vector, size_t & i)
 			return (error("Syntax error : Invalid redirection code"));
 	}
 	if (vector[i][j])
+		return (error("Syntax error : Invalid redirection code"));
+	if (invalid_redirection_code(_redirection_code))
 		return (error("Syntax error : Invalid redirection code"));
 	_redirection_path = vector[++i];
 	++i;

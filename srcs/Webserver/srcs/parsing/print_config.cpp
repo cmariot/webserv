@@ -31,7 +31,7 @@ static void	print_cgi(const Location & location)
 static void	print_answer_directory(const Location & location)
 {
 	if (location.directory_file_set == true)
-		print("\t\tdir_file\t" + location.get_directory_file() + ";");
+		print("\t\tdir_file\t" + location.get_directory_file_path() + ";");
 };
 
 static void	print_directory_listing(const Location & location)
@@ -92,6 +92,8 @@ static void	print_max_body_size(const double & max_body_size)
 	const char	*cyan		= "\033[36;1m";
 	const char	*reset		= "\033[0m";
 
+	if (max_body_size == 0)
+		return ;
 	std::cout << cyan << "[webserv] (conf)  " << reset << "\tmax_body_size\t" << max_body_size << ";" << std::endl;
 };
 

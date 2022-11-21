@@ -55,6 +55,11 @@ const std::string &		Location::get_directory_file(void) const
 	return (_directory_file);
 };
 
+const std::string &		Location::get_directory_file_path(void) const
+{
+	return (_directory_file_path);
+};
+
 const std::vector<std::string> &	Location::cgi_extensions(void) const
 {
 	return (_cgi_extensions);

@@ -25,7 +25,7 @@ int		Webserver::launch(const char *env[])
 				_request.get(events[i].data.fd);
 				if (get_server(request_server))
 				{
-					// send error
+					// send error 404
 					remove_client(main_socket, client_socket, events);
 					continue ;
 				}

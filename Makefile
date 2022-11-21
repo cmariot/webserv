@@ -113,6 +113,7 @@ SERVER			= constructor.cpp \
 
 ERROR_PAGE		= constructor.cpp \
 				  destructor.cpp \
+				  get_file.cpp \
 				  getters.cpp
 
 LOCATION		= constructor.cpp \
