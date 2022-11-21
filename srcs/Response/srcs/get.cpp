@@ -44,6 +44,24 @@ int		Response::stored_file(string & path)
 	return (set_status_code(200));
 };
 
+bool	Response::match_extension(void)
+{
+	string ext;
+	std::vector<string> cgi_ext;
+
+	if (_file_path.size() > 3)
+	{
+		ext = _file_path.substr(_file_path.size() - 4, _file_path.size());
+		cgi_ext = _location.cgi_extensions();
+		for (size_t i = 0; i < cgi_ext.size(); i++)
+		{
+			if (cgi_ext[i] == ext)
+				return (1);
+		}
+	}
+	return (0);
+}
+
 void 	Response::get(void)
 {
 	if (get_location())
@@ -90,10 +108,10 @@ void 	Response::get(void)
 			generate_error_page(415);
 		return ;
 	}
-	if (_location.cgi_set == true)
+	if (_location.cgi_set == true && match_extension())
 	{
-		std::cout << "HOHO" <<std::endl;
-		if (!build_cgi_response())
+		if (!build_cgi_response(_file_path))
+			//CODE ERROR POUR CMARIOT
 			return ;
 	}
 	stored_file(_file_path);

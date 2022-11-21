@@ -2,7 +2,7 @@
 
 # define SIGNAL_CAUGHT 1
 
-int		Webserver::launch(const char *env[])
+int		Webserver::launch(char *const *env)
 {
 	int			client_socket;
 	size_t		index;

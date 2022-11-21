@@ -7,6 +7,10 @@
 # include <sys/stat.h>
 # include <fstream>
 # include <map>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <stdlib.h>
 
 
 
@@ -39,7 +43,7 @@ class Response
 		~Response(void);
 
 		map<int, string>		init_status_code_map(void) const;
-		void					update(Request &, Server &, const char *env[]);
+		void					update(Request &, Server &, char *const *env);
 		void					create(int);
 		int						get_location(void);
 		int						path_construction(void);
@@ -53,7 +57,7 @@ class Response
 		Server					_server;
 		Location				_location;
 
-		const char				**_env;
+		char *const 			*_env;
 		std::string				_file_path;
 
 	public:
@@ -67,9 +71,11 @@ class Response
 		// used for get_response
 		bool  					check_file_existance(string & path);
 		int						stored_file(string & path);
-		int						build_cgi_response(void);
-		const char				**get_env(void);
+		int						build_cgi_response(string & path);
+		bool					match_extension(void);
+		char *const 	 		*get_env(void);
 		void 					build_http_response(void);
+		bool					execute_script(char **arg);
 
 	private:
 
