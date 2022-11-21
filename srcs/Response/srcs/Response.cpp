@@ -62,7 +62,7 @@ void	Response::create(int fd)
 	if (_request.method == "GET")
 	{
 		get();
-		print(INFO, ("Response =\n" + _full_response).c_str());
+	//	print(INFO, ("Response =\n" + _full_response).c_str());
 		send(fd, _full_response.c_str(), _full_response.size(), 0);
 		print(INFO, "The response has been sent to the client");
 		return ;

@@ -114,6 +114,7 @@ void 	Response::get(void)
 			//CODE ERROR POUR CMARIOT
 			return ;
 	}
+	return ;
 	stored_file(_file_path);
 	// CGI ?
 	if (_server.get_max_size() > 0)
