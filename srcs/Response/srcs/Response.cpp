@@ -27,14 +27,17 @@ bool Response::check_file_existance(string &file)
 void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
+	cout << "post1" << endl;
 
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
-	
+	cout << "post2" << endl;
+
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) == _server.get_error_pages().end())
 		_response_body = _server.get_error_pages().find(_status_code)->second.get_path();
 	else if (_status_code >= 300)
 		generate_error_page(_status_code);
 
+	cout << "post3" << endl;
 
 	_full_response = _response_header + _response_body;
 };
@@ -65,7 +68,6 @@ void	Response::post(void)
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
-	cout << "post" << endl;
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
 	if (_request.method == "DELETE" && _location.delete_allowed())
@@ -73,7 +75,6 @@ int	Response::test_authorization(void)
 	if (_request.method == "POST" && _location.post_allowed())
 		return (0);
 	set_status_code(403);
-	cout << "post2" << endl;
 
 	build_http_response();
 	cout << "post3" << endl;
