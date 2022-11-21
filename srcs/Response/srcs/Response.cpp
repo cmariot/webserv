@@ -33,7 +33,7 @@ void	Response::build_http_response(void)
 	if (_status_code >= 300 && _server._error_pages.find(_status_code) == _server._error_pages.end())
 		_response_body = _server._error_pages.find(_status_code)->second;
 	else
-		_response_body = generate_error_page(_status_code);
+		generate_error_page(_status_code);
 
 
 	_full_response = _response_header + _response_body;
