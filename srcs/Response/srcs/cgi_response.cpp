@@ -34,6 +34,7 @@ int Response::build_cgi_response(string & path)
 	char *arg[3];
 	int pipes[NUM_PIPES][2];
 
+	// a secure
 	pipe(pipes[PARENT_READ_PIPE]);
     pipe(pipes[PARENT_WRITE_PIPE]);
 
@@ -42,8 +43,11 @@ int Response::build_cgi_response(string & path)
 		return (error("Fork failed."));
 	else if (pid == 0)
 	{
+		// construction path php_cgi a revoir en fonction du PATH de l'env
 		arg[0] = strdup("/bin/php-cgi");
+		// secure
 		arg[1] = strdup(path.c_str());
+		// secure
 		arg[2] = NULL; 
 		dup2(CHILD_READ_FD, STDIN_FILENO);
 		dup2(CHILD_WRITE_FD, STDOUT_FILENO);
@@ -75,8 +79,13 @@ int Response::build_cgi_response(string & path)
 		const std::string	message = _status_code_map.find(200)->second;
 		_status_code = 200;
 		_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
-		_response_body = _response_body.substr(39, _response_body.size());
+		_response_body = _response_body.substr(39, _response_body.size()); // Le 39 c'est degueu
 		_full_response = _response_header + _response_body;
+
+		close(pipes[PARENT_READ_PIPE][0]);
+		close(pipes[PARENT_READ_PIPE][1]);
+		close(pipes[PARENT_WRITE_PIPE][0]);
+		close(pipes[PARENT_WRITE_PIPE][1]);
 	}
 	return (0);
 };
