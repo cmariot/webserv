@@ -42,6 +42,7 @@ void	Response::post(void)
 	{
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
+		cout << "upload folder" << _location.get_upload_folder() << endl;
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 		if (fout.is_open() == false)
 		{
