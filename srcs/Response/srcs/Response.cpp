@@ -92,6 +92,7 @@ void	Response::create(int fd)
 	{
 		if (!test_authorization())
 		{
+			cout << "post" << endl;
 			post();
 			build_http_response();
 			// print(INFO, "Files were succesfully uploaded");
