@@ -32,11 +32,10 @@ void	Response::build_http_response(void)
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
 	cout << "post2" << endl;
 
-	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) == _server.get_error_pages().end())
+	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) != _server.get_error_pages().end())
 		stored_file(_server.get_error_pages().find(_status_code)->second.get_path());
-		
 	else if (_status_code >= 300)
-	{		generate_error_page(_status_code);
+	{	generate_error_page(_status_code);
 		return;
 	}
 
