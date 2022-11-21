@@ -1,28 +1,31 @@
 #include "Response.hpp"
 
-//void execute_script(char **env)
-//{
-//    char *arg[] = {"/usr/bin/php", "HelloWorld.php", NULL};
-//	execve(arg[0], arg, env);
-//    printf("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK\n");
-//	return (0);
-// 
-//};
+bool Response::execute_script(char **arg)
+{
+	execve(arg[0], arg, get_env());
+	return (0);
+};
 
-const char  **Response::get_env(void)
+char *const *Response::get_env(void)
 {
     return (_env);
 };
 
-int Response::build_cgi_response(void)
+int Response::build_cgi_response(string & path)
 {
-//	int	pid;
-//			
-//    pid = fork();
-//	if (pid == 0)
-//		if (execute(env))
-//			return (1);
-//	waitpid(pid, NULL, 0);
-		
-	return (0);
+    std::cout << path << std::endl;
+    int	pid;
+	char *(arg[3]);
+
+    arg[0] = strdup("/usr/bin/php");
+    arg[1] = strdup(path.c_str());
+    arg[2] = NULL; 
+    pid = fork();
+	if (pid == 0)
+		if (execute_script(arg))
+			return (0);
+    waitpid(pid, NULL, 0);
+    free(arg[0]);
+    free(arg[1]);
+	return (1);
 };

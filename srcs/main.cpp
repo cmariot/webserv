@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-int	main(int argc, const char *argv[], const char *env[])
+int	main(int argc, const char *argv[], char *const *env)
 {
 	Webserver	webserv;
 
