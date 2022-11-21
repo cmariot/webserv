@@ -56,7 +56,7 @@ void	Response::post(void)
 }
 
 // Check if methods allowed in the location
-int	Reponse::test_authorization(void)
+int	Response::test_authorization(void)
 {
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
