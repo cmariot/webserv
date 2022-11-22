@@ -49,9 +49,10 @@ class Webserver
 
 	private:
 
+		int						main_socket;
+
 		std::vector<Server>		server;
 		static size_t			nb_of_servers;
-		int						main_socket;
 
 		Request					_request;
 		Response				_response;

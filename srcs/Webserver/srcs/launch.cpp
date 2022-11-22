@@ -1,45 +1,47 @@
 #include "Webserver.hpp"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <fcntl.h>
+#include <sys/epoll.h>
+#include <string.h>
+
 # define SIGNAL_CAUGHT 1
+
+static const int	create_socket(void)
+{
+	struct addrinfo	hints;
+	int				socket_fd;
+
+	bzero(&hints, sizeof(struct addrinfo));
+
+	return (socket_fd);
+};
 
 int		Webserver::launch(char *const *env)
 {
-	int			client_socket;
-	size_t		index;
-	Server		request_server;
+	(void)env;
 
-	if (init_sockets())
-		return (exit_webserv());
-	catch_signal();
+	// Init sockets
+	int	socket_fd;
+
+	socket_fd = create_socket();
+
 	print(INFO, "Webserv is waiting for clients connexion ...");
+	catch_signal();
 	while (true)
 	{
 		if (wait_event(events, nb_events) == SIGNAL_CAUGHT)
-			return (exit_webserv());
+			break ;
 		for (size_t i = 0 ; i < nb_events ; ++i)
 		{
-			if (client_connexion(&index, events[i]))
-			{
-				accept_connexion(&client_socket, server[index], events);
-				// Creer une instance de classe client si client_socket inconnu
-				// Sinon ptr sur client
-			}
-			else
-			{
-				// Check si on doit fermer socket client dans la requete
-				_request.get(events[i].data.fd);
-				if (get_server(request_server))
-				{
-					// send error 404
-					remove_client(main_socket, client_socket, events);
-					continue ;
-				}
-				_response.update(_request, request_server, env);
-				_response.create(events[i].data.fd);
-				//	if (on doit fermer client)
-				//	remove_client(main_socket, client_socket, events);
-			}
+		
 		}
 	}
+	exit_webserv();
 	return (0);
 };
