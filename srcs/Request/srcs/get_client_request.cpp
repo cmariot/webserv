@@ -24,6 +24,7 @@ int	Request::get(int fd)
 
 	print(INFO, "Getting the client's request");
 	request.clear();
+	// Interdit, 1 seul appel recv par event
 	while (true)
 	{
 		bzero(buffer, recv_return);
@@ -37,7 +38,6 @@ int	Request::get(int fd)
 		if (recv_return < BUFFER_SIZE)
 			break ;
 	}
-	std::cout << "REQUEST = " << request << std::endl;
 	interpret();
 	return (0);
 };

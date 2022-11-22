@@ -31,7 +31,8 @@ int		Webserver::launch(char *const *env)
 				}
 				_response.update(_request, request_server, env);
 				_response.create(events[i].data.fd);
-				remove_client(main_socket, client_socket, events);
+			//	if ()
+					remove_client(main_socket, client_socket, events);
 			}
 		}
 	}

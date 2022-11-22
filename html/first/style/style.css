@@ -2,3 +2,11 @@ h1
 {
 	color: green;
 }
+
+#link_list, 
+#link_list a:visited
+{
+	display: flex;
+	flex-direction: column;
+	color: green;
+}
