@@ -70,6 +70,9 @@ void	Response::post(void)
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
+
+	cout << "get : "<< +_location.get_allowed_methods() << endl;
+	cout << "post : "<< +_location.get_allowed_methods() << endl;
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
 	if (_request.method == "DELETE" && _location.delete_allowed())
