@@ -111,11 +111,13 @@ void 	Response::get(void)
 	if (_location.cgi_set == true && match_extension())
 	{
 		if (!build_cgi_response(_file_path))
-			//CODE ERROR POUR CMARIOT
 			return ;
+		//CODE ERROR POUR CMARIOT
 	}
-	return ;
-	stored_file(_file_path);
+	else
+	{
+		stored_file(_file_path);
+	}
 	// CGI ?
 	if (_server.get_max_size() > 0)
 	{
