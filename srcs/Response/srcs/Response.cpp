@@ -53,7 +53,7 @@ void	Response::post(void)
 	{
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
-		cout << "upload folder" << _server::_location.get_upload_path() << endl;
+		cout << "upload folder" << _server._location.get_upload_path() << endl;
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 		if (fout.is_open() == false)
 		{
@@ -78,9 +78,9 @@ int	Response::test_authorization(void)
 		return (0);
 	if (_request.method == "POST" && _location.post_allowed())
 		return (0);
-	if (!_location.post_allowed())
+	if (!_server._location.post_allowed())
 			cout << "post is not allowed "<< endl;
-	if (!_location.get_allowed())
+	if (_server.!_location.get_allowed())
 			cout << "get is not allowed "<< endl;
 	set_status_code(403);
 
@@ -111,7 +111,7 @@ void	Response::create(int fd)
 			// print(INFO, "Files were succesfully uploaded");
 		}
 	}
-	else if (_server::_request.method == "DELETE")
+	else if (_request.method == "DELETE")
 	{
 		// if (!test_authorization())
 			//delete();
