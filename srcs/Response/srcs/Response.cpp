@@ -73,7 +73,7 @@ int	Response::test_authorization(void)
 	if (get_location()) 
 	{
 		generate_error_page(404);
-		return ;
+		return 1 ;
 	}
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
