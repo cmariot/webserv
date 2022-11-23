@@ -8,6 +8,7 @@ int		Webserver::launch(char *const *env)
 	size_t		index;
 	Server		request_server;
 
+	(void)env;
 	if (init_sockets())
 		return (exit_webserv());
 	catch_signal();
@@ -21,23 +22,24 @@ int		Webserver::launch(char *const *env)
 			if (client_connexion(&index, events[i]))
 			{
 				accept_connexion(&client_socket, server[index], events);
-				// Creer une instance de classe client si client_socket inconnu
-				// Sinon ptr sur client
+				std::cout << "Client connexion !" << std::endl;
 			}
 			else
 			{
-				// Check si on doit fermer socket client dans la requete
-				_request.get(events[i].data.fd);
-				if (get_server(request_server))
+				char	buffer[10];
+				int		recv_return = 10;
+
+				print(INFO, "Getting the client's request");
+				
+				_request.request.clear();
+				bzero(buffer, 10);
+				recv_return = recv(client_socket, buffer, 9, 0);
+				if (recv_return <= 0)
 				{
-					// send error 404
 					remove_client(main_socket, client_socket, events);
-					continue ;
+					return (0);
 				}
-				_response.update(_request, request_server, env);
-				_response.create(events[i].data.fd);
-				//	if (on doit fermer client)
-				remove_client(main_socket, client_socket, events);
+				std::cout << _request.request << std::endl;
 			}
 		}
 	}
