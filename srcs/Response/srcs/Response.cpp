@@ -48,7 +48,7 @@ void	Response::post(void)
 	// string folder = _location.get_upload_path();
 	// if (stat(folder.c_str(), &buff) != 0)
 	// 	mkdir(folder.c_str(), 0777);
-	string folder = "test/";
+	string folder = "/html/test/";
 	cout << folder << endl;
 	if(mkdir(folder.c_str(), 0777))
 	{
