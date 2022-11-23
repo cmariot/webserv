@@ -3,7 +3,7 @@
 bool	Webserver::client_connexion(size_t & server_index, struct epoll_event & event)
 {
 	std::cout << "Event fd = " <<  event.data.fd << std::endl;
-	for (server_index = 0 ; server_index < nb_of_servers ; ++server_index)
+	for (server_index = 0 ; server_index < 1 /* nb_of_servers */ ; ++server_index)
 	{
 		std::cout << "Server socket = " <<  server[server_index].socket << std::endl;
 		if (event.data.fd == server[server_index].socket)
@@ -17,18 +17,28 @@ bool	Webserver::client_connexion(size_t & server_index, struct epoll_event & eve
 int		Webserver::launch(char *const *env)
 {
 	(void)env;
+
 	// Ouvrir un epoll_socket avec epoll create
 	main_socket = epoll_create1(0);
+	if (main_socket == -1)
+			std::cerr << "epoll_create1" << std::endl;
 
 	// Pour chaque serveur : 
-	for (size_t i = 0 ; i < nb_of_servers ; ++i)
-	{
+	//for (size_t i = 0 ; i < nb_of_servers ; ++i)
+	//{
 		// Ouvrir un socket
+		int i = 0;
 		server[i].socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (server[i].socket == -1)
 			std::cerr << "socket" << std::endl;
 
 		//setsockopt ?
+		const int		options			= 1;
+		const void *	option_value	= &options;
+		const socklen_t	option_len		= sizeof(options);
+
+		if (setsockopt(server[i].socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, option_value, option_len) == -1)
+			std::cerr << "setsockopt" << std::endl;
 
 		// Attribuer un type, un host et un port a l'addresse de ce socket
 		server[i].address.sin_family = AF_INET;
@@ -36,11 +46,11 @@ int		Webserver::launch(char *const *env)
 		server[i].address.sin_port = htons(server[i].get_address().second);
 
 		// Bind socket et addresse
-		if (bind(server[i].socket, (const sockaddr *)&server[i].address, sizeof(server[i].address)) == -1)
+		if (bind(server[i].socket, (const sockaddr *)&(server[i].address), sizeof(server[i].address)) == -1)
 			std::cerr << "bind" << std::endl;
 
 		// Listen
-		if (listen(server[i].socket, 100) == -1)
+		if (listen(server[i].socket, 42) == -1)
 			std::cerr << "listen" << std::endl;
 
 		// Options du server_socket
@@ -56,7 +66,7 @@ int		Webserver::launch(char *const *env)
 		// Ajout a la liste d'interet
 		if (epoll_ctl(main_socket, EPOLL_CTL_ADD, server[i].socket, &event) == -1)
 			std::cerr << "epoll_ctl" << std::endl;
-	}
+	//}
 
 	size_t	server_index = 0;
 	// Signal catcher
@@ -68,17 +78,10 @@ int		Webserver::launch(char *const *env)
 			std::cerr << "epoll_wait" << std::endl;
 			break ;
 		}
-		for (int i = 0 ; i < nb_events ; ++i)
+		for (int i = 0 ; i < nb_events ; i++)
 		{
 			if (client_connexion(server_index, events[i]))
-			{
-				std::cout << _server.get_host() << std::endl;
 				return (0);
-			}
-			else
-				return (1);
-
-			std::cout << server_index << std::endl;
 		}
 	}
 

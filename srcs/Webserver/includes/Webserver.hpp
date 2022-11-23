@@ -15,7 +15,7 @@
 #include <vector>
 #include <sstream>
 
-# define MAX_EVENTS	100
+# define MAX_EVENTS	10
 
 # define STDIN		0
 # define STDOUT		1
