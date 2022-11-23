@@ -8,6 +8,7 @@
 # include <vector>
 # include <map>
 # include <set>
+# include <stdlib.h>
 
 using std::map;
 using std::set;
