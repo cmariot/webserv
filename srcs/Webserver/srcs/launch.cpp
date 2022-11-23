@@ -13,9 +13,7 @@ int		Webserver::launch(char *const *env)
 		// Ouvrir un socket
 		server[i].socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (server[i].socket == -1)
-		{
 			std::cerr << "socket" << std::endl;
-		}
 
 		// Attribuer un type, un host et un port a l'addresse de ce socket
 		server[i].address.sin_family = AF_INET;
@@ -24,13 +22,15 @@ int		Webserver::launch(char *const *env)
 
 		// Bind socket et addresse
 		if (bind(server[i].socket, (const sockaddr *)&server[i].address, sizeof(server[i].address)) == -1)
-		{
 			std::cerr << "bind" << std::endl;
-		}
+
 		// Listen
 		// fcntl pour non-bloquant ici ?
 	}
 
 	// Ajouter chaque server_socket a epoll_socket
+	// Signal catcher
+	// Boucle infinie
+	// Close
 	return (0);
 };

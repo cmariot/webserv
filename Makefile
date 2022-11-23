@@ -97,9 +97,6 @@ SERVER			= constructor.cpp \
 				  set_error_page.cpp \
 				  set_location.cpp \
 				  getters.cpp \
-				  create_server_socket.cpp \
-				  bind_server_address.cpp \
-				  listen_for_clients.cpp \
 				  destructor.cpp
 
 ERROR_PAGE		= constructor.cpp \

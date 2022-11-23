@@ -4,7 +4,7 @@ int	Webserver::exit_webserv(void)
 {
 	close(main_socket);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
-		close(server[i]._server_socket);
+		close(server[i].socket);
 	close(STDIN);
 	close(STDOUT);
 	close(STDERR);
