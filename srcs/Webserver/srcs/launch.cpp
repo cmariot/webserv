@@ -1,93 +1,39 @@
 #include "Webserver.hpp"
 
-bool	Webserver::client_connexion(size_t & server_index, struct epoll_event & event)
+# define BUFFER_SIZE 4096
+
+int		Webserver::launch(void)
 {
-	std::cout << "Event fd = " <<  event.data.fd << std::endl;
-	for (server_index = 0 ; server_index < 1 /* nb_of_servers */ ; ++server_index)
+	size_t	server_index;
+	int		client_socket;
+
+	if (init_sockets())
+		return (1);
+	catch_signal();
+	while (true)
 	{
-		std::cout << "Server socket = " <<  server[server_index].socket << std::endl;
-		if (event.data.fd == server[server_index].socket)
-		{
-			return (true);
-		}
-	}
-	return (false);
-};
-
-int		Webserver::launch(char *const *env)
-{
-	(void)env;
-
-	// Ouvrir un epoll_socket avec epoll create
-	main_socket = epoll_create1(0);
-	if (main_socket == -1)
-			std::cerr << "epoll_create1" << std::endl;
-
-	// Pour chaque serveur : 
-	for (size_t i = 0 ; i < nb_of_servers ; ++i)
-	{
-		// Ouvrir un socket
-		server[i].socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-		if (server[i].socket == -1)
-			std::cerr << "socket" << std::endl;
-
-		//setsockopt ?
-		const int		options			= 1;
-		const void *	option_value	= &options;
-		const socklen_t	option_len		= sizeof(options);
-
-		if (setsockopt(server[i].socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, option_value, option_len) == -1)
-			std::cerr << "setsockopt" << std::endl;
-
-		// Attribuer un type, un host et un port a l'addresse de ce socket
-		server[i].address.sin_family = AF_INET;
-		server[i].address.sin_addr.s_addr = inet_addr(server[i].get_address().first.c_str());
-		server[i].address.sin_port = htons(server[i].get_address().second);
-
-		// Bind socket et addresse
-		if (bind(server[i].socket, (const sockaddr *)&(server[i].address), sizeof(server[i].address)) == -1)
-			std::cerr << "bind" << std::endl;
-
-		// Listen
-		if (listen(server[i].socket, 42) == -1)
-			std::cerr << "listen" << std::endl;
-
-		// Options du server_socket
-		bzero(&event, sizeof(event));
-		event.data.fd = server[i].socket;
-		event.events = EPOLLIN | EPOLLOUT | EPOLLET;
-
-		// Non-blocking socket
-		//if (fcntl(server[i].socket, F_SETFL, O_NONBLOCK) == -1)
-		//	std::cerr << "fcntl" << std::endl;
-
-		// Ajout a la liste d'interet
-		if (epoll_ctl(main_socket, EPOLL_CTL_ADD, server[i].socket, &event) == -1)
-			std::cerr << "epoll_ctl" << std::endl;
-	}
-
-	size_t	server_index = 0;
-	// Signal catcher
-	while (1)
-	{
-		nb_events = epoll_wait(main_socket, events, MAX_EVENTS, -1);
-		if (nb_events == -1)
-		{
-			std::cerr << "epoll_wait" << std::endl;
+		if (wait_event() == SIGNAL_CAUGHT)
 			break ;
-		}
 		for (int i = 0 ; i < nb_events ; i++)
 		{
 			if (client_connexion(server_index, events[i]))
 			{
-				std::cout << "YEEEES" << std::endl;
-				return (0);
+				if (accept_connexion(client_socket, server[server_index], events))
+					std::cerr << "accept_connexion" << std::endl;
+				continue ;
+			}
+			else
+			{
+				char	buff[BUFFER_SIZE];
+				bzero(buff, BUFFER_SIZE);
+				recv(events[i].data.fd, buff, BUFFER_SIZE - 1, 0);
+				std::cout << buff << std::endl;
+
+				std::cout << "PTR = " << (events[i].data.ptr) << std::endl;
+				std::cout << "MAIN = " << &main_socket << std::endl;
 			}
 		}
 	}
-
-	// Close
 	exit_webserv();
-
 	return (0);
 };

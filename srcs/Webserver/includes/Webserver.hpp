@@ -16,6 +16,7 @@
 #include <sstream>
 
 # define MAX_EVENTS	10
+#define SIGNAL_CAUGHT 1
 
 # define STDIN		0
 # define STDOUT		1
@@ -50,17 +51,13 @@ class Webserver
 
 		int						nb_events;
 
-		Server					_server;
-		Request					_request;
-		Response				_response;
-
 	public:
 
 		Webserver(void);
 		~Webserver(void);
 
-		int		parse(int argc, const char *argv[]);
-		int		launch(char *const *env);
+		int		parse(const int argc, const char *argv[], const char **env);
+		int		launch(void);
 
 	private:
 
@@ -75,20 +72,31 @@ class Webserver
 		int		separate_semicolon(std::vector<std::string>	& tokens_vector) const;
 		int		parse_server(std::vector<std::string> &);
 		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
+		void	set_env(const char *env[]);
 
 		void	print_config(void) const;
 
 	private:
 
 		//	launch
-		int		get_server(Server & request_server);
+		int		init_sockets(void);
+		int		catch_signal(void);
+		int		wait_event(void);
 		bool	client_connexion(size_t &, struct epoll_event &);
+		int		accept_connexion(int &, Server &, struct epoll_event *);
+		int		add_client(int &, struct epoll_event *);
 
 	private:
 
 		//	utils
 		int		usage(void) const;
 		int		exit_webserv(void);
+		const char **get_env(void) const;
+
+
+	private:
+
+		const char	**env;
 
 };
 

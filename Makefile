@@ -77,10 +77,14 @@ WEBSERVER		= parsing/remove_commentaries.cpp \
 				  parsing/print_config.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
+				  catch_signal.cpp \
+				  client_connexion.cpp \
 				  constructor.cpp \
 				  destructor.cpp \
 				  exit_webserv.cpp \
-				  launch.cpp
+				  init_sockets.cpp \
+				  launch.cpp \
+				  wait_event.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \

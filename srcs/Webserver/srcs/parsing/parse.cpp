@@ -62,10 +62,21 @@ int	Webserver::check_arguments(int argc, const char *argv[])
 	return (0);
 }
 
+const char **Webserver::get_env(void) const
+{
+	return (env);
+};
+
+void	Webserver::set_env(const char **env)
+{
+	env = env;
+	return ;
+};
+
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
-int	Webserver::parse(int argc, const char *argv[])
+int	Webserver::parse(const int argc, const char *argv[], const char *env[])
 {
 	std::vector<std::string>	vector;
 
@@ -76,6 +87,7 @@ int	Webserver::parse(int argc, const char *argv[])
 		return (1);
 	if (parse_configuration_file(vector))
 		return (1);
+	set_env(env);
 	print(INFO, "The configuration file seems to be ok.");
 	print_config();
 	return (0);
