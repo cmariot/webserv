@@ -17,7 +17,6 @@ int	Location::set_allow_methods(std::vector<std::string> & vector, size_t & i)
 				return (error("Syntax error : Multiple allow_methods GET in the same location context."));
 			_get_allowed = true;
 		}
-		cout << _get_allowed << "c est la" << endl;
 		else if (vector[i] == "POST")
 		{
 			cout << "POST allowed ?" << endl;
@@ -33,6 +32,7 @@ int	Location::set_allow_methods(std::vector<std::string> & vector, size_t & i)
 		}
 		else
 			return (error("Syntax error : invalid allow_methods directive."));
+		cout << _get_allowed << "c est la" << endl;
 		++i;
 	}
 	return (0);
