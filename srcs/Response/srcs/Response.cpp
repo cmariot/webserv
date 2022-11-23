@@ -48,6 +48,7 @@ void	Response::post(void)
 	string folder = _location.get_upload_path();
 	if (stat(folder.c_str(), &buff) != 0)
 		mkdir(folder.c_str(), 0777);
+	cout << folder << endl;
 	mkdir(folder.c_str(), 0777);
 
 	while (i < _request.content.size())
