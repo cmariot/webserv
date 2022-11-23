@@ -27,10 +27,8 @@ bool Response::check_file_existance(string &file)
 void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
-	cout << "post1" << endl;
 
 	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
-	cout << "post2" << endl;
 
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) != _server.get_error_pages().end())
 		stored_file(_server.get_error_pages().find(_status_code)->second.get_path());
@@ -38,8 +36,6 @@ void	Response::build_http_response(void)
 	{	generate_error_page(_status_code);
 		return;
 	}
-
-	cout << "post3" << endl;
 
 	_full_response = _response_header + _response_body;
 };
@@ -53,7 +49,8 @@ void	Response::post(void)
 	{
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
-		cout << "upload folder" << _location.get_upload_path() << endl;
+
+		infile = _location.get_upload_path() + infile;
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 		if (fout.is_open() == false)
 		{
@@ -73,7 +70,7 @@ int	Response::test_authorization(void)
 	if (get_location()) 
 	{
 		generate_error_page(404);
-		return 1 ;
+		return (1) ;
 	}
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
@@ -81,13 +78,8 @@ int	Response::test_authorization(void)
 		return (0);
 	if (_request.method == "POST" && _location.post_allowed())
 		return (0);
-	cout << "post is not allowed " << _location.post_allowed()<< endl;
-	cout << "get is not allowed "<< _location.get_allowed() << endl;
 	set_status_code(403);
-
 	build_http_response();
-	cout << "post3" << endl;
-
 	return (1);
 }
 
@@ -109,7 +101,7 @@ void	Response::create(int fd)
 		{
 			post();
 			build_http_response();
-			// print(INFO, "Files were succesfully uploaded");
+			print(INFO, "Files were succesfully uploaded to the server");
 		}
 	}
 	else if (_request.method == "DELETE")
