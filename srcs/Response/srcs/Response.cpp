@@ -70,17 +70,20 @@ void	Response::post(void)
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
-
-
+	if (get_location()) 
+	{
+		generate_error_page(404);
+		return ;
+	}
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
 	if (_request.method == "DELETE" && _location.delete_allowed())
 		return (0);
 	if (_request.method == "POST" && _location.post_allowed())
 		return (0);
-	if (!_server.get_locations().post_allowed())
+	if (_locations.post_allowed())
 			cout << "post is not allowed "<< endl;
-	if (_server.get_locations().get_allowed())
+	if (_locations.get_allowed())
 			cout << "get is not allowed "<< endl;
 	set_status_code(403);
 
