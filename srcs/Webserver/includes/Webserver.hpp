@@ -13,8 +13,7 @@
 
 #include <string>
 #include <vector>
-#include <vector>
-#include <istringstream>
+#include <sstream>
 
 # define MAX_EVENTS	100
 

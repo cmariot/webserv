@@ -78,13 +78,9 @@ WEBSERVER		= parsing/remove_commentaries.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
 				  constructor.cpp \
-				  create_epoll_socket.cpp \
 				  destructor.cpp \
 				  exit_webserv.cpp \
-				  get_server.cpp \
-				  launch.cpp \
-				  signals.cpp \
-				  wait_event.cpp
+				  launch.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \
