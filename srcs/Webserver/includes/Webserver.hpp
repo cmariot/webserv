@@ -40,11 +40,17 @@ class Webserver
 
 	private:
 
-		int						main_socket;
-
-		std::vector<Server>		server;
 		static size_t			nb_of_servers;
+		std::vector<Server>		server;
 
+		int						main_socket;
+		struct epoll_event		event;
+
+		struct epoll_event		events[MAX_EVENTS];;
+
+		int						nb_events;
+
+		Server					_server;
 		Request					_request;
 		Response				_response;
 
@@ -52,9 +58,6 @@ class Webserver
 
 		Webserver(void);
 		~Webserver(void);
-
-		size_t				nb_events;
-		struct epoll_event	events[MAX_EVENTS];
 
 		int		parse(int argc, const char *argv[]);
 		int		launch(char *const *env);
@@ -70,23 +73,21 @@ class Webserver
 		int		split_strings(std::vector<std::string> &, std::vector<std::string>	&) const;
 		int		separate_braces(std::vector<std::string> &) const;
 		int		separate_semicolon(std::vector<std::string>	& tokens_vector) const;
-
-		//	servers initialization
 		int		parse_server(std::vector<std::string> &);
 		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
 		void	print_config(void) const;
 
-		// reponse : A deplacer dans response non ?
-		string	stored_file(string path);
-		string	create_http_response(string method, string path);
-		string	server_http_header_response(string method, string path);
-		int 	server_response(int ,char *);
+	private:
 
-		//	error
+		//	launch
+		int		get_server(Server & request_server);
+		bool	client_connexion(size_t &, struct epoll_event &);
+
+	private:
+
+		//	utils
 		int		usage(void) const;
-
-		// exit
 		int		exit_webserv(void);
 
 };

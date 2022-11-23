@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
 	// some variables we need
 	int portno = strtol(argv[1], NULL, 10);
-	struct sockaddr_in server_addr, client_addr;
+////	struct sockaddr_in server_addr, client_addr;
 	socklen_t client_len = sizeof(client_addr);
 
 	char buffer[MAX_MESSAGE_LEN];
@@ -36,6 +36,15 @@ int main(int argc, char *argv[])
 	int new_events, sock_conn_fd, epollfd;
 
 
+	// SOCKET CLUSTER
+
+	epollfd = epoll_create(MAX_EVENTS);
+	if (epollfd < 0)
+	{
+		error("Error creating epoll..\n");
+	}
+	ev.events = EPOLLIN;
+	ev.data.fd = sock_listen_fd;
 
 
 	// POUR CHAQUE SERVEUR
@@ -46,7 +55,7 @@ int main(int argc, char *argv[])
 			error("Error creating socket..\n");
 		}
 
-		memset((char *)&server_addr, 0, sizeof(server_addr));
+//		memset((char *)&server_addr, 0, sizeof(server_addr));
 		server_addr.sin_family = AF_INET;
 		server_addr.sin_port = htons(portno);
 		server_addr.sin_addr.s_addr = INADDR_ANY;
@@ -66,15 +75,6 @@ int main(int argc, char *argv[])
 
 
 
-	// SOCKET CLUSTER
-
-	epollfd = epoll_create(MAX_EVENTS);
-	if (epollfd < 0)
-	{
-		error("Error creating epoll..\n");
-	}
-	ev.events = EPOLLIN;
-	ev.data.fd = sock_listen_fd;
 
 
 
