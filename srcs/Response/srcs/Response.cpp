@@ -53,7 +53,7 @@ void	Response::post(void)
 	{
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
-		cout << "upload folder" << _location.get_upload_path() << endl;
+		cout << "upload folder" << _server::_location.get_upload_path() << endl;
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 		if (fout.is_open() == false)
 		{
@@ -102,7 +102,7 @@ void	Response::create(int fd)
 		print(INFO, "The response has been sent to the client");
 		return ;
 	}
-	else if (_request.method == "POST")
+	else if (_server::_request.method == "POST")
 	{
 		if (!test_authorization())
 		{
@@ -111,7 +111,7 @@ void	Response::create(int fd)
 			// print(INFO, "Files were succesfully uploaded");
 		}
 	}
-	else if (_request.method == "DELETE")
+	else if (_server::_request.method == "DELETE")
 	{
 		// if (!test_authorization())
 			//delete();
