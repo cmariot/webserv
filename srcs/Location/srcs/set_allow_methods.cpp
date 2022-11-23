@@ -32,7 +32,6 @@ int	Location::set_allow_methods(std::vector<std::string> & vector, size_t & i)
 		}
 		else
 			return (error("Syntax error : invalid allow_methods directive."));
-		cout << _get_allowed << "c est la" << endl;
 		++i;
 	}
 	return (0);
