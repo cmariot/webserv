@@ -54,7 +54,7 @@ void	Response::post(void)
 	{
 		folder = "mkdir -p " + folder;
 		cout << folder << endl;
-		systemctl(folder.c_str());
+		system(folder.c_str());
 		print(INFO, "Upload folder created :");
 	}
 
