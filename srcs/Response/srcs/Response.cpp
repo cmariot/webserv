@@ -46,10 +46,12 @@ void	Response::post(void)
 	
 	struct stat buff;
 	string folder = _location.get_upload_path();
-	if (stat(folder.c_str(), &buff) != 0)
-		mkdir(folder.c_str(), 0777);
+	// if (stat(folder.c_str(), &buff) != 0)
+	// 	mkdir(folder.c_str(), 0777);
 	cout << folder << endl;
-	mkdir(folder.c_str(), 0777);
+	if(mkdir(folder.c_str(), 0777))
+		print(INFO, "Upload folder created");
+
 
 	while (i < _request.content.size())
 	{
