@@ -102,7 +102,7 @@ void	Response::create(int fd)
 		print(INFO, "The response has been sent to the client");
 		return ;
 	}
-	else if (_server::_request.method == "POST")
+	else if (_request.method == "POST")
 	{
 		if (!test_authorization())
 		{
