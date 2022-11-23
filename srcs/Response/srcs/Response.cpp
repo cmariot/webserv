@@ -44,7 +44,7 @@ void	Response::post(void)
 {
 	size_t i = 0;
 	
-	struct stat buff;
+	// struct stat buff;
 	string folder = _location.get_upload_path();
 	// if (stat(folder.c_str(), &buff) != 0)
 	// 	mkdir(folder.c_str(), 0777);
