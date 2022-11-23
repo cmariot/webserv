@@ -1,279 +1,125 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <sys/socket.h>
-#include <netdb.h>
-#include <fcntl.h>
+#include <sys/types.h>
 #include <sys/epoll.h>
-#include <string.h>
-#include <cstdio>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string>
 
-#define MAXEVENTS 64
+#define BACKLOG 512
+#define MAX_EVENTS 128
+#define MAX_MESSAGE_LEN 2048
 
-//函数:
-//功能:创建和绑定一个TCP socket
-//参数:端口
-//返回值:创建的socket
-static int create_and_bind (char *port)
+void error(const std::string & msg);
+
+
+int main(int argc, char *argv[])
 {
-	struct addrinfo hints;
-	struct addrinfo *result, *rp;
-	int s, sfd;
+    if (argc < 2) {
+        printf("Please give a port number: ./epoll_echo_server [port]\n");
+        exit(0);
+    } 
 
-	memset (&hints, 0, sizeof (struct addrinfo));
-	hints.ai_family = AF_UNSPEC;     /* Return IPv4 and IPv6 choices */
-	hints.ai_socktype = SOCK_STREAM; /* We want a TCP socket */
-	hints.ai_flags = AI_PASSIVE;     /* All interfaces */
+	// some variables we need
+	int portno = strtol(argv[1], NULL, 10);
+	struct sockaddr_in server_addr, client_addr;
+	socklen_t client_len = sizeof(client_addr);
 
-	s = getaddrinfo (NULL, port, &hints, &result);
-	if (s == 0)
-	{
-		fprintf (stderr, "getaddrinfo: %s\n", gai_strerror (s));
-		return -1;
+	char buffer[MAX_MESSAGE_LEN];
+	memset(buffer, 0, sizeof(buffer));
+
+
+	// setup socket
+	int sock_listen_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock_listen_fd < 0) {
+		error("Error creating socket..\n");
 	}
 
-	for (rp = result; rp != NULL; rp = rp->ai_next)
-	{
-		sfd = socket (rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-		if (sfd == -1)
-			continue;
+	memset((char *)&server_addr, 0, sizeof(server_addr));
+	server_addr.sin_family = AF_INET;
+	server_addr.sin_port = htons(portno);
+	server_addr.sin_addr.s_addr = INADDR_ANY;
+	
 
-		s = bind (sfd, rp->ai_addr, rp->ai_addrlen);
-		if (s == 0)
+	// bind socket and listen for connections
+	if (bind(sock_listen_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+		error("Error binding socket..\n");
+
+	if (listen(sock_listen_fd, BACKLOG) < 0) {
+        error("Error listening..\n");
+    }
+	printf("epoll echo server listening for connections on port: %d\n", portno);
+
+
+	struct epoll_event ev, events[MAX_EVENTS];
+	int new_events, sock_conn_fd, epollfd;
+	
+	epollfd = epoll_create(MAX_EVENTS);
+	if (epollfd < 0)
+	{
+		error("Error creating epoll..\n");
+	}
+	ev.events = EPOLLIN;
+	ev.data.fd = sock_listen_fd;
+
+	if (epoll_ctl(epollfd, EPOLL_CTL_ADD, sock_listen_fd, &ev) == -1)
+	{
+		error("Error adding new listeding socket to epoll..\n");
+	}
+
+	while(1)
+	{
+		new_events = epoll_wait(epollfd, events, MAX_EVENTS, -1);
+		
+		if (new_events == -1)
 		{
-			/* We managed to bind successfully! */
-			break;
+			error("Error in epoll_wait..\n");
 		}
 
-		close (sfd);
-	}
-
-	if (rp == NULL)
-	{
-		fprintf (stderr, "Could not bind\n");
-		return -1;
-	}
-
-	freeaddrinfo (result);
-
-	return sfd;
-}
-
-
-//函数
-//功能:设置socket为非阻塞的
-	static int
-make_socket_non_blocking (int sfd)
-{
-	int flags, s;
-
-	//得到文件状态标志
-	flags = fcntl (sfd, F_GETFL, 0);
-	if (flags == -1)
-	{
-		perror ("fcntl");
-		return -1;
-	}
-
-	//设置文件状态标志
-	flags |= O_NONBLOCK;
-	s = fcntl (sfd, F_SETFL, flags);
-	if (s == -1)
-	{
-		perror ("fcntl");
-		return -1;
-	}
-
-	return 0;
-}
-
-//端口由参数argv[1]指定
-	int
-main (int argc, char *argv[])
-{
-	int sfd, s;
-	int efd;
-	struct epoll_event event;
-	struct epoll_event *events;
-
-	if (argc != 2)
-	{
-		fprintf (stderr, "Usage: %s [port]\n", argv[0]);
-		exit (EXIT_FAILURE);
-	}
-
-	sfd = create_and_bind (argv[1]);
-	if (sfd == -1)
-		abort ();
-
-	s = make_socket_non_blocking (sfd);
-	if (s == -1)
-		abort ();
-
-	s = listen (sfd, SOMAXCONN);
-	if (s == -1)
-	{
-		perror ("listen");
-		abort ();
-	}
-
-	//除了参数size被忽略外,此函数和epoll_create完全相同
-	efd = epoll_create1 (0);
-	if (efd == -1)
-	{
-		perror ("epoll_create");
-		abort ();
-	}
-
-	event.data.fd = sfd;
-	event.events = EPOLLIN | EPOLLET;//读入,边缘触发方式
-	s = epoll_ctl (efd, EPOLL_CTL_ADD, sfd, &amp;event);
-	if (s == -1)
-	{
-		perror ("epoll_ctl");
-		abort ();
-	}
-
-	/* Buffer where events are returned */
-	events = calloc (MAXEVENTS, sizeof event);
-
-	/* The event loop */
-	while (1)
-	{
-		int n, i;
-
-		n = epoll_wait (efd, events, MAXEVENTS, -1);
-		for (i = 0; i &lt; n; i &#43 ;&#43;)
+		for (int i = 0; i < new_events; ++i)
 		{
-			if ((events[i].events &amp; EPOLLERR) ||
-					(events[i].events &amp; EPOLLHUP) ||
-					(!(events[i].events &amp; EPOLLIN)))
+			if (events[i].data.fd == sock_listen_fd)
 			{
-				/* An error has occured on this fd, or the socket is not
-				   ready for reading (why were we notified then?) */
-				fprintf (stderr, "epoll error\n");
-				close (events[i].data.fd);
-				continue;
-			}
-
-			else if (sfd == events[i].data.fd)
-			{
-				/* We have a notification on the listening socket, which
-				   means one or more incoming connections. */
-				while (1)
+				sock_conn_fd = accept4(sock_listen_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
+				if (sock_conn_fd == -1)
 				{
-					struct sockaddr in_addr;
-					socklen_t in_len;
-					int infd;
-					char hbuf[NI_MAXHOST], sbuf[NI_MAXSERV];
-
-					in_len = sizeof in_addr;
-					infd = accept (sfd, &amp;in_addr, &amp;in_len);
-					if (infd == -1)
-					{
-						if ((errno == EAGAIN) ||
-								(errno == EWOULDBLOCK))
-						{
-							/* We have processed all incoming
-							   connections. */
-							break;
-						}
-						else
-						{
-							perror ("accept");
-							break;
-						}
-					}
-
-					//将地址转化为主机名或者服务名
-					s = getnameinfo (&amp;in_addr, in_len,
-							hbuf, sizeof hbuf,
-							sbuf, sizeof sbuf,
-							NI_NUMERICHOST | NI_NUMERICSERV);//flag参数:以数字名返回
-															 //主机地址和服务地址
-
-					if (s == 0)
-					{
-						printf("Accepted connection on descriptor %d "
-								"(host=%s, port=%s)\n", infd, hbuf, sbuf);
-					}
-
-					/* Make the incoming socket non-blocking and add it to the
-					   list of fds to monitor. */
-					s = make_socket_non_blocking (infd);
-					if (s == -1)
-						abort ();
-
-					event.data.fd = infd;
-					event.events = EPOLLIN | EPOLLET;
-					s = epoll_ctl (efd, EPOLL_CTL_ADD, infd, &amp;event);
-					if (s == -1)
-					{
-						perror ("epoll_ctl");
-						abort ();
-					}
+					error("Error accepting new connection..\n");
 				}
-				continue;
+
+				ev.events = EPOLLIN | EPOLLET;
+				ev.data.fd = sock_conn_fd;
+				if (epoll_ctl(epollfd, EPOLL_CTL_ADD, sock_conn_fd, &ev) == -1)
+				{
+					error("Error adding new event to epoll..\n");
+				}
 			}
 			else
 			{
-				/* We have data on the fd waiting to be read. Read and
-				   display it. We must read whatever data is available
-				   completely, as we are running in edge-triggered mode
-				   and won&#39;t get a notification again for the same
-				   data. */
-				int done = 0;
-
-				while (1)
+				int newsockfd = events[i].data.fd;
+				int bytes_received = recv(newsockfd, buffer, MAX_MESSAGE_LEN, 0);
+				if (bytes_received <= 0)
 				{
-					ssize_t count;
-					char buf[512];
-
-					count = read (events[i].data.fd, buf, sizeof(buf));
-					if (count == -1)
-					{
-						/* If errno == EAGAIN, that means we have read all
-						   data. So go back to the main loop. */
-						if (errno != EAGAIN)
-						{
-							perror ("read");
-							done = 1;
-						}
-						break;
-					}
-					else if (count == 0)
-					{
-						/* End of file. The remote has closed the
-						   connection. */
-						done = 1;
-						break;
-					}
-
-					/* Write the buffer to standard output */
-					s = write (1, buf, count);
-					if (s == -1)
-					{
-						perror ("write");
-						abort ();
-					}
+					epoll_ctl(epollfd, EPOLL_CTL_DEL, newsockfd, NULL);
+					shutdown(newsockfd, SHUT_RDWR);
 				}
-
-				if (done)
+				else
 				{
-					printf ("Closed connection on descriptor %d\n",
-							events[i].data.fd);
-
-					/* Closing the descriptor will make epoll remove it
-					   from the set of descriptors which are monitored. */
-					close (events[i].data.fd);
+					send(newsockfd, buffer, bytes_received, 0);
 				}
 			}
 		}
 	}
+}
 
-	free (events);
 
-	close (sfd);
 
-	return EXIT_SUCCESS;
+void error(const std::string & msg)
+{
+	perror(msg.c_str());
+	printf("erreur...\n");
+	exit(1);
 }

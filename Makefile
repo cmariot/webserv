@@ -67,28 +67,23 @@ SRC_SUBDIR	    = $(MAIN) \
 
 MAIN			= main.cpp
 
-WEBSERVER		= accept_connexion.cpp \
-				  add_to_interest_list.cpp \
-				  client_connexion.cpp \
-				  constructor.cpp \
-				  create_epoll_socket.cpp \
-				  destructor.cpp \
-				  exit_webserv.cpp \
-				  init_sockets.cpp \
-				  launch.cpp \
+WEBSERVER		= parsing/remove_commentaries.cpp \
+				  parsing/replace_blank_characters.cpp \
+				  parsing/separate_braces.cpp \
+				  parsing/separate_semicolon.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
 				  parsing/parse_server.cpp \
 				  parsing/print_config.cpp \
-				  get_server.cpp \
-				  remove_client.cpp \
-				  parsing/remove_commentaries.cpp \
-				  parsing/replace_blank_characters.cpp \
-				  parsing/separate_braces.cpp \
-				  parsing/separate_semicolon.cpp \
-				  signals.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
+				  constructor.cpp \
+				  create_epoll_socket.cpp \
+				  destructor.cpp \
+				  exit_webserv.cpp \
+				  get_server.cpp \
+				  launch.cpp \
+				  signals.cpp \
 				  wait_event.cpp
 
 UTILS			= error.cpp \

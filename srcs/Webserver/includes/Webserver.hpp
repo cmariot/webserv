@@ -1,28 +1,20 @@
 #ifndef WEBSERVER_HPP
 # define WEBSERVER_HPP
 
-# include <vector>
-# include <string>
-# include <fstream>
-# include <istream>
-# include <iostream>
-# include <sstream>
-# include <climits>
-# include <sys/types.h>
-# include <errno.h>
-# include <netinet/in.h>
-# include <sys/socket.h>
-# include <arpa/inet.h>
-# include <iostream>
-# include <cstdio>
-# include <cstdlib>
-# include <cstring>
-# include <unistd.h>
-# include <sys/epoll.h>
-# include <poll.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <sys/wait.h>
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <fcntl.h>
+#include <sys/epoll.h>
+#include <cstring>
+
+#include <string>
+#include <vector>
+#include <vector>
+#include <istringstream>
 
 # define MAX_EVENTS	100
 
@@ -86,22 +78,7 @@ class Webserver
 
 		void	print_config(void) const;
 
-		// signal catcher
-		int		catch_signal(void);
-
-		// launch
-		int		init_sockets(void);
-		int		create_main_socket(void);
-		int		add_to_interest_list(Server *);
-		bool	client_connexion(size_t *, struct epoll_event &);
-		int		accept_connexion(int *, Server &, struct epoll_event *);
-		int		add_client(int, struct epoll_event *);
-		int		wait_event(struct epoll_event *, size_t &);
-		int		remove_client(int, int, struct epoll_event *);
-
-		int		get_server(Server &);
-
-		// reponse
+		// reponse : A deplacer dans response non ?
 		string	stored_file(string path);
 		string	create_http_response(string method, string path);
 		string	server_http_header_response(string method, string path);
