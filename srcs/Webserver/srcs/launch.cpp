@@ -24,10 +24,9 @@ int		Webserver::launch(char *const *env)
 			std::cerr << "epoll_create1" << std::endl;
 
 	// Pour chaque serveur : 
-	//for (size_t i = 0 ; i < nb_of_servers ; ++i)
-	//{
+	for (size_t i = 0 ; i < nb_of_servers ; ++i)
+	{
 		// Ouvrir un socket
-		int i = 0;
 		server[i].socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (server[i].socket == -1)
 			std::cerr << "socket" << std::endl;
@@ -56,8 +55,7 @@ int		Webserver::launch(char *const *env)
 		// Options du server_socket
 		bzero(&event, sizeof(event));
 		event.data.fd = server[i].socket;
-		event.data.ptr = &server[i];
-		event.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
+		event.events = EPOLLIN | EPOLLOUT | EPOLLET;
 
 		// Non-blocking socket
 		//if (fcntl(server[i].socket, F_SETFL, O_NONBLOCK) == -1)
@@ -66,13 +64,13 @@ int		Webserver::launch(char *const *env)
 		// Ajout a la liste d'interet
 		if (epoll_ctl(main_socket, EPOLL_CTL_ADD, server[i].socket, &event) == -1)
 			std::cerr << "epoll_ctl" << std::endl;
-	//}
+	}
 
 	size_t	server_index = 0;
 	// Signal catcher
 	while (1)
 	{
-		nb_events = epoll_wait(main_socket, events, MAX_EVENTS, -1);	
+		nb_events = epoll_wait(main_socket, events, MAX_EVENTS, -1);
 		if (nb_events == -1)
 		{
 			std::cerr << "epoll_wait" << std::endl;
@@ -81,7 +79,10 @@ int		Webserver::launch(char *const *env)
 		for (int i = 0 ; i < nb_events ; i++)
 		{
 			if (client_connexion(server_index, events[i]))
+			{
+				std::cout << "YEEEES" << std::endl;
 				return (0);
+			}
 		}
 	}
 
