@@ -51,7 +51,8 @@ void	Response::post(void)
 	cout << folder << endl;
 	if(mkdir(folder.c_str(), 0777))
 	{
-		print(INFO, "Upload folder created :" + folder);
+		cout << folder << endl;
+		print(INFO, "Upload folder created :");
 	}
 
 
