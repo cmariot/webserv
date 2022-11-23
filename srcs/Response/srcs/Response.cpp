@@ -42,7 +42,6 @@ void	Response::build_http_response(void)
 
 void	Response::post(void)
 {
-	// std::cout << _request.request << std::endl;
 	size_t i = 0;
 
 	while (i < _request.content.size())
