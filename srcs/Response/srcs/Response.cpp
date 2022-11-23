@@ -50,7 +50,9 @@ void	Response::post(void)
 	// 	mkdir(folder.c_str(), 0777);
 	cout << folder << endl;
 	if(mkdir(folder.c_str(), 0777))
-		print(INFO, "Upload folder created");
+	{
+		print(INFO, "Upload folder created :" + folder);
+	}
 
 
 	while (i < _request.content.size())
