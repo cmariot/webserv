@@ -2,6 +2,7 @@
 # define UTILS_HPP
 
 # define INFO 0
+# define ERR 1
 
 # include <iostream>
 # include <string>
@@ -9,6 +10,7 @@
 # include <map>
 # include <set>
 # include <stdlib.h>
+# include <dirent.h>
 
 using std::map;
 using std::set;
@@ -30,7 +32,7 @@ bool		no_semicolon(std::vector<string> &, size_t &);
 // set_ip_and_port.hpp
 size_t		ft_atoi(string str);
 size_t		set_port(string port);
-string	set_ip(string ip);
+string		set_ip(string ip);
 
 // print.cpp
 void		print(int, const char *);

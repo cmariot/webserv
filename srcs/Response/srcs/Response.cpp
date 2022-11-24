@@ -37,7 +37,7 @@ void	Response::build_http_response(void)
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
-	if (get_location()) 
+	if (get_location())
 	{
 		generate_error_page(404);
 		return (1) ;
@@ -67,11 +67,9 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "POST")
 	{
-		if (!test_authorization())
+		if (!test_authorization() && _request.content.size())
 		{
 			post();
-			build_http_response();
-			print(INFO, "Files were succesfully uploaded to the server");
 		}
 	}
 	else if (_request.method == "DELETE")
@@ -84,6 +82,7 @@ void	Response::create(int fd)
 		set_status_code(501);
 		build_http_response();
 	}
+	build_http_response();
 	print(INFO, ("Response =\n" + _full_response).c_str());
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 	print(INFO, "The response has been sent to the client");
