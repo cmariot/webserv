@@ -2,7 +2,9 @@ name: Compilation test
 
 on:
   push:
-    branches: [ "main", "epoll" ]
+    branches:
+    - main
+    - epoll
   pull_request:
     branches: [ "main" ]
 
