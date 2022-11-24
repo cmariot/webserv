@@ -1,36 +1,33 @@
 #include "Webserver.hpp"
 
-# define BUFFER_SIZE 4096
+# define BUFFER_SIZE 50
+
+int	Webserver::remove_client(const int & client_socket, struct epoll_event *events)
+{
+	print(INFO, "Closing the client connexion.");
+	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, client_socket, events);
+	close(client_socket);
+	return (0);
+};
 
 int		Webserver::launch(void)
 {
-	size_t	server_index;
-	int		client_socket;
-
 	if (init_sockets())
 		return (1);
 	catch_signal();
-	while (true)
+	while (new_events()) // verifs
 	{
-		if (wait_event() == SIGNAL_CAUGHT)
-			break ;
-		for (int i = 0 ; i < nb_events ; i++)
+		for (int i = 0 ; i < nb_events ; ++i)
 		{
-			if (client_connexion(server_index, events[i]))
-			{
-				if (accept_connexion(client_socket, server[server_index], events))
-					std::cerr << "accept_connexion" << std::endl;
+			if (client_connexion(events[i]))
 				continue ;
-			}
-			else
+			else if (events[i].events & EPOLLIN)
 			{
 				char	buff[BUFFER_SIZE];
+
 				bzero(buff, BUFFER_SIZE);
 				recv(events[i].data.fd, buff, BUFFER_SIZE - 1, 0);
 				std::cout << buff << std::endl;
-
-				std::cout << "PTR = " << (events[i].data.ptr) << std::endl;
-				std::cout << "MAIN = " << &main_socket << std::endl;
 			}
 		}
 	}

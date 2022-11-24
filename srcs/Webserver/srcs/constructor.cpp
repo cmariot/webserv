@@ -3,7 +3,8 @@
 size_t Webserver::nb_of_servers = 0;
 
 Webserver::Webserver(void) :
-	env(NULL)
+	signal(false),
+	_env(NULL)
 {
 	return ;
 };

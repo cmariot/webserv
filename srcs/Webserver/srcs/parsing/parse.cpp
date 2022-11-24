@@ -15,7 +15,7 @@ int	check_extension(const char *filename, const char *extension)
 	return (0);
 }
 
-int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
+int	Webserver::get_file(const char * & filename, std::vector<std::string> & vector)
 {
 	std::ifstream	configuration_file;
 	std::string		line;
@@ -50,7 +50,7 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 	return (0);
 };
 
-int	Webserver::check_arguments(int argc, const char *argv[])
+int	Webserver::check_arguments(const int & argc, const char *argv[])
 {
 	print(INFO, "Checking the webserv's arguments");
 	if (argc > 2)
@@ -64,12 +64,12 @@ int	Webserver::check_arguments(int argc, const char *argv[])
 
 const char **Webserver::get_env(void) const
 {
-	return (env);
+	return (_env);
 };
 
 void	Webserver::set_env(const char **env)
 {
-	env = env;
+	_env = env;
 	return ;
 };
 

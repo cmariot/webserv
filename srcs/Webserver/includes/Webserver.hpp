@@ -1,36 +1,31 @@
 #ifndef WEBSERVER_HPP
 # define WEBSERVER_HPP
 
-#include <cstdio>
-#include <cstdlib>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <fcntl.h>
-#include <sys/epoll.h>
-#include <cstring>
+# include <cstdio>
+# include <cstdlib>
+# include <unistd.h>
+# include <errno.h>
+# include <sys/socket.h>
+# include <netdb.h>
+# include <fcntl.h>
+# include <sys/epoll.h>
+# include <cstring>
 
-#include <string>
-#include <vector>
-#include <sstream>
-
-# define MAX_EVENTS	10
-#define SIGNAL_CAUGHT 1
-
-# define STDIN		0
-# define STDOUT		1
-# define STDERR		2
-
-# define SUCCESS	0
-# define FAILURE	1
-
-# define INFO 0
+# include <string>
+# include <vector>
+# include <sstream>
 
 # include "Server.hpp"
 # include "Utils.hpp"
 # include "Request.hpp"
 # include "Response.hpp"
+
+# define STDIN			0
+# define STDOUT			1
+# define STDERR			2
+# define MAX_EVENTS		200
+# define SIGNAL_CAUGHT	1
+# define INFO			0
 
 using std::string;
 using std::cout;
@@ -38,18 +33,6 @@ using std::endl;
 
 class Webserver
 {
-
-	private:
-
-		static size_t			nb_of_servers;
-		std::vector<Server>		server;
-
-		int						main_socket;
-		struct epoll_event		event;
-
-		struct epoll_event		events[MAX_EVENTS];;
-
-		int						nb_events;
 
 	public:
 
@@ -61,42 +44,54 @@ class Webserver
 
 	private:
 
+		//	private members
+		static size_t			nb_of_servers;
+		std::vector<Server>		server;
+		int						epoll_socket;
+		struct epoll_event		events[MAX_EVENTS];;
+		int						nb_events;
+		bool					signal;
+		const char				**_env;
+
 		//	parsing
-		int		check_arguments(int argc, const char *argv[]);
-		int		get_file(const char *, std::vector<std::string> &);
-		int		parse_configuration_file(std::vector<std::string> &);
-		int		remove_commentaries(std::vector<std::string> &) const;
-		int		replace_blank_characters(std::vector<std::string> &) const;
-		int		split_strings(std::vector<std::string> &, std::vector<std::string>	&) const;
-		int		separate_braces(std::vector<std::string> &) const;
-		int		separate_semicolon(std::vector<std::string>	& tokens_vector) const;
-		int		parse_server(std::vector<std::string> &);
-		int		get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
-		void	set_env(const char *env[]);
+		int			check_arguments(const int & argc, const char *argv[]);
+		int			get_file(const char * &, std::vector<std::string> &);
+		int			parse_configuration_file(std::vector<std::string> &);
+		int			remove_commentaries(std::vector<std::string> &) const;
+		int			replace_blank_characters(std::vector<std::string> &) const;
+		int			split_strings(std::vector<std::string> &, std::vector<std::string> &) const;
+		int			separate_braces(std::vector<std::string> &) const;
+		int			separate_semicolon(std::vector<std::string>	&) const;
+		int			parse_server(std::vector<std::string> &);
+		int			get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
-		void	print_config(void) const;
-
-	private:
+		//	print
+		void		print_config(void) const;
 
 		//	launch
-		int		init_sockets(void);
-		int		catch_signal(void);
-		int		wait_event(void);
-		bool	client_connexion(size_t &, struct epoll_event &);
-		int		accept_connexion(int &, Server &, struct epoll_event *);
-		int		add_client(int &, struct epoll_event *);
+		int			init_sockets(void);
+		int			create_epoll_descriptor(void);
+		int			open_server_socket(Server &);
+		int			bind_server_address(Server &);
+		int			listen_server(Server &);
+		int			set_non_blocking(Server &);
+		int			add_to_epoll_interest_list(Server &);
 
-	private:
+		int			catch_signal(void);
+		int			new_events(void);
+		bool		client_connexion(struct epoll_event &);
+		bool		accept_connexion(Server &);
+		int			add_client(int &, struct epoll_event *);
+
+		int			remove_client(const int &, struct epoll_event *);
 
 		//	utils
-		int		usage(void) const;
-		int		exit_webserv(void);
-		const char **get_env(void) const;
+		int			usage(void) const;
+		int			exit_webserv(void);
 
-
-	private:
-
-		const char	**env;
+		//	env
+		void		set_env(const char *env[]);
+		const char	**get_env(void) const;
 
 };
 

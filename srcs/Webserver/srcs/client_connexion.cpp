@@ -1,40 +1,40 @@
 #include "Webserver.hpp"
 
-int	Webserver::add_client(int & client_socket, struct epoll_event *server_event)
+bool	Webserver::accept_connexion(Server & server)
 {
-	fcntl(client_socket, F_SETFL, O_NONBLOCK);
-	server_event->events = EPOLLIN | EPOLLET;
-	server_event->data.fd = client_socket;
-	server_event->data.ptr = &main_socket; // A CHANGER MAIS C'EST UN TEST !
-	if (epoll_ctl(main_socket, EPOLL_CTL_ADD, client_socket, server_event) == -1)
-	{
-		perror("epoll_ctl: client_socket");
-		return (1);
-	}
-	return (0);
-};
+	int	addrlen = sizeof(server.address);
+	int	ready_socket = accept(server.socket, (struct sockaddr *)&(server.address), (socklen_t *)&addrlen);
 
-int Webserver::accept_connexion(int  & client_socket, Server & server, struct epoll_event *events)
-{
-	int addrlen = sizeof(server.address);
-
-	client_socket = accept(server.socket, (struct sockaddr *)&(server.address), (socklen_t *)&addrlen);
-	if (client_socket == -1)
+	if (ready_socket == -1)
 	{
-		error("accept() failed.", NULL);
+		error("accept() failed.");
 		perror("accept");
-		return (1);
+		return (false);
 	}
-	if (add_client(client_socket, events))
-		return (1);
+
+	struct epoll_event	event;
+	bzero(&event, sizeof(struct epoll_event));
+	event.data.fd = ready_socket;
+	event.events = EPOLLIN | EPOLLOUT;
+
+	int	flags = fcntl(ready_socket, F_GETFL, 0);
+	if (fcntl(ready_socket, F_SETFL, flags|O_NONBLOCK) == -1)
+		std::cerr << "fcntl" << std::endl;
+
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, ready_socket, &event) == -1)
+	{
+		perror("epoll_ctl: ready_socket");
+		return (false);
+	}
 	print(INFO, "Connexion accepted, the client has been add to the interest list.");
-	return (0);
+	return (true);
 };
 
-bool	Webserver::client_connexion(size_t & server_index, struct epoll_event & event)
+bool	Webserver::client_connexion(struct epoll_event & event)
 {
-	for (server_index = 0 ; server_index <  nb_of_servers ; ++server_index)
-		if (event.data.fd == server[server_index].socket)
-			return (true);
+	for (size_t	i = 0 ; i <  nb_of_servers ; ++i)
+		if (server[i].socket == event.data.fd)
+			if (accept_connexion(server[i]))
+				return (true);
 	return (false);
 };
