@@ -66,6 +66,10 @@ int		Webserver::launch(void)
 					// add buff to the correct client request
 				}
 			}
+			else
+			{
+				// Other events ?
+			}
 		}
 	}
 	return (exit_webserv());
