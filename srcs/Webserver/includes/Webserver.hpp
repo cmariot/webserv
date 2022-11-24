@@ -82,7 +82,7 @@ class Webserver
 		int			client_disconnection(struct epoll_event &);
 		bool		client_connection(struct epoll_event &);
 
-		bool		accept_connection(Server &);
+		bool		add_to_ready_list(Server &);
 		int			add_client(int &, struct epoll_event *);
 
 		int			remove_client(const int &, struct epoll_event *);

@@ -1,6 +1,6 @@
 #include "Webserver.hpp"
 
-bool	Webserver::accept_connection(Server & server)
+bool	Webserver::add_to_ready_list(Server & server)
 {
 	int	addrlen = sizeof(server.address);
 	int	ready_socket = accept(server.socket, (struct sockaddr *)&(server.address), (socklen_t *)&addrlen);
@@ -12,14 +12,14 @@ bool	Webserver::accept_connection(Server & server)
 		return (false);
 	}
 
+	int	flags = fcntl(ready_socket, F_GETFL, 0);
+	if (fcntl(ready_socket, F_SETFL, flags | O_NONBLOCK) == -1)
+		std::cerr << "fcntl" << std::endl;
+
 	struct epoll_event	event;
 	bzero(&event, sizeof(struct epoll_event));
 	event.data.fd = ready_socket;
-	event.events = EPOLLIN | EPOLLOUT | EPOLLET | EPOLLRDHUP;
-
-	int	flags = fcntl(ready_socket, F_GETFL, 0);
-	if (fcntl(ready_socket, F_SETFL, flags|O_NONBLOCK) == -1)
-		std::cerr << "fcntl" << std::endl;
+	event.events = EPOLLIN;
 
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, ready_socket, &event) == -1)
 	{
@@ -34,7 +34,6 @@ bool	Webserver::client_connection(struct epoll_event & event)
 {
 	for (size_t	i = 0 ; i <  nb_of_servers ; ++i)
 		if (server[i].socket == event.data.fd)
-			if (accept_connection(server[i]))
-				return (true);
+			return (add_to_ready_list(server[i]));
 	return (false);
 };

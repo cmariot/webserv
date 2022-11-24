@@ -54,7 +54,7 @@ int	Request::get_host(void)
 int	Request::get_http_version(std::string & request_line, size_t & i)
 {
 	http_version.clear();
-	while (i < request_line.size() && request_line[i] != '\n')
+	while (i < request_line.size() && request_line[i] != '\r')
 		http_version += request_line[i++];
 	if (uri.empty())
 		return (error("Invalid _http_version in the request line."));

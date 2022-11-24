@@ -43,7 +43,8 @@ int		Webserver::bind_server_address(Server & server)
 
 	print(INFO, "Binding the server_socket with an address.");
 	if (bind(server.socket, addr, addrlen) == -1)
-		return (error("bind server"));
+		return (0);
+		//return (error("bind server"));
 	return (0);
 };
 
@@ -75,7 +76,7 @@ int		Webserver::add_to_epoll_interest_list(Server & server)
 	print(INFO, "Add the server_socket on the epoll interest_list.");
 	bzero(&server.event, sizeof(struct epoll_event));
 	server.event.data.fd = server.socket;
-	server.event.events = EPOLLIN | EPOLLOUT | EPOLLET | EPOLLRDHUP;
+	server.event.events = EPOLLIN;
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &(server.event)) == -1)
 		return (error("epoll_ctl ADD server"));
 	return (0);
