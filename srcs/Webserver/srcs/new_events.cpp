@@ -12,6 +12,7 @@ int		Webserver::new_events(void)
 			return (false);
 		}
 		std::cerr << "epoll_wait" << std::endl;
+		return (false);
 	}
 	return (true);
 };

@@ -79,8 +79,10 @@ class Webserver
 
 		int			catch_signal(void);
 		int			new_events(void);
-		bool		client_connexion(struct epoll_event &);
-		bool		accept_connexion(Server &);
+		int			client_disconnection(struct epoll_event &);
+		bool		client_connection(struct epoll_event &);
+
+		bool		accept_connection(Server &);
 		int			add_client(int &, struct epoll_event *);
 
 		int			remove_client(const int &, struct epoll_event *);

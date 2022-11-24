@@ -84,7 +84,7 @@ WEBSERVER		= parsing/remove_commentaries.cpp \
 				  exit_webserv.cpp \
 				  init_sockets.cpp \
 				  launch.cpp \
-				  wait_events.cpp
+				  new_events.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \
