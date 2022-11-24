@@ -19,7 +19,7 @@ bool	Webserver::add_to_ready_list(Server & server)
 	struct epoll_event	event;
 	bzero(&event, sizeof(struct epoll_event));
 	event.data.fd = ready_socket;
-	event.events = EPOLLIN;
+	event.events = EPOLLIN | EPOLLOUT;
 
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, ready_socket, &event) == -1)
 	{
@@ -30,7 +30,7 @@ bool	Webserver::add_to_ready_list(Server & server)
 	return (true);
 };
 
-bool	Webserver::client_connection(struct epoll_event & event)
+bool	Webserver::client_connection(void)
 {
 	for (size_t	i = 0 ; i <  nb_of_servers ; ++i)
 		if (server[i].socket == event.data.fd)

@@ -48,7 +48,8 @@ class Webserver
 		static size_t			nb_of_servers;
 		std::vector<Server>		server;
 		int						epoll_socket;
-		struct epoll_event		events[MAX_EVENTS];;
+		struct epoll_event		event;
+		struct epoll_event		events[MAX_EVENTS];
 		int						nb_events;
 		bool					signal;
 		const char				**_env;
@@ -79,13 +80,14 @@ class Webserver
 
 		int			catch_signal(void);
 		int			new_events(void);
-		int			client_disconnection(struct epoll_event &);
-		bool		client_connection(struct epoll_event &);
+		bool		client_error(void) const;
+		bool		client_connection(void);
+		bool		client_ready(void) const;
 
 		bool		add_to_ready_list(Server &);
 		int			add_client(int &, struct epoll_event *);
 
-		int			remove_client(const int &, struct epoll_event *);
+		void		remove_client(void);
 
 		//	utils
 		int			usage(void) const;
