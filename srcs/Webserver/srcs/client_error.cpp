@@ -9,7 +9,9 @@ void	Webserver::remove_client(void)
 
 bool	Webserver::client_error(void) const
 {
-	if ((event.events & EPOLLERR) || (event.events & EPOLLHUP))
+	if ((event.events & EPOLLERR)
+		|| (event.events & EPOLLHUP)
+		|| (event.events & EPOLLRDHUP))
 		return (true);
 	return (false);
 };

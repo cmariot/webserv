@@ -94,6 +94,8 @@ class Webserver
 		
 		bool		client_ready(void) const;
 		int			handle_client(void);
+		int			receive_input(void);
+		bool		create_response(Client &);
 
 
 		//	utils

@@ -17,7 +17,10 @@ int		Webserver::launch(void)
 			else if (client_ready())
 				handle_client();
 			else
-				error("Other event");
+			{
+				error(strerror(errno));
+				close(event.data.fd);
+			}
 		}
 	}
 	return (exit_webserv());

@@ -15,7 +15,7 @@ static int	add_to_ready_list(const int & client_socket, const int & epoll_socket
 
 	bzero(&event, sizeof(struct epoll_event));
 	event.data.fd = client_socket;
-	event.events = EPOLLIN | EPOLLOUT;
+	event.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, &event) == -1)
 		return (error("epoll_ctl() failed."));
 	return (0);
