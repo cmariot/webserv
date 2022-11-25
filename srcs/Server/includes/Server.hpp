@@ -64,16 +64,13 @@ class	Server
 		const double &							get_max_size(void)				const;
 		const std::map<int, Error_page> &		get_error_pages(void)			const;
 		const std::map<std::string, Location> &	get_locations(void)				const;
-		const int &								get_server_socket(void)			const;
-		const struct sockaddr_in &				get_server_address(void)		const;
 
-		int						_server_socket;
-		struct sockaddr_in		_server_address;
+	public:
 
-		int		create_server_socket(void);
-		int		set_server_socket_options(void);
-		int		bind_server_address(void);
-		int		listen_for_clients(void) const;
+		int					socket;
+		struct sockaddr_in	address;
+		struct epoll_event	event;
+		int					addrlen;
 
 };
 

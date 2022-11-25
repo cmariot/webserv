@@ -7,7 +7,8 @@ Server::Server(void) :
 	server_names_set(false),
 	client_max_body_size_set(false),
 	error_page_set(false),
-	locations_set(false)
+	locations_set(false),
+	addrlen(sizeof(struct sockaddr_in))
 {
 	return ;
 };
