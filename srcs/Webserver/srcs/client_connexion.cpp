@@ -34,7 +34,7 @@ int		Webserver::add_client(void)
 		return (1);
 	if (add_to_ready_list(client_socket, epoll_socket))
 		return (1);
-	clients.insert(std::make_pair<const int &, const Client &>(client_socket, client));
+	clients.insert(std::make_pair<const int &, Client>(client_socket, client));
 	return (0);
 };
 
