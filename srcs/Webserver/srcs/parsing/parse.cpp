@@ -83,6 +83,7 @@ int	Webserver::parse(const int argc, const char *argv[], const char *env[])
 	print(INFO, "Webserv is starting ...");
 	if (check_arguments(argc, argv))
 		return (1);
+	// check defined variables (BUFFER_SIZE ...)
 	if (get_file(argv[1], vector))
 		return (1);
 	if (parse_configuration_file(vector))

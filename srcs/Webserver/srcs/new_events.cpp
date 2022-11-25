@@ -7,7 +7,8 @@ int		Webserver::new_events(void)
 	{
 		if (errno == EINTR)
 			return (false);
-		std::cerr << "epoll_wait" << std::endl;
+		else
+			error("epoll_wait");
 	}
 	return (true);
 };

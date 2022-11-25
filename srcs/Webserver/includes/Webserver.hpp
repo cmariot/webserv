@@ -49,14 +49,18 @@ class Webserver
 
 		//	private members
 		static size_t					nb_of_servers;
-		std::vector<Server>				server;
+		std::vector<Server>				servers;
+		Server							_server;
+
 		int								epoll_socket;
-		struct epoll_event				event;
+		
 		struct epoll_event				events[MAX_EVENTS];
+		struct epoll_event				event;
 		int								nb_events;
+		
 		const char						**_env;
+		
 		std::map<int, Client>			clients;
-		Server							_client_server;
 
 		char							buffer[BUFFER_SIZE];
 		ssize_t							recv_return;
@@ -94,7 +98,7 @@ class Webserver
 		int			add_client(void);
 		
 		bool		client_ready(void) const;
-		int			treat_client_request(void);
+		int			handle_client(void);
 
 
 		//	utils

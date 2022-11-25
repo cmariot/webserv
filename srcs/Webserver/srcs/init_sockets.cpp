@@ -87,15 +87,15 @@ int		Webserver::init_sockets(void)
 		return (1);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
 	{
-		if (open_server_socket(server[i]))
+		if (open_server_socket(servers[i]))
 			return (1);
-		else if (bind_server_address(server[i]))
+		else if (bind_server_address(servers[i]))
 			return (1);
-		else if (set_non_blocking(server[i]))
+		else if (set_non_blocking(servers[i]))
 			return (1);
-		else if (listen_server(server[i]))
+		else if (listen_server(servers[i]))
 			return (1);
-		else if (add_to_epoll_interest_list(server[i]))
+		else if (add_to_epoll_interest_list(servers[i]))
 			return (1);
 	}
 	return (0);

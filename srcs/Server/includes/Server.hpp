@@ -70,6 +70,7 @@ class	Server
 		int					socket;
 		struct sockaddr_in	address;
 		struct epoll_event	event;
+		int					addrlen;
 
 };
 
