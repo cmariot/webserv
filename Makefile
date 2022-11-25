@@ -61,35 +61,33 @@ SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
 				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
 				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Client/srcs/, $(CLIENT)) \
 				  $(addprefix Request/srcs/, $(REQUEST)) \
 				  $(addprefix Response/srcs/, $(RESPONSE)) \
 				  $(addprefix Utils/srcs/, $(UTILS))
 
 MAIN			= main.cpp
 
-WEBSERVER		= accept_connexion.cpp \
-				  add_to_interest_list.cpp \
-				  client_connexion.cpp \
-				  constructor.cpp \
-				  create_epoll_socket.cpp \
-				  destructor.cpp \
-				  exit_webserv.cpp \
-				  init_sockets.cpp \
-				  launch.cpp \
+WEBSERVER		= parsing/remove_commentaries.cpp \
+				  parsing/replace_blank_characters.cpp \
+				  parsing/separate_braces.cpp \
+				  parsing/separate_semicolon.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
 				  parsing/parse_server.cpp \
 				  parsing/print_config.cpp \
-				  get_server.cpp \
-				  remove_client.cpp \
-				  parsing/remove_commentaries.cpp \
-				  parsing/replace_blank_characters.cpp \
-				  parsing/separate_braces.cpp \
-				  parsing/separate_semicolon.cpp \
-				  signals.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
-				  wait_event.cpp
+				  catch_signal.cpp \
+				  client_connexion.cpp \
+				  client_error.cpp \
+				  client_ready.cpp \
+				  constructor.cpp \
+				  destructor.cpp \
+				  exit_webserv.cpp \
+				  init_sockets.cpp \
+				  launch.cpp \
+				  new_events.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \
@@ -106,9 +104,6 @@ SERVER			= constructor.cpp \
 				  set_error_page.cpp \
 				  set_location.cpp \
 				  getters.cpp \
-				  create_server_socket.cpp \
-				  bind_server_address.cpp \
-				  listen_for_clients.cpp \
 				  destructor.cpp
 
 ERROR_PAGE		= constructor.cpp \
@@ -135,6 +130,10 @@ REQUEST			= constructor.cpp \
 				  interpret.cpp \
 				  destructor.cpp \
 				  get_content.cpp
+
+CLIENT			= add_to_request.cpp \
+				  constructor.cpp \
+				  destructor.cpp
 
 RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \

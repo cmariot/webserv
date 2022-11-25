@@ -124,21 +124,21 @@ void	Webserver::print_config(void) const
 	std::map<int, Error_page>::const_iterator		error_page;
 	std::map<std::string, Location>::const_iterator	location;
 
-	for (size_t i = 0 ; i < server.size() ; ++i)
+	for (size_t i = 0 ; i < servers.size() ; ++i)
 	{
 		print("server");
 		print("{");
-		print_listen(server[i].get_host(), server[i].get_port());
-		print_server_names(server[i].get_server_names());
-		error_page = server[i].get_error_pages().begin();
-		while (error_page != server[i].get_error_pages().end())
+		print_listen(servers[i].get_host(), servers[i].get_port());
+		print_server_names(servers[i].get_server_names());
+		error_page = servers[i].get_error_pages().begin();
+		while (error_page != servers[i].get_error_pages().end())
 		{
 			print_error_pages(error_page->second);
 			++error_page;
 		}
-		print_max_body_size(server[i].get_max_size());
-		location = server[i].get_locations().begin();
-		while (location != server[i].get_locations().end())
+		print_max_body_size(servers[i].get_max_size());
+		location = servers[i].get_locations().begin();
+		while (location != servers[i].get_locations().end())
 		{
 			print_locations(location->second);
 			++location;

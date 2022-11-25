@@ -2,9 +2,11 @@
 
 int	Webserver::exit_webserv(void)
 {
-	close(main_socket);
+	close(epoll_socket);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
-		close(server[i]._server_socket);
+		close(servers[i].socket);
+	for (int i = 0 ; i < nb_events ; ++i)
+		close(events[i].data.fd);
 	close(STDIN);
 	close(STDOUT);
 	close(STDERR);

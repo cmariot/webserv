@@ -19,25 +19,26 @@
 
 int	Request::get(int fd)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	int		recv_return = BUFFER_SIZE + 1;
-
-	print(INFO, "Getting the client's request");
-	request.clear();
-	// Interdit, 1 seul appel recv par event
-	while (true)
-	{
-		bzero(buffer, recv_return);
-		recv_return = recv(fd, buffer, BUFFER_SIZE, 0);
-		if (recv_return == -1)
-		{
-			perror("recv");
-			return (error("recv request failed"));
-		}
-		request += buffer;
-		if (recv_return < BUFFER_SIZE)
-			break ;
-	}
-	interpret();
+	(void)fd;
+//	char	buffer[BUFFER_SIZE + 1];
+//	int		recv_return = BUFFER_SIZE + 1;
+//
+//	print(INFO, "Getting the client's request");
+//	request.clear();
+//	// Interdit, 1 seul appel recv par event
+//	while (true)
+//	{
+//		bzero(buffer, recv_return);
+//		recv_return = recv(fd, buffer, BUFFER_SIZE, 0);
+//		if (recv_return == -1)
+//		{
+//			perror("recv");
+//			return (error("recv request failed"));
+//		}
+//		request += buffer;
+//		if (recv_return < BUFFER_SIZE)
+//			break ;
+//	}
+//	interpret();
 	return (0);
 };
