@@ -51,17 +51,12 @@ class Webserver
 		static size_t					nb_of_servers;
 		std::vector<Server>				servers;
 		Server							_server;
-
 		int								epoll_socket;
-		
 		struct epoll_event				events[MAX_EVENTS];
 		struct epoll_event				event;
 		int								nb_events;
-		
 		char * const					*_env;
-		
-		std::map<int, Client>			clients;
-
+		std::map<const int, Client>		clients;
 		char							buffer[BUFFER_SIZE];
 		ssize_t							recv_return;
 

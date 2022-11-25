@@ -23,9 +23,9 @@ static int	add_to_ready_list(const int & client_socket, const int & epoll_socket
 
 int		Webserver::add_client(void)
 {
-	const int &	client_socket = accept(_server.socket,
-										(struct sockaddr *)&(_server.address),
-										(socklen_t *)&(_server.addrlen));
+	const int		client_socket = accept(_server.socket,
+									(struct sockaddr *)&(_server.address),
+									(socklen_t *)&(_server.addrlen));
 	Client	client(client_socket, _server);
 
 	if (client_socket == -1)
@@ -34,7 +34,7 @@ int		Webserver::add_client(void)
 		return (1);
 	if (add_to_ready_list(client_socket, epoll_socket))
 		return (1);
-	clients.insert(std::make_pair<const int &, Client>(client_socket, client));
+	clients.insert(std::pair<const int, Client>(client_socket, client));
 	return (0);
 };
 
