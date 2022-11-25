@@ -1,39 +1,42 @@
 #include "Webserver.hpp"
 
-bool	Webserver::add_to_ready_list(Server & server)
+int		Webserver::add_client(void)
 {
-	int	addrlen = sizeof(server.address);
-	int	ready_socket = accept(server.socket, (struct sockaddr *)&(server.address), (socklen_t *)&addrlen);
+	// Accept client
+	int	addrlen = sizeof(_client_server.address);
+	int	client_socket = accept(_client_server.socket, (struct sockaddr *)&(_client_server.address), (socklen_t *)&addrlen);
+	if (client_socket == -1)
+		return (error("accept() failed."));
 
-	if (ready_socket == -1)
-	{
-		error("accept() failed.");
-		perror("accept");
-		return (false);
-	}
+	// Set non blocking
+	int	flags = fcntl(client_socket, F_GETFL, 0);
+	if (flags == -1 || fcntl(client_socket, F_SETFL, flags | O_NONBLOCK) == -1)
+		return (error("fcntl() failed."));
 
-	int	flags = fcntl(ready_socket, F_GETFL, 0);
-	if (fcntl(ready_socket, F_SETFL, flags | O_NONBLOCK) == -1)
-		std::cerr << "fcntl" << std::endl;
-
+	// Add to the ready_list
 	struct epoll_event	event;
 	bzero(&event, sizeof(struct epoll_event));
-	event.data.fd = ready_socket;
+	event.data.fd = client_socket;
 	event.events = EPOLLIN | EPOLLOUT;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, &event) == -1)
+		return (error("epoll_ctl() failed."));
 
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, ready_socket, &event) == -1)
-	{
-		perror("epoll_ctl: ready_socket");
-		return (false);
-	}
-	print(INFO, "Connexion accepted, the client has been add to the interest list.");
-	return (true);
+	// Insert the new client in the map
+	Client	client(client_socket, _client_server);
+	clients.insert(std::make_pair<int, Client>(client_socket, client));
+
+	return (0);
 };
 
 bool	Webserver::client_connection(void)
 {
 	for (size_t	i = 0 ; i <  nb_of_servers ; ++i)
+	{
 		if (server[i].socket == event.data.fd)
-			return (add_to_ready_list(server[i]));
+		{
+			_client_server = server[i];
+			return (true);
+		}
+	}
 	return (false);
 };

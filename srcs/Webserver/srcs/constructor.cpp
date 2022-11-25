@@ -3,8 +3,8 @@
 size_t Webserver::nb_of_servers = 0;
 
 Webserver::Webserver(void) :
-	signal(false),
 	_env(NULL)
 {
+	bzero(buffer, BUFFER_SIZE);
 	return ;
 };

@@ -6,12 +6,8 @@ int		Webserver::new_events(void)
 	if (nb_events == -1)
 	{
 		if (errno == EINTR)
-		{
-			signal = true;
 			return (false);
-		}
 		std::cerr << "epoll_wait" << std::endl;
-		return (false);
 	}
 	return (true);
 };

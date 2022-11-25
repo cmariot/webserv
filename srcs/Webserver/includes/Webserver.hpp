@@ -10,11 +10,13 @@
 # include <fcntl.h>
 # include <sys/epoll.h>
 # include <cstring>
+# include <utility>
 
 # include <string>
 # include <vector>
 # include <sstream>
 
+# include "Client.hpp"
 # include "Server.hpp"
 # include "Utils.hpp"
 # include "Request.hpp"
@@ -26,6 +28,7 @@
 # define MAX_EVENTS		200
 # define SIGNAL_CAUGHT	1
 # define INFO			0
+# define BUFFER_SIZE	50
 
 using std::string;
 using std::cout;
@@ -45,14 +48,18 @@ class Webserver
 	private:
 
 		//	private members
-		static size_t			nb_of_servers;
-		std::vector<Server>		server;
-		int						epoll_socket;
-		struct epoll_event		event;
-		struct epoll_event		events[MAX_EVENTS];
-		int						nb_events;
-		bool					signal;
-		const char				**_env;
+		static size_t					nb_of_servers;
+		std::vector<Server>				server;
+		int								epoll_socket;
+		struct epoll_event				event;
+		struct epoll_event				events[MAX_EVENTS];
+		int								nb_events;
+		const char						**_env;
+		std::map<int, Client>			clients;
+		Server							_client_server;
+
+		char							buffer[BUFFER_SIZE];
+		ssize_t							recv_return;
 
 		//	parsing
 		int			check_arguments(const int & argc, const char *argv[]);
@@ -77,17 +84,18 @@ class Webserver
 		int			listen_server(Server &);
 		int			set_non_blocking(Server &);
 		int			add_to_epoll_interest_list(Server &);
-
 		int			catch_signal(void);
 		int			new_events(void);
+
 		bool		client_error(void) const;
-		bool		client_connection(void);
-		bool		client_ready(void) const;
-
-		bool		add_to_ready_list(Server &);
-		int			add_client(int &, struct epoll_event *);
-
 		void		remove_client(void);
+
+		bool		client_connection(void);
+		int			add_client(void);
+		
+		bool		client_ready(void) const;
+		int			treat_client_request(void);
+
 
 		//	utils
 		int			usage(void) const;

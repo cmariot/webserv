@@ -61,6 +61,7 @@ SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
 				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
 				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Client/srcs/, $(CLIENT)) \
 				  $(addprefix Request/srcs/, $(REQUEST)) \
 				  $(addprefix Response/srcs/, $(RESPONSE)) \
 				  $(addprefix Utils/srcs/, $(UTILS))
@@ -79,6 +80,7 @@ WEBSERVER		= parsing/remove_commentaries.cpp \
 				  parsing/usage.cpp \
 				  catch_signal.cpp \
 				  client_connexion.cpp \
+				  client_error.cpp \
 				  constructor.cpp \
 				  destructor.cpp \
 				  exit_webserv.cpp \
@@ -127,6 +129,9 @@ REQUEST			= constructor.cpp \
 				  interpret.cpp \
 				  destructor.cpp \
 				  get_content.cpp
+
+CLIENT			= constructor.cpp \
+				  destructor.cpp
 
 RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \
