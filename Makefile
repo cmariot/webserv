@@ -131,8 +131,10 @@ REQUEST			= constructor.cpp \
 				  destructor.cpp \
 				  get_content.cpp
 
-CLIENT			= constructor.cpp \
-				  destructor.cpp
+CLIENT			= add_to_request.cpp \
+				  constructor.cpp \
+				  destructor.cpp \
+				  getters.cpp
 
 RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \

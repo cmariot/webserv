@@ -3,7 +3,7 @@
 int		Webserver::launch(void)
 {
 	if (init_sockets())
-		return (exit_webserv());
+		return (exit_webserv()); // uninitialised byte(s)
 	catch_signal();
 	while (new_events())
 	{

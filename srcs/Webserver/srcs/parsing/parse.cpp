@@ -62,12 +62,12 @@ int	Webserver::check_arguments(const int & argc, const char *argv[])
 	return (0);
 }
 
-const char **Webserver::get_env(void) const
+char * const *Webserver::get_env(void) const
 {
 	return (_env);
 };
 
-void	Webserver::set_env(const char **env)
+void	Webserver::set_env(char * const *env)
 {
 	_env = env;
 	return ;
@@ -76,7 +76,7 @@ void	Webserver::set_env(const char **env)
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
-int	Webserver::parse(const int argc, const char *argv[], const char *env[])
+int	Webserver::parse(const int argc, const char *argv[], char * const *env)
 {
 	std::vector<std::string>	vector;
 

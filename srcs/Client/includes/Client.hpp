@@ -13,8 +13,8 @@ class	Client
 
 		Client(const int &, const Server &);
 		~Client(void);
-
-	private:
+	
+		int	add_to_request(char *buff);
 
 		int			_socket;
 		Server		_server;

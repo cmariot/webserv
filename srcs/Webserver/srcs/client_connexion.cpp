@@ -2,7 +2,6 @@
 
 static int	set_non_blocking_client(const int & client_socket)
 {
-	// Set non blocking
 	int	flags = fcntl(client_socket, F_GETFL, 0);
 
 	if (flags == -1 || fcntl(client_socket, F_SETFL, flags | O_NONBLOCK) == -1)
@@ -24,7 +23,6 @@ static int	add_to_ready_list(const int & client_socket, const int & epoll_socket
 
 int		Webserver::add_client(void)
 {
-	// Accept client
 	const int &	client_socket = accept(_server.socket,
 										(struct sockaddr *)&(_server.address),
 										(socklen_t *)&(_server.addrlen));

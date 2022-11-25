@@ -42,7 +42,7 @@ class Webserver
 		Webserver(void);
 		~Webserver(void);
 
-		int		parse(const int argc, const char *argv[], const char **env);
+		int		parse(const int argc, const char *argv[], char * const *env);
 		int		launch(void);
 
 	private:
@@ -58,7 +58,7 @@ class Webserver
 		struct epoll_event				event;
 		int								nb_events;
 		
-		const char						**_env;
+		char * const					*_env;
 		
 		std::map<int, Client>			clients;
 
@@ -106,8 +106,8 @@ class Webserver
 		int			exit_webserv(void);
 
 		//	env
-		void		set_env(const char *env[]);
-		const char	**get_env(void) const;
+		void		set_env(char * const *env);
+		char * const *get_env(void) const;
 
 };
 

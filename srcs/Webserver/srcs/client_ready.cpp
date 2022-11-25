@@ -2,27 +2,29 @@
 
 int	Webserver::handle_client(void)
 {
+	std::map<const int, Client>::iterator	client = clients.find(event.data.fd);
+	if (client == clients.end())
+	{
+		error("Unkwown client socket.");
+		close(event.data.fd);
+		return (0);
+	}
 	recv_return = recv(event.data.fd, buffer, BUFFER_SIZE - 1, MSG_DONTWAIT);
 	if (recv_return == -1)
 		return (1);
 	buffer[recv_return] = '\0';
-
-	// get current client in the map
 	if (recv_return < BUFFER_SIZE - 1)
 	{
-		std::cout << buffer;
-		// add buffer to the correct client request
-		// send the response
-		std::string	response = "HTTP/1.1 200 OK\r\n\r\n<h1>Ca fonctionne !</h1>";
-		send(event.data.fd, response.c_str(), response.size(), 0);
+		client->second.add_to_request(buffer);
+		client->second._request.interpret();
+		client->second._response.update(client->second._request, client->second._server, get_env());
+		client->second._response.create(event.data.fd);
+		clients.erase(event.data.fd);
 		close(event.data.fd);
 		print(INFO, "Connexion closed");
 	}
 	else
-	{
-		std::cout << buffer;
-		// add buffer to the correct client request
-	}
+		client->second.add_to_request(buffer);
 	return (0);
 };
 
