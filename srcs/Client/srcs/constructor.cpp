@@ -1,9 +1,7 @@
 #include "Client.hpp"
 
-Client::Client(const int & socket, const Server & server) :
-	_socket(socket),
-	_server(server)
+Client::Client(const int & socket) :
+	_socket(socket)
 {
-	print(INFO, "New client !");
 	return ;
 };

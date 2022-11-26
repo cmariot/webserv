@@ -30,7 +30,6 @@ class	Request
 		vector<string>		content_type;
 		vector<string> 		file_name;
 
-
 		int	get(int);
 		int	interpret(void);
 

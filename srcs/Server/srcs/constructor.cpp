@@ -8,6 +8,7 @@ Server::Server(void) :
 	client_max_body_size_set(false),
 	error_page_set(false),
 	locations_set(false),
+	socket(0),
 	addrlen(sizeof(struct sockaddr_in))
 {
 	return ;

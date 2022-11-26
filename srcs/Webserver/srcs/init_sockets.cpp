@@ -8,7 +8,7 @@ int		Webserver::create_epoll_descriptor(void)
 	print(INFO, "Opening the epoll_socket.");
 	epoll_socket = epoll_create1(flags);
 	if (epoll_socket == -1)
-		return (error("epoll_create1"));
+		return (error(strerror(errno)));
 	return (0);
 };
 
@@ -16,13 +16,17 @@ int		Webserver::create_epoll_descriptor(void)
 int		Webserver::open_server_socket(Server & server)
 {
 	const int	socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int	socket_type		= SOCK_STREAM | SOCK_NONBLOCK;	// TCP
+	const int	socket_type		= SOCK_STREAM					// TCP
+								| SOCK_NONBLOCK;				// NON-BLOCKING
 	const int	protocol		= IPPROTO_TCP;					// IP
+	int	opt						= 1;
 
 	print(INFO, "Opening a server_socket.");
 	server.socket = socket(socket_family, socket_type, protocol);
 	if (server.socket == -1)
-		return (error("socket server"));
+		return (error(strerror(errno)));
+	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int)) == -1)
+		return (error(strerror(errno)));
 	return (0);
 };
 
@@ -43,7 +47,7 @@ int		Webserver::bind_server_address(Server & server)
 
 	print(INFO, "Binding the server_socket with an address.");
 	if (bind(server.socket, addr, addrlen) == -1)
-		return (error("bind failed, the address is already used ?"));
+		return (error(strerror(errno)));
 	return (0);
 };
 
@@ -54,7 +58,7 @@ int		Webserver::set_non_blocking(Server & server)
 	int	flags = fcntl(server.socket, F_GETFL, 0);
 	if (flags == -1
 			|| fcntl(server.socket, F_SETFL, flags | O_NONBLOCK) == -1)
-		return (error("fcntl server"));
+		return (error(strerror(errno)));
 	return (0);
 };
 
@@ -65,7 +69,7 @@ int		Webserver::listen_server(Server & server)
 
 	print(INFO, "Tells the socket that new connections shall be accepted.");
 	if (listen(server.socket, backlog) == -1)
-		return (error("listen server"));
+		return (error(strerror(errno)));
 	return (0);
 };
 
@@ -77,7 +81,7 @@ int		Webserver::add_to_epoll_interest_list(Server & server)
 	server.event.data.fd = server.socket;
 	server.event.events = EPOLLIN | EPOLLOUT;
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &(server.event)) == -1)
-		return (error("epoll_ctl ADD server"));
+		return (error(strerror(errno)));
 	return (0);
 };
 

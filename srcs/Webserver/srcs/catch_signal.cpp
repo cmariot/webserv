@@ -2,8 +2,8 @@
 
 static void	sigint_primitive(int signal)
 {
-	print(INFO, "Signal caught, bye.");
 	(void)signal;
+	print(INFO, "Signal caught, bye.");
 };
 
 int		Webserver::catch_signal(void)

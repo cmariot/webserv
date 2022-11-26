@@ -11,7 +11,7 @@ class	Client
 
 	public:
 
-		Client(const int &, const Server &);
+		Client(const int &);
 		~Client(void);
 	
 		int	add_to_request(char *buff);

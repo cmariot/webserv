@@ -8,7 +8,7 @@ int		Webserver::new_events(void)
 		if (errno == EINTR)
 			return (false);
 		else
-			error("epoll_wait");
+			return (error(strerror(errno)));
 	}
 	return (true);
 };

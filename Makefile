@@ -59,8 +59,8 @@ SRC_ROOTDIR		= srcs/
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
-				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
-				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Server/Error_page/srcs/, $(ERROR_PAGE)) \
+				  $(addprefix Server/Location/srcs/, $(LOCATION)) \
 				  $(addprefix Client/srcs/, $(CLIENT)) \
 				  $(addprefix Request/srcs/, $(REQUEST)) \
 				  $(addprefix Response/srcs/, $(RESPONSE)) \
@@ -126,7 +126,6 @@ LOCATION		= constructor.cpp \
 				  set_upload_path.cpp
 
 REQUEST			= constructor.cpp \
-				  get_client_request.cpp \
 				  interpret.cpp \
 				  destructor.cpp \
 				  get_content.cpp

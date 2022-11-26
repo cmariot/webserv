@@ -3,7 +3,7 @@
 int		Webserver::launch(void)
 {
 	if (init_sockets())
-		return (exit_webserv()); // uninitialised byte(s)
+		return (exit_webserv());
 	catch_signal();
 	while (new_events())
 	{
@@ -16,11 +16,8 @@ int		Webserver::launch(void)
 				add_client();
 			else if (client_ready())
 				handle_client();
-			else
-			{
-				error(strerror(errno));
-				close(event.data.fd);
-			}
+			else if (!(event.events & EPOLLIN) && !(event.events & EPOLLOUT))
+				error("Unknown event ...");
 		}
 	}
 	return (exit_webserv());

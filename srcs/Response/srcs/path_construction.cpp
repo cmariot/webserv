@@ -29,7 +29,6 @@ int	Response::path_construction(void)
 	_file_path.replace(0, _location.get_uri().size(), _location.root());
 	if (is_a_file(_file_path) == true)
 	{
-		print(INFO, "GET will try the file", _file_path.c_str());
 		return (0);
 	}
 	for (size_t i = 0 ; i < _location.index().size() ; ++i)
@@ -38,14 +37,12 @@ int	Response::path_construction(void)
 		if (is_a_file(path) == true)
 		{
 			_file_path = path;
-			print(INFO, "GET will try the file", _file_path.c_str());
 			return (0);
 		}
 	}
 	if (is_a_directory(_file_path) == true)
 	{
 		_dir = true;
-		print(INFO, "GET will try the file", _file_path.c_str());
 		return (0);
 	}
 	return (1);

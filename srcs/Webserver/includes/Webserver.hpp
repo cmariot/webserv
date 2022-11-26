@@ -28,7 +28,7 @@
 # define MAX_EVENTS		200
 # define SIGNAL_CAUGHT	1
 # define INFO			0
-# define BUFFER_SIZE	50
+# define BUFFER_SIZE	4096
 
 using std::string;
 using std::cout;
@@ -50,7 +50,7 @@ class Webserver
 		//	private members
 		static size_t					nb_of_servers;
 		std::vector<Server>				servers;
-		Server							_server;
+		Server							server;
 		int								epoll_socket;
 		struct epoll_event				events[MAX_EVENTS];
 		struct epoll_event				event;
@@ -61,50 +61,50 @@ class Webserver
 		ssize_t							recv_return;
 
 		//	parsing
-		int			check_arguments(const int & argc, const char *argv[]);
-		int			get_file(const char * &, std::vector<std::string> &);
-		int			parse_configuration_file(std::vector<std::string> &);
-		int			remove_commentaries(std::vector<std::string> &) const;
-		int			replace_blank_characters(std::vector<std::string> &) const;
-		int			split_strings(std::vector<std::string> &, std::vector<std::string> &) const;
-		int			separate_braces(std::vector<std::string> &) const;
-		int			separate_semicolon(std::vector<std::string>	&) const;
-		int			parse_server(std::vector<std::string> &);
-		int			get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
+		int				check_arguments(const int & argc, const char *argv[]);
+		int				get_file(const char * &, std::vector<std::string> &);
+		int				parse_configuration_file(std::vector<std::string> &);
+		int				remove_commentaries(std::vector<std::string> &) const;
+		int				replace_blank_characters(std::vector<std::string> &) const;
+		int				split_strings(std::vector<std::string> &, std::vector<std::string> &) const;
+		int				separate_braces(std::vector<std::string> &) const;
+		int				separate_semicolon(std::vector<std::string>	&) const;
+		int				parse_server(std::vector<std::string> &);
+		int				get_server_directives(std::vector<std::string> &, size_t &, size_t &, size_t &);
 
 		//	print
-		void		print_config(void) const;
+		void			print_config(void) const;
 
 		//	launch
-		int			init_sockets(void);
-		int			create_epoll_descriptor(void);
-		int			open_server_socket(Server &);
-		int			bind_server_address(Server &);
-		int			listen_server(Server &);
-		int			set_non_blocking(Server &);
-		int			add_to_epoll_interest_list(Server &);
-		int			catch_signal(void);
-		int			new_events(void);
+		int				init_sockets(void);
+		int				create_epoll_descriptor(void);
+		int				open_server_socket(Server &);
+		int				bind_server_address(Server &);
+		int				listen_server(Server &);
+		int				set_non_blocking(Server &);
+		int				add_to_epoll_interest_list(Server &);
+		int				catch_signal(void);
+		int				new_events(void);
 
-		bool		client_error(void) const;
-		void		remove_client(void);
+		bool			client_error(void) const;
+		void			remove_client(void);
 
-		bool		client_connection(void);
-		int			add_client(void);
+		bool			client_connection(void);
+		int				add_client(void);
 		
-		bool		client_ready(void) const;
-		int			handle_client(void);
-		int			receive_input(void);
-		bool		create_response(Client &);
-
+		bool			client_ready(void) const;
+		int				get_server(Client &);
+		int				handle_client(void);
+		int				receive_input(void);
+		bool			create_response(Client &);
 
 		//	utils
-		int			usage(void) const;
-		int			exit_webserv(void);
+		int				usage(void) const;
+		int				exit_webserv(void);
 
 		//	env
-		void		set_env(char * const *env);
-		char * const *get_env(void) const;
+		void			set_env(char * const *env);
+		char * const	*get_env(void) const;
 
 };
 

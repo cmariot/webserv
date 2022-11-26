@@ -44,7 +44,7 @@ class Response
 
 		map<int, string>		init_status_code_map(void) const;
 		void					update(Request &, Server &, char * const *env);
-		void					create(int);
+		void					create(void);
 		int						get_location(void);
 		int						path_construction(void);
 
@@ -85,7 +85,12 @@ class Response
 		string					_status_line;
 		string					_response_header;
 		string					_response_body;
+
+	public:
+
 		string					_full_response;
+
+	private:
 
 		bool					_dir;
 

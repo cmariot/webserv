@@ -120,7 +120,7 @@ int	Request::interpret(void)
 	std::string		request_line;
 	size_t			i = 0;
 
-	std::cout << request << std::endl;
+	//std::cout << request << std::endl;
 	if (get_request_line(request_line))
 		return (1);
 	else if (get_method(request_line, i))
@@ -135,8 +135,5 @@ int	Request::interpret(void)
 		return (1);
 	else if (method == "POST")
 		get_content();
-	print(INFO, ("Request_line : " + request_line).c_str());
-	print(INFO, ("Request_host : " + host).c_str());
-	print(INFO, "The request seems to be valid.");
 	return (0);
 };

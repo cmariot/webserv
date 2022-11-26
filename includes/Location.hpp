@@ -1,1 +1,1 @@
-../srcs/Location/includes/Location.hpp
+../srcs/Server/Location/includes/Location.hpp
