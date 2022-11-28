@@ -71,7 +71,7 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "DELETE" && !test_authorization())
 	{
-		delete();
+		// delete();
 	}
 	else
 	{
