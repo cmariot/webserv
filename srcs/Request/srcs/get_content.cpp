@@ -42,7 +42,6 @@ int Request::get_body_content(size_t i)
 	size_t		pos;
 
 	pos = content[i].find("\n\r");
-	pos = pos + 3;
 
 	if (pos != std::string::npos)
 	{
