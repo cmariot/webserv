@@ -47,7 +47,7 @@ class Response
 		int						test_authorization(void);
 		void 					get(void);
 		void					post(void);
-		void 					delet(void)
+		void 					delet(void);
 
 		int 					set_status_code(const int & status_code);
 		void 					build_http_response(void); 
