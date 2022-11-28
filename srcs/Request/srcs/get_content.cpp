@@ -41,10 +41,7 @@ int Request::get_body_content(size_t i)
 {
 	size_t		pos;
 
-	// degueu mais fonctionnel
-	pos = content[i].find("filename");
 	pos = content[i].find("\n\r", ++pos);
-	// pos = content[i].find("\n", ++pos);
 	pos = pos + 3;
 
 	if (pos != std::string::npos)
