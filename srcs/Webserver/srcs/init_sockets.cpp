@@ -3,7 +3,7 @@
 // Ouvrir un epoll_socket avec epoll_create1, c'est le socket principal
 int		Webserver::create_epoll_descriptor(void)
 {
-	const int	flags = 0;
+	int	flags = 0;
 
 	print(INFO, "Opening the epoll_socket.");
 	epoll_socket = epoll_create1(flags);
@@ -15,17 +15,16 @@ int		Webserver::create_epoll_descriptor(void)
 // Ouvrir un socket pour chaque serveur
 int		Webserver::open_server_socket(Server & server)
 {
-	const int	socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int	socket_type		= SOCK_STREAM					// TCP
-								| SOCK_NONBLOCK;				// NON-BLOCKING
-	const int	protocol		= IPPROTO_TCP;					// IP
-	int	opt						= 1;
+	int	socket_family	= AF_INET;						// IPv4 Internet protocols
+	int	socket_type		= SOCK_STREAM | SOCK_NONBLOCK;	// TCP + NON-BLOCKING
+	int	protocol		= IPPROTO_TCP;					// IP
+	int	opt				= 1;
 
 	print(INFO, "Opening a server_socket.");
 	server.socket = socket(socket_family, socket_type, protocol);
 	if (server.socket == -1)
 		return (error(strerror(errno)));
-	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int)) == -1)
+	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };
@@ -33,17 +32,17 @@ int		Webserver::open_server_socket(Server & server)
 // Assigner un type, un host et un port a l'addresse de ce socket
 int		Webserver::bind_server_address(Server & server)
 {
-	const int		socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int		server_port		= server.get_port();			// Listening port
-	const char		*server_host	= server.get_host().c_str();	// Listening IP address
+	int			socket_family	= AF_INET;						// IPv4 Internet protocols
+	int			server_port		= server.get_port();			// Listening port
+	const char	*server_host	= server.get_host().c_str();	// Listening IP address
 
 	bzero(&server.address, sizeof(struct sockaddr_in));
 	server.address.sin_family = socket_family;
 	server.address.sin_port = htons(server_port);
-	server.address.sin_addr.s_addr = inet_addr(server_host);
+	server.address.sin_addr.s_addr = inet_addr(server_host);		// A CHANGER : MODIF SUJET
 
-	const struct sockaddr	*addr	= (const struct	sockaddr *)&server.address;
-	socklen_t				addrlen = sizeof(server.address);
+	struct sockaddr	*addr	= (struct sockaddr *)&server.address;
+	socklen_t		addrlen	= sizeof(server.address);
 
 	print(INFO, "Binding the server_socket with an address.");
 	if (bind(server.socket, addr, addrlen) == -1)
@@ -76,11 +75,13 @@ int		Webserver::listen_server(Server & server)
 // Add the socket server to the epoll interest_list
 int		Webserver::add_to_epoll_interest_list(Server & server)
 {
+	struct epoll_event	new_event;
+
 	print(INFO, "Add the server_socket on the epoll interest_list.");
-	bzero(&server.event, sizeof(struct epoll_event));
-	server.event.data.fd = server.socket;
-	server.event.events = EPOLLIN | EPOLLOUT;
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &(server.event)) == -1)
+	bzero(&new_event, sizeof(struct epoll_event));
+    new_event.events = EPOLLIN | EPOLLOUT;
+	new_event.data.fd = server.socket;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &new_event) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };

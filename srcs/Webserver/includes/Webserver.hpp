@@ -25,10 +25,11 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define MAX_EVENTS		200
+# define MAX_EVENTS		20
 # define SIGNAL_CAUGHT	1
+# define READY			0
 # define INFO			0
-# define BUFFER_SIZE	4096
+# define BUFFER_SIZE	50
 
 using std::string;
 using std::cout;
@@ -91,12 +92,12 @@ class Webserver
 
 		bool			client_connection(void);
 		int				add_client(void);
-		
-		bool			client_ready(void) const;
-		int				get_server(Client &);
-		int				handle_client(void);
-		int				receive_input(void);
-		bool			create_response(Client &);
+
+		bool			client_recv(void);
+		int				get_request(void);
+
+		bool			client_send(void);
+		int				send_response(void);
 
 		//	utils
 		int				usage(void) const;

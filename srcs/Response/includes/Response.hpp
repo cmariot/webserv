@@ -77,7 +77,7 @@ class Response
 		void 					build_http_response(void);
 		bool					execute_script(char **arg);
 
-	private:
+	//private:
 
 		// Which status code are mandatory ?
 		const map<int, string>	_status_code_map;
