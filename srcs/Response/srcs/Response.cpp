@@ -44,9 +44,9 @@ int	Response::test_authorization(void)
 	}
 	if (_request.method == "GET" && _location.get_allowed())
 		return (0);
-	if (_request.method == "DELETE" && _location.delete_allowed())
+	else if (_request.method == "DELETE" && _location.delete_allowed())
 		return (0);
-	if (_request.method == "POST" && _location.post_allowed())
+	else if (_request.method == "POST" && _location.post_allowed())
 		return (0);
 	set_status_code(403);
 	build_http_response();
@@ -65,17 +65,13 @@ void	Response::create(int fd)
 		print(INFO, "The response has been sent to the client");
 		return ;
 	}
-	else if (_request.method == "POST")
+	else if (_request.method == "POST" && !test_authorization() && _request.content.size())
 	{
-		if (!test_authorization() && _request.content.size())
-		{
-			post();
-		}
+		post();
 	}
-	else if (_request.method == "DELETE")
+	else if (_request.method == "DELETE" && !test_authorization())
 	{
-		// if (!test_authorization())
-			//delete();
+		delete();
 	}
 	else
 	{

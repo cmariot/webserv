@@ -80,7 +80,7 @@ int	Request::get_boundary_content(void)
 		if (first_boundary != std::string::npos && second_boundary != std::string::npos)
 			content.push_back(request.substr((first_boundary + boundary.size() + 2),
 			 (second_boundary - first_boundary - boundary.size() - 4)));
-		verif_last_boundary = request.find(boundary_end);
+		verif_last_bou ndary = request.find(boundary_end);
 		if (second_boundary == verif_last_boundary)
 			break;
 		first_boundary = second_boundary;
