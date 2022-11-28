@@ -44,7 +44,7 @@ int Request::get_body_content(size_t i)
 	cout << content[i] << endl;
 	// degueu mais fonctionnel
 	pos = content[i].find("filename");
-	pos = content[i].find("\r\n\n", ++pos);
+	pos = content[i].find("\r\n", ++pos);
 	// pos = content[i].find("\n", ++pos);
 	pos = pos + 3;
 
