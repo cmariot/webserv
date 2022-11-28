@@ -9,6 +9,7 @@ int	Response::set_status_code(const int & status_code)
 
 // inline is to make a quicker
 // This function is to verify if the file exists or not (quicker execution than fopen)
+// stat return -1 if the file does not exist 0 if it does
 bool Response::check_file_existance(string &file)
 {
 	struct stat	buffer;
@@ -69,7 +70,7 @@ void	Response::create(int fd)
 	{
 		post();
 	}
-	else if (_request.method == "DELETE" && !test_authorization())
+	else if (_request.method == "DELETE" && !test_authorization() && _request.file_name())
 	{
 		// delete();
 	}

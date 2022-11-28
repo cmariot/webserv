@@ -13,11 +13,11 @@ void	Response::post(void)
 		return ;
 	}
 	else
+	{
 		mkdir(("." + _location.get_upload_path()).c_str(), 0777);
-
-
-	print(INFO, "Upload folder created ");
-
+		print(INFO, "Upload folder created ");
+	}
+	
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
