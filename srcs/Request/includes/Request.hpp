@@ -38,7 +38,7 @@ class	Request
 
 	private:
 
-		int		get_request_line(string &);
+		int		get_request_line(string &, size_t &);
 		int		get_method(string &, size_t &);
 		int 	get_request_uri(string &, size_t &);
 		int		get_http_version(string &, size_t &);

@@ -95,18 +95,30 @@ int	Request::get_method(std::string & request_line, size_t & i)
 	return (0);
 };
 
+
+# define CRLF		"\r\n"
+# define CRLF_LEN	 2
+
 // La request line est la 1ere ligne de la requete,
+// (sauf si des CRLF sont en debut de header, dans ce cas ils sont skip)
 // Request-Line = Method SP Request-URI SP HTTP-Version CRLF
-# define RN_LEN	2	// Size of \r\n
-int	Request::get_request_line(std::string & request_line)
+int	Request::get_request_line(std::string & request_line, size_t & i)
 {
-	const size_t	pos = request.find("\r\n");
+	while (i + 1 < request.size()
+			&& request[i] == '\r'
+			&& request[i + 1] == '\n')
+		i += 2;
+
+	const size_t	pos = request.find(CRLF, i);
 
 	if (pos == std::string::npos)
-		return (error("Invalid request line."));
-	request_line = request.substr(0, pos + RN_LEN);
+		// status code ?
+		return (error("Invalid request line, no CRLF."));
+	
+	request_line = request.substr(i, pos + CRLF_LEN);
 	if (request_line.empty())
-		return (error("Invalid request line."));
+		// status code ?
+		return (error("Empty request line."));
 	return (0);
 };
 
@@ -116,7 +128,7 @@ int	Request::interpret(void)
 	std::string		request_line;
 	size_t			i = 0;
 
-	if (get_request_line(request_line))
+	if (get_request_line(request_line, i))
 		return (1);
 	else if (get_method(request_line, i))
 		return (1);

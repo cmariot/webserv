@@ -33,7 +33,7 @@ int		Webserver::get_request(void)
 		print(INFO, "Server received data from client.");
 		buffer[recv_return] = '\0';
 		client.add_to_request(buffer);
-		if (client.request_is_ready())
+		if (client.request_is_ready()) // Faire des modifs dans cette fonction pour voir si methode == post et body fini de recevoir
 		{
 			struct epoll_event	new_event;
 

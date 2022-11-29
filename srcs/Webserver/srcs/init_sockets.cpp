@@ -118,6 +118,8 @@ int		Webserver::init_sockets(void)
 			return (1);
 		else if (add_to_epoll_interest_list(servers[i]))
 			return (1);
+		else if (catch_signal())
+			return (1);
 	}
 	return (0);
 };

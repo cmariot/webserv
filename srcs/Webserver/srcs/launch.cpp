@@ -4,7 +4,7 @@ int		Webserver::launch(void)
 {
 	if (init_sockets())
 		return (exit_webserv());
-	catch_signal();
+	print(INFO, "Waiting for new events ...");
 	while (new_events())
 	{
 		for (int i = 0 ; i < nb_events ; ++i)
