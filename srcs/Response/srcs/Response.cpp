@@ -72,9 +72,7 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "DELETE" && !test_authorization())
 	{
-		cout << _request.uri << endl;
-		cout << "gona delete" << endl;
-		// delete();
+		delet();
 	}
 	else
 		set_status_code(501);
