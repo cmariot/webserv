@@ -9,7 +9,7 @@ void    Response::delet(void)
     //     print(ERR, "File to be deleted does not exist");
     //     set_status_code(404);
     // }
-    
+    cout << _request.uri << endl;
     if (remove(_request.uri.c_str()) != 0)
     {
         error("Error : while deleting the file", _request.uri.c_str());
