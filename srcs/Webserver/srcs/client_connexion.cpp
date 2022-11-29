@@ -16,7 +16,7 @@ static int	set_non_blocking_client(int client_socket)
 {
 	int	flags = fcntl(client_socket, F_GETFL, 0);
 
-	if (flags == -1 || fcntl(client_socket, F_SETFL, flags | O_NONBLOCK) == -1)
+	if (flags == -1 || fcntl(client_socket, F_SETFL, O_NONBLOCK) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };
@@ -34,10 +34,11 @@ int		Webserver::add_client(void)
 	if (add_to_ready_list(client_socket, epoll_socket))
 		return (1);
 
+	print(INFO, "New client connection.");
+
 	Client		client(client_socket);
 
 	clients.insert(std::pair<const int, Client>(client_socket, client));
-	print(INFO, "Client connection.");
 	return (0);
 };
 

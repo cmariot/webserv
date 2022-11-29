@@ -32,17 +32,30 @@ int		Webserver::open_server_socket(Server & server)
 // Assigner un type, un host et un port a l'addresse de ce socket
 int		Webserver::bind_server_address(Server & server)
 {
-	int			socket_family	= AF_INET;						// IPv4 Internet protocols
-	int			server_port		= server.get_port();			// Listening port
-	const char	*server_host	= server.get_host().c_str();	// Listening IP address
+	//int			socket_family	= AF_INET;						// IPv4 Internet protocols
+	//int			server_port		= server.get_port();			// Listening port
+	//const char	*server_host	= server.get_host().c_str();	// Listening IP address
+
+	//struct addrinfo		addr;
+	//struct addrinfo		hint;
+
+	//bzero(&hint, sizeof(struct addrinfo));
+	//hint.ai_family		= AF_INET;
+	//hint.ai_socktype	= SOCK_STREAM;
+	//hint.ai_protocol	= 0;
+	//hint.ai_flags		= 0;
+
+	const int		socket_family	= AF_INET;						// IPv4 Internet protocols
+	const int		server_port		= server.get_port();			// Listening port
+	const char		*server_host	= server.get_host().c_str();	// Listening IP address
 
 	bzero(&server.address, sizeof(struct sockaddr_in));
 	server.address.sin_family = socket_family;
 	server.address.sin_port = htons(server_port);
-	server.address.sin_addr.s_addr = inet_addr(server_host);		// A CHANGER : MODIF SUJET
+	server.address.sin_addr.s_addr = inet_addr(server_host);		// A CHANGER, MODIF SUJET PROCHAINEMENT
 
-	struct sockaddr	*addr	= (struct sockaddr *)&server.address;
-	socklen_t		addrlen	= sizeof(server.address);
+	const struct sockaddr	*addr	= (const struct	sockaddr *)&server.address;
+	socklen_t				addrlen = sizeof(server.address);
 
 	print(INFO, "Binding the server_socket with an address.");
 	if (bind(server.socket, addr, addrlen) == -1)

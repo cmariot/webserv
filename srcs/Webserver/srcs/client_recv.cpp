@@ -2,8 +2,6 @@
 
 int		Webserver::get_request(void)
 {
-	print(INFO, "Client recv.");
-	print(INFO, "Client recv. 2");
 	std::map<int, Client>::iterator	it = clients.find(event.data.fd);
 
 	if (it == clients.end())
@@ -12,34 +10,36 @@ int		Webserver::get_request(void)
 		return (error("Unknow client."));
 	}
 
-	Client	client = it->second;
+	Client	& client = it->second;
 
 	bzero(buffer, sizeof(char) * BUFFER_SIZE);
-	std::cout << "recv_return = ";
-	const ssize_t recv_return = recv(event.data.fd, buffer, sizeof(char) * (BUFFER_SIZE - 1), 0);
-	std::cout << recv_return << std::endl;
+
+	const ssize_t recv_return = recv(it->first,
+							buffer,
+							sizeof(char) * (BUFFER_SIZE - 1),
+							O_NONBLOCK);
+
 	if (recv_return <= 0)
 	{
 		if (recv_return == 0)
 			print(INFO, "Client connection closed.");
 		else
 			print(INFO, "Client connection lost.");
-		clients.erase(it->first);
-		epoll_ctl(epoll_socket, EPOLL_CTL_DEL, event.data.fd, NULL);
-		close(event.data.fd);
+		remove_client();
 	}
 	else
 	{
+		print(INFO, "Server received data from client.");
 		buffer[recv_return] = '\0';
-		std::cout << buffer << std::endl;
 		client._request.request += buffer;
-		if (client._request.request.find("\r\n\r\n") != std::string::npos)
+		if (client._request.is_ready())
 		{
+			std::cout << client._request.request << std::endl;
 			struct epoll_event	new_event;
 
 			bzero(&new_event, sizeof(struct epoll_event));
+			new_event.data.fd = it->first;
 			new_event.events = EPOLLOUT;
-			new_event.data.fd = event.data.fd;
 			epoll_ctl(epoll_socket, EPOLL_CTL_MOD, event.data.fd, &new_event);
 		}
 	}

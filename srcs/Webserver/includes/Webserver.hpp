@@ -27,9 +27,9 @@
 # define STDERR			2
 # define MAX_EVENTS		20
 # define SIGNAL_CAUGHT	1
-# define READY			0
+# define READY			1
 # define INFO			0
-# define BUFFER_SIZE	50
+# define BUFFER_SIZE	4096
 
 using std::string;
 using std::cout;
@@ -54,7 +54,7 @@ class Webserver
 		Server							server;
 		int								epoll_socket;
 		struct epoll_event				events[MAX_EVENTS];
-		struct epoll_event				event;
+		struct epoll_event				& event;
 		int								nb_events;
 		char * const					*_env;
 		std::map<const int, Client>		clients;
@@ -97,6 +97,7 @@ class Webserver
 		int				get_request(void);
 
 		bool			client_send(void);
+		int				get_server(Client &);
 		int				send_response(void);
 
 		//	utils

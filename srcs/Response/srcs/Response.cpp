@@ -20,7 +20,8 @@ int		Response::create_response_header(void)
 {
 	const std::string	code  = itostring(_status_code);
 
-	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
+	_response_header += "Content-Length: " + itostring(_response_body.size()) + "\r\n\r\n";
 	return (0);
 };
 

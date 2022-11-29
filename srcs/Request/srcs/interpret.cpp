@@ -97,18 +97,14 @@ int	Request::get_method(std::string & request_line, size_t & i)
 
 // La request line est la 1ere ligne de la requete,
 // Request-Line = Method SP Request-URI SP HTTP-Version CRLF
+# define RN_LEN	2	// Size of \r\n
 int	Request::get_request_line(std::string & request_line)
 {
-	size_t			i = 0;
+	const size_t	pos = request.find("\r\n");
 
-	request_line.clear();
-	while (i < request.size())
-	{
-		if (request[i] == '\r' || request[i] == '\n')
-			break ;
-		request_line += request[i];
-		++i;
-	}
+	if (pos == std::string::npos)
+		return (error("Invalid request line."));
+	request_line = request.substr(0, pos + RN_LEN);
 	if (request_line.empty())
 		return (error("Invalid request line."));
 	return (0);
@@ -120,7 +116,6 @@ int	Request::interpret(void)
 	std::string		request_line;
 	size_t			i = 0;
 
-	//std::cout << request << std::endl;
 	if (get_request_line(request_line))
 		return (1);
 	else if (get_method(request_line, i))

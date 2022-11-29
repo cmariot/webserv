@@ -1,0 +1,2 @@
+- [ ] ./srcs/Webserver/srcs/init_sockets.cpp : Bind a modifier, utilisation de get_addrinfo()
+- [ ] 
