@@ -4,16 +4,16 @@
 void    Response::delet(void)
 {
 
+    string infile(_request.uri);
     // if (check_file_existance(infile))
     // {
     //     print(ERR, "File to be deleted does not exist");
-    //     set_status_code(404);
+        
     // }
-    cout << _request.uri << endl;
-    if (remove(_request.uri.c_str()) != 0)
+    infile = "./" + infile;
+    if (remove(infile.c_str()) != 0)
     {
-        strerror(errno);
-        error("Error : while deleting the file", _request.uri.c_str());
+        error("Error : while deleting the file", infile);
         print(ERR, "Error while deleting the file");
         print(ERR, "Files not deleted");
         generate_error_page(500);
