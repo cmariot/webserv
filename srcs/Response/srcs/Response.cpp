@@ -61,24 +61,15 @@ int	Response::test_authorization(void)
 void	Response::create(void)
 {
 	if (_request.method == "GET")
+	{
 		get();
-		// print(INFO, ("Response =\n" + _full_response).c_str());
-		send(fd, _full_response.c_str(), _full_response.size(), 0);
-		print(INFO, "The response has been sent to the client");
 		return ;
 	}
 	else if (_request.method == "POST" && !test_authorization() && _request.content.size())
-	{
 		post();
-	}
 	else if (_request.method == "DELETE" && !test_authorization())
-	{
 		delet();
-	}
 	else
 		set_status_code(501);
 	build_http_response();
-	// print(INFO, ("Response =\n" + _full_response).c_str());
-	send(fd, _full_response.c_str(), _full_response.size(), 0);
-	print(INFO, "The response has been sent to the client");
 };

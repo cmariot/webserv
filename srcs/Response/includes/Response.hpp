@@ -96,6 +96,10 @@ class Response
 		void					add_dot_link(void);
 		void					add_double_dot_link(void);
 		void					add_other_link(char d_name[256]);
+
+		bool execute_script(char **arg);
+		int build_cgi_response(string & path);
+
 };
 
 #endif
