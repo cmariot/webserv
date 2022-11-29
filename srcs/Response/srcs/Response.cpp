@@ -22,7 +22,10 @@ void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
 
-	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
+	_response_header += "Content-Length: " + itostring(_response_body.size()) + "\r\n\r\n";
+	return (0);
+};
 
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) != _server.get_error_pages().end())
 		stored_file(_server.get_error_pages().find(_status_code)->second.get_path());

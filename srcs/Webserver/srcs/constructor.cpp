@@ -4,6 +4,7 @@ size_t Webserver::nb_of_servers = 0;
 
 Webserver::Webserver(void) :
 	epoll_socket(0),
+	event(*events),
 	nb_events(0),
 	_env(NULL)
 {

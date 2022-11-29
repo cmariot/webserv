@@ -3,7 +3,7 @@
 // Ouvrir un epoll_socket avec epoll_create1, c'est le socket principal
 int		Webserver::create_epoll_descriptor(void)
 {
-	const int	flags = 0;
+	int	flags = 0;
 
 	print(INFO, "Opening the epoll_socket.");
 	epoll_socket = epoll_create1(flags);
@@ -15,17 +15,15 @@ int		Webserver::create_epoll_descriptor(void)
 // Ouvrir un socket pour chaque serveur
 int		Webserver::open_server_socket(Server & server)
 {
-	const int	socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int	socket_type		= SOCK_STREAM					// TCP
-								| SOCK_NONBLOCK;				// NON-BLOCKING
-	const int	protocol		= IPPROTO_TCP;					// IP
-	int	opt						= 1;
+	int	socket_family	= AF_INET;						// IPv4 Internet protocols
+	int	socket_type		= SOCK_STREAM | SOCK_NONBLOCK;	// TCP + NON-BLOCKING
+	int	protocol		= IPPROTO_TCP;					// IP
+	int	opt				= 1;
 
-	print(INFO, "Opening a server_socket.");
 	server.socket = socket(socket_family, socket_type, protocol);
 	if (server.socket == -1)
 		return (error(strerror(errno)));
-	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int)) == -1)
+	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };
@@ -33,21 +31,56 @@ int		Webserver::open_server_socket(Server & server)
 // Assigner un type, un host et un port a l'addresse de ce socket
 int		Webserver::bind_server_address(Server & server)
 {
-	const int		socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int		server_port		= server.get_port();			// Listening port
-	const char		*server_host	= server.get_host().c_str();	// Listening IP address
+	const char	*server_host	= server.get_host().c_str();	// Listening IP address
 
-	bzero(&server.address, sizeof(struct sockaddr_in));
-	server.address.sin_family = socket_family;
-	server.address.sin_port = htons(server_port);
-	server.address.sin_addr.s_addr = inet_addr(server_host);
+	struct addrinfo				hints;
+	struct addrinfo				*result;
+	struct addrinfo				*rp;
+	int							opt = 1;
 
-	const struct sockaddr	*addr	= (const struct	sockaddr *)&server.address;
-	socklen_t				addrlen = sizeof(server.address);
+	bzero(&hints, sizeof(struct addrinfo));
+	hints.ai_family				= AF_INET;			// IPv4 Internet Protocols
+	hints.ai_socktype			= SOCK_STREAM;		// TCP
+	hints.ai_protocol			= IPPROTO_TCP;		// IP
+	hints.ai_flags				= 0;
+	hints.ai_protocol			= 0;
+	hints.ai_canonname			= NULL;
+	hints.ai_addr				= NULL;
+	hints.ai_next				= NULL;
 
-	print(INFO, "Binding the server_socket with an address.");
-	if (bind(server.socket, addr, addrlen) == -1)
-		return (error(strerror(errno)));
+	int s = getaddrinfo(server_host,
+							itostring(server.get_port()).c_str(),
+							&hints,
+							&result);
+	if (s != 0)
+		return (error(gai_strerror(s)));
+	for (rp = result; rp != NULL; rp = rp->ai_next)	// Linked list, test untill bind success
+	{
+
+		print(INFO, "Opening a server_socket.");
+		server.socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+		if (server.socket == -1)
+			continue ;
+
+		if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
+		{
+			close(server.socket);
+			continue ;
+		}
+
+		print(INFO, "Binding the server_socket with an address.");
+		if (bind(server.socket, rp->ai_addr, rp->ai_addrlen) == 0)
+		{
+			server.address = *(rp->ai_addr);
+			server.addrlen = rp->ai_addrlen;
+			break ; // Bind OK
+		}
+
+		close(server.socket);
+	}
+	freeaddrinfo(result);
+	if (rp == NULL)
+		return (error("Could not bind the server socket with a server address."));
 	return (0);
 };
 
@@ -76,11 +109,13 @@ int		Webserver::listen_server(Server & server)
 // Add the socket server to the epoll interest_list
 int		Webserver::add_to_epoll_interest_list(Server & server)
 {
+	struct epoll_event	new_event;
+
 	print(INFO, "Add the server_socket on the epoll interest_list.");
-	bzero(&server.event, sizeof(struct epoll_event));
-	server.event.data.fd = server.socket;
-	server.event.events = EPOLLIN | EPOLLOUT;
-	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &(server.event)) == -1)
+	bzero(&new_event, sizeof(struct epoll_event));
+    new_event.events = EPOLLIN | EPOLLOUT;
+	new_event.data.fd = server.socket;
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, server.socket, &new_event) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };
@@ -91,9 +126,7 @@ int		Webserver::init_sockets(void)
 		return (1);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
 	{
-		if (open_server_socket(servers[i]))
-			return (1);
-		else if (bind_server_address(servers[i]))
+		if (bind_server_address(servers[i]))
 			return (1);
 		else if (set_non_blocking(servers[i]))
 			return (1);

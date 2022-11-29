@@ -25,8 +25,9 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define MAX_EVENTS		200
+# define MAX_EVENTS		20
 # define SIGNAL_CAUGHT	1
+# define READY			1
 # define INFO			0
 # define BUFFER_SIZE	4096
 
@@ -53,7 +54,7 @@ class Webserver
 		Server							server;
 		int								epoll_socket;
 		struct epoll_event				events[MAX_EVENTS];
-		struct epoll_event				event;
+		struct epoll_event				& event;
 		int								nb_events;
 		char * const					*_env;
 		std::map<const int, Client>		clients;
@@ -91,12 +92,13 @@ class Webserver
 
 		bool			client_connection(void);
 		int				add_client(void);
-		
-		bool			client_ready(void) const;
+
+		bool			client_recv(void);
+		int				get_request(void);
+
+		bool			client_send(void);
 		int				get_server(Client &);
-		int				handle_client(void);
-		int				receive_input(void);
-		bool			create_response(Client &);
+		int				send_response(void);
 
 		//	utils
 		int				usage(void) const;

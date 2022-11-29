@@ -79,9 +79,10 @@ WEBSERVER		= parsing/remove_commentaries.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
 				  catch_signal.cpp \
-				  client_connexion.cpp \
+				  client_connection.cpp \
 				  client_error.cpp \
-				  client_ready.cpp \
+				  client_recv.cpp \
+				  client_send.cpp \
 				  constructor.cpp \
 				  destructor.cpp \
 				  exit_webserv.cpp \
@@ -132,7 +133,11 @@ REQUEST			= constructor.cpp \
 
 CLIENT			= add_to_request.cpp \
 				  constructor.cpp \
-				  destructor.cpp
+				  create_response.cpp \
+				  destructor.cpp \
+				  getters.cpp \
+				  request_is_ready.cpp \
+				  setters.cpp
 
 RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \

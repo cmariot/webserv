@@ -68,7 +68,7 @@ class	Server
 	public:
 
 		int					socket;
-		struct sockaddr_in	address;
+		struct sockaddr		address;
 		struct epoll_event	event;
 		int					addrlen;
 

@@ -14,11 +14,13 @@ int		Webserver::launch(void)
 				remove_client();
 			else if (client_connection())
 				add_client();
-			else if (client_ready())
-				handle_client();
-			else if (!(event.events & EPOLLIN) && !(event.events & EPOLLOUT))
-				error("Unknown event ...");
+			else if (client_recv() == READY)
+				get_request();
+			else if (client_send() == READY)
+				send_response();
 		}
+		//std::cout << "Number of events  = " << nb_events << std::endl;
+		//std::cout << "Number of clients = " << clients.size() << std::endl;
 	}
 	return (exit_webserv());
 };
