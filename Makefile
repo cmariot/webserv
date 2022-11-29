@@ -138,6 +138,8 @@ RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \
 				  update.cpp \
 				  get.cpp \
+				  post.cpp \
+				  delete.cpp \
 				  Response.cpp \
 				  generate_error_page.cpp \
 				  get_location.cpp \

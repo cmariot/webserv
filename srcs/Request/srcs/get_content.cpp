@@ -37,14 +37,12 @@ int Request::get_content_type(size_t i)
 };
 
 // store body content of the file in the vector
+// \n\r is to get to the body content
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
 
-	// degueu mais fonctionnel
-	pos = content[i].find("filename");
-	pos = content[i].find("\n", ++pos);
-	pos = content[i].find("\n", ++pos);
+	pos = content[i].find("\n\r");
 	pos = pos + 3;
 
 	if (pos != std::string::npos)
@@ -91,6 +89,7 @@ int	Request::get_boundary_content(void)
 	return 0;
 }
 
+// reset all the vectors used to store the different files -> for new request
 void Request::reset(void)
 {
 	content.clear();
@@ -98,7 +97,6 @@ void Request::reset(void)
 	content_type.clear();
 	body_content.clear();
 }
-
 
 // This function stores the different infos of files in 3 vectors : name, type, content
 // 1 stored the different contents of the form divided by the boundaries in a vector
