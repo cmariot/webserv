@@ -12,6 +12,7 @@ void    Response::delet(void)
     cout << _request.uri << endl;
     if (remove(_request.uri.c_str()) != 0)
     {
+        perror();
         error("Error : while deleting the file", _request.uri.c_str());
         print(ERR, "Error while deleting the file");
         print(ERR, "Files not deleted");
