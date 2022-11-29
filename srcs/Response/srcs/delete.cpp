@@ -12,7 +12,7 @@ void    Response::delet(void)
     
     if (remove(_request.uri.c_str()) != 0)
     {
-        error("Error : while deleting the file", infile);
+        error("Error : while deleting the file", _request.uri.c_str());
         print(ERR, "Error while deleting the file");
         print(ERR, "Files not deleted");
         generate_error_page(500);
