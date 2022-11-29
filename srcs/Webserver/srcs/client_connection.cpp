@@ -6,7 +6,7 @@ static int	add_to_ready_list(int & client_socket, int & epoll_socket)
 
 	bzero(&new_event, sizeof(struct epoll_event));
 	new_event.data.fd = client_socket;
-	new_event.events = EPOLLIN | EPOLLOUT;
+	new_event.events = EPOLLIN;
 	if (epoll_ctl(epoll_socket, EPOLL_CTL_ADD, client_socket, &new_event) == -1)
 		return (error(strerror(errno)));
 	return (0);

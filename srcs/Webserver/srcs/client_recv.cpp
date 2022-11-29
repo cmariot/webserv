@@ -6,6 +6,7 @@ int		Webserver::get_request(void)
 
 	if (it == clients.end())
 	{
+		epoll_ctl(epoll_socket, EPOLL_CTL_DEL, event.data.fd, 0);
 		close(event.data.fd);
 		return (error("Unknow client."));
 	}
@@ -31,10 +32,9 @@ int		Webserver::get_request(void)
 	{
 		print(INFO, "Server received data from client.");
 		buffer[recv_return] = '\0';
-		client._request.request += buffer;
-		if (client._request.is_ready())
+		client.add_to_request(buffer);
+		if (client.request_is_ready())
 		{
-			std::cout << client._request.request << std::endl;
 			struct epoll_event	new_event;
 
 			bzero(&new_event, sizeof(struct epoll_event));

@@ -20,7 +20,6 @@ int		Webserver::open_server_socket(Server & server)
 	int	protocol		= IPPROTO_TCP;					// IP
 	int	opt				= 1;
 
-	print(INFO, "Opening a server_socket.");
 	server.socket = socket(socket_family, socket_type, protocol);
 	if (server.socket == -1)
 		return (error(strerror(errno)));
@@ -32,34 +31,56 @@ int		Webserver::open_server_socket(Server & server)
 // Assigner un type, un host et un port a l'addresse de ce socket
 int		Webserver::bind_server_address(Server & server)
 {
-	//int			socket_family	= AF_INET;						// IPv4 Internet protocols
-	//int			server_port		= server.get_port();			// Listening port
-	//const char	*server_host	= server.get_host().c_str();	// Listening IP address
+	const char	*server_host	= server.get_host().c_str();	// Listening IP address
 
-	//struct addrinfo		addr;
-	//struct addrinfo		hint;
+	struct addrinfo				hints;
+	struct addrinfo				*result;
+	struct addrinfo				*rp;
+	int							opt = 1;
 
-	//bzero(&hint, sizeof(struct addrinfo));
-	//hint.ai_family		= AF_INET;
-	//hint.ai_socktype	= SOCK_STREAM;
-	//hint.ai_protocol	= 0;
-	//hint.ai_flags		= 0;
+	bzero(&hints, sizeof(struct addrinfo));
+	hints.ai_family				= AF_INET;			// IPv4 Internet Protocols
+	hints.ai_socktype			= SOCK_STREAM;		// TCP
+	hints.ai_protocol			= IPPROTO_TCP;		// IP
+	hints.ai_flags				= 0;
+	hints.ai_protocol			= 0;
+	hints.ai_canonname			= NULL;
+	hints.ai_addr				= NULL;
+	hints.ai_next				= NULL;
 
-	const int		socket_family	= AF_INET;						// IPv4 Internet protocols
-	const int		server_port		= server.get_port();			// Listening port
-	const char		*server_host	= server.get_host().c_str();	// Listening IP address
+	int s = getaddrinfo(server_host,
+							itostring(server.get_port()).c_str(),
+							&hints,
+							&result);
+	if (s != 0)
+		return (error(gai_strerror(s)));
+	for (rp = result; rp != NULL; rp = rp->ai_next)	// Linked list, test untill bind success
+	{
 
-	bzero(&server.address, sizeof(struct sockaddr_in));
-	server.address.sin_family = socket_family;
-	server.address.sin_port = htons(server_port);
-	server.address.sin_addr.s_addr = inet_addr(server_host);		// A CHANGER, MODIF SUJET PROCHAINEMENT
+		print(INFO, "Opening a server_socket.");
+		server.socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+		if (server.socket == -1)
+			continue ;
 
-	const struct sockaddr	*addr	= (const struct	sockaddr *)&server.address;
-	socklen_t				addrlen = sizeof(server.address);
+		if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
+		{
+			close(server.socket);
+			continue ;
+		}
 
-	print(INFO, "Binding the server_socket with an address.");
-	if (bind(server.socket, addr, addrlen) == -1)
-		return (error(strerror(errno)));
+		print(INFO, "Binding the server_socket with an address.");
+		if (bind(server.socket, rp->ai_addr, rp->ai_addrlen) == 0)
+		{
+			server.address = *(rp->ai_addr);
+			server.addrlen = rp->ai_addrlen;
+			break ; // Bind OK
+		}
+
+		close(server.socket);
+	}
+	freeaddrinfo(result);
+	if (rp == NULL)
+		return (error("Could not bind the server socket with a server address."));
 	return (0);
 };
 
@@ -105,9 +126,7 @@ int		Webserver::init_sockets(void)
 		return (1);
 	for (size_t i = 0 ; i < nb_of_servers ; ++i)
 	{
-		if (open_server_socket(servers[i]))
-			return (1);
-		else if (bind_server_address(servers[i]))
+		if (bind_server_address(servers[i]))
 			return (1);
 		else if (set_non_blocking(servers[i]))
 			return (1);

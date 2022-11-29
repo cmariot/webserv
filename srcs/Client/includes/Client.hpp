@@ -8,18 +8,31 @@
 
 class	Client
 {
-
-	public:
-
-		Client(const int &);
-		~Client(void);
-	
-		int	add_to_request(char *buff);
+	private:
 
 		int			_socket;
 		Server		_server;
 		Request		_request;
 		Response	_response;
+
+	public:
+
+		Client(const int &);
+		~Client(void);
+
+		int							add_to_request(char *);
+
+		bool						request_is_ready(void);
+
+		int							create_response(void);
+
+		const char *				get_response(void) const;
+		size_t						get_response_size(void) const;
+		std::string					get_hostname(void) const;
+		int							get_port(void) const;
+		std::pair<std::string, int>	get_address(void) const;
+
+		void						set_server(const Server &);
 
 };
 

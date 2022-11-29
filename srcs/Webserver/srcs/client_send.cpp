@@ -6,16 +6,16 @@ int	Webserver::get_server(Client & client)
 {
 	for (size_t i = 0 ; i < servers.size() ; ++i)
 	{
-		if ((servers[i].get_server_names().count(client._request.request_address.first) == 1
-				&& servers[i].get_address().second == client._request.request_address.second)
-			|| servers[i].get_address() == client._request.request_address)
+		if ((servers[i].get_server_names().count(client.get_hostname()) == 1
+				&& servers[i].get_address().second == client.get_port())
+			|| servers[i].get_address() == client.get_address())
 		{
-			client._server = servers[i];
+			client.set_server(servers[i]);
 			return (0);
 		}
 	}
-	client._server = Server();
-	return (error("A client has a incorrect server."));
+	client.set_server(Server());
+	return (error("A client has an incorrect server."));
 };
 
 int		Webserver::send_response(void)
@@ -30,20 +30,11 @@ int		Webserver::send_response(void)
 
 	Client	& client = it->second;
 
-	client._request.interpret();
-	if (get_server(client))
-	{
-		//return 404
-		remove_client();
-		return (false);
-	}
-	client._response.update(client._request, client._server, get_env());
-	client._response.create();
-	client._request.request.clear();
+	client.create_response();
 
 	const ssize_t send_return = send(it->first,
-					client._response._full_response.c_str(),
-					client._response._full_response.size(),
+					client.get_response(),
+					client.get_response_size(),
 					O_NONBLOCK);
 
 	if (send_return <= 0)
@@ -52,9 +43,7 @@ int		Webserver::send_response(void)
 			print(INFO, "Send returned 0.");
 		else
 			print(INFO, "Send error.");
-		clients.erase(it->first);
-		epoll_ctl(epoll_socket, EPOLL_CTL_DEL, event.data.fd, 0);
-		close(event.data.fd);
+		remove_client();
 		return (1);
 	}
 	else
