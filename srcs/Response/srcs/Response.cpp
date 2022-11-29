@@ -70,7 +70,7 @@ void	Response::create(int fd)
 	{
 		post();
 	}
-	else if (_request.method == "DELETE" && !test_authorization() && _request.file_name())
+	else if (_request.method == "DELETE" && !test_authorization())
 	{
 		cout << _request.uri << endl;
 		// delete();
