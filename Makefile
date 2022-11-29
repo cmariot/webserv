@@ -127,6 +127,7 @@ LOCATION		= constructor.cpp \
 				  set_upload_path.cpp
 
 REQUEST			= constructor.cpp \
+				  is_ready.cpp \
 				  interpret.cpp \
 				  destructor.cpp \
 				  get_content.cpp
