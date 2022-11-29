@@ -4,11 +4,11 @@
 void    Response::delet(void)
 {
 
-    string infile(_request.file_name[i]);
+    string infile(_request.file_name[0]);
     // if (check_file_existance(infile))
     // {
     //     print(ERR, "File to be deleted does not exist");
-
+    //     set_status_code(404);
     // }
     
     if (remove(infile.c_str()) != 0)

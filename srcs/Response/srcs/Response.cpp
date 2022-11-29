@@ -72,6 +72,7 @@ void	Response::create(int fd)
 	}
 	else if (_request.method == "DELETE" && !test_authorization() && _request.file_name())
 	{
+		cout << _request.uri << endl;
 		// delete();
 	}
 	else
