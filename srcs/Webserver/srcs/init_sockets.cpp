@@ -12,22 +12,6 @@ int		Webserver::create_epoll_descriptor(void)
 	return (0);
 };
 
-// Ouvrir un socket pour chaque serveur
-int		Webserver::open_server_socket(Server & server)
-{
-	int	socket_family	= AF_INET;						// IPv4 Internet protocols
-	int	socket_type		= SOCK_STREAM | SOCK_NONBLOCK;	// TCP + NON-BLOCKING
-	int	protocol		= IPPROTO_TCP;					// IP
-	int	opt				= 1;
-
-	server.socket = socket(socket_family, socket_type, protocol);
-	if (server.socket == -1)
-		return (error(strerror(errno)));
-	if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
-		return (error(strerror(errno)));
-	return (0);
-};
-
 // Assigner un type, un host et un port a l'addresse de ce socket
 int		Webserver::bind_server_address(Server & server)
 {

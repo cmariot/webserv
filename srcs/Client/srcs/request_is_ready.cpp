@@ -2,6 +2,9 @@
 
 bool	Client::request_is_ready(void)
 {
+	static bool	body_complete = false;
+
+	_request.interpret();
 	if (_request.request.find("\r\n\r\n") != std::string::npos)
 	{
 		_request.interpret();
@@ -9,8 +12,10 @@ bool	Client::request_is_ready(void)
 			return (true);
 		else if (_request.method == "POST")
 		{
-			// check body_size ?
-			return (true);
+			// Check post a revoir ? On attend la fin du body ?
+			if (_request.request.rfind("\0") != std::string::npos)
+				body_complete = true;
+			return (body_complete);
 		}
 	}
 	return (false);

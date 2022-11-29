@@ -48,6 +48,7 @@ std::map<int, std::string> 	Response::init_status_code_map(void) const
 
 Response::Response(void) :
 	_file_path(""),
+	_status_code(0),
 	_status_code_map(init_status_code_map())
 {
 	return ;

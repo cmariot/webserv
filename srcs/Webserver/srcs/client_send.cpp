@@ -1,23 +1,5 @@
 #include "Webserver.hpp"
 
-// Trouve le serveur (parmi ceux presents dans notre vecteur de serveur) sur lequel la requete a ete envoyee.
-// C'est le server[i] qui sera utilise pour la generation de la reponse.
-int	Webserver::get_server(Client & client)
-{
-	for (size_t i = 0 ; i < servers.size() ; ++i)
-	{
-		if ((servers[i].get_server_names().count(client.get_hostname()) == 1
-				&& servers[i].get_address().second == client.get_port())
-			|| servers[i].get_address() == client.get_address())
-		{
-			client.set_server(servers[i]);
-			return (0);
-		}
-	}
-	client.set_server(Server());
-	return (error("A client has an incorrect server."));
-};
-
 int		Webserver::send_response(void)
 {
 	std::map<int, Client>::iterator	it = clients.find(event.data.fd);
@@ -30,7 +12,7 @@ int		Webserver::send_response(void)
 
 	Client	& client = it->second;
 
-	client.create_response();
+	client.create_response(servers, get_env());
 
 	const ssize_t send_return = send(it->first,
 					client.get_response(),

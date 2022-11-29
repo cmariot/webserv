@@ -24,7 +24,8 @@ class	Client
 
 		bool						request_is_ready(void);
 
-		int							create_response(void);
+		int							create_response(const std::vector<Server> &, char * const *);
+		int							get_server(const std::vector<Server> &);
 
 		const char *				get_response(void) const;
 		size_t						get_response_size(void) const;

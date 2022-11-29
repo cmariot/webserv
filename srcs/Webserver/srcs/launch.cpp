@@ -19,8 +19,6 @@ int		Webserver::launch(void)
 			else if (client_send() == READY)
 				send_response();
 		}
-		//std::cout << "Number of events  = " << nb_events << std::endl;
-		//std::cout << "Number of clients = " << clients.size() << std::endl;
 	}
 	return (exit_webserv());
 };

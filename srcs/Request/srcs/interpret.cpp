@@ -102,6 +102,10 @@ int	Request::get_request_line(std::string & request_line)
 {
 	const size_t	pos = request.find("\r\n");
 
+	while (reques.size() > )
+	{
+
+	}
 	if (pos == std::string::npos)
 		return (error("Invalid request line."));
 	request_line = request.substr(0, pos + RN_LEN);

@@ -79,7 +79,6 @@ class Webserver
 		//	launch
 		int				init_sockets(void);
 		int				create_epoll_descriptor(void);
-		int				open_server_socket(Server &);
 		int				bind_server_address(Server &);
 		int				listen_server(Server &);
 		int				set_non_blocking(Server &);
@@ -97,7 +96,6 @@ class Webserver
 		int				get_request(void);
 
 		bool			client_send(void);
-		int				get_server(Client &);
 		int				send_response(void);
 
 		//	utils
