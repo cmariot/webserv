@@ -1,0 +1,12 @@
+- [ ] Parsing Requete a revoir (interpret) : Stocker toutes les infos dans une map key/value + Separer header / body
+
+	- Si get ou delete on a pas besoin de plus que le header -> si header ok on evoie
+	- Si post on regarde dans le header si on doit attendre un body et on peut decaller l'envoie si necessaire ?
+
+	- [ ] Deplacer get_body en dehors de l'interpretation, doit aller dans la condition de changement vers EPOLLIN :
+			./srcs/Webserver/srcs/client_recv.cpp (on a pas forcement tout le body.)
+
+
+- [ ] Structurer la creation de la reponse
+
+	- [ ] Ajouter des champs d'en tete automatiquement (Content-Lenght ...)

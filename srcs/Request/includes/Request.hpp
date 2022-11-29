@@ -34,6 +34,8 @@ class	Request
 		int		interpret(void);
 		bool	is_ready(void);
 
+		void	reset(void);
+
 	private:
 
 		int		get_request_line(string &);
@@ -51,7 +53,6 @@ class	Request
 		int		set_content(void);
 		int		host_to_address(void);
 
-		void	reset(void);
 
 };
 
