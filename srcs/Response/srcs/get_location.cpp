@@ -12,7 +12,7 @@ int	Response::get_location(void)
 	while (ite != end)
 	{
 		// Check exact match
-		if (_request.uri == ite->first)
+		if (_request.get_uri() == ite->first)
 		{
 			_location = ite->second;
 			return (0);
@@ -27,7 +27,7 @@ int	Response::get_location(void)
 	while (ite != end)
 	{
 		// Check best prefix match
-		if (_request.uri.find(ite->first) == 0)
+		if (_request.get_uri().find(ite->first) == 0)
 		{
 			current_match_len = ite->first.size();
 			if (current_match_len > best_match)

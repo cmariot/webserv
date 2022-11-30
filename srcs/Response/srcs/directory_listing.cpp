@@ -3,25 +3,25 @@
 
 void	Response::add_dot_link(void)
 {
-	_response_body += "<a href=\"" + _request.uri + "\">.</a>";
+	_response_body += "<a href=\"" + _request.get_uri() + "\">.</a>";
 };
 
 void	Response::add_double_dot_link(void)
 {
 	std::string		link;
 
-	if (_request.uri.size() > 0)
+	if (_request.get_uri().size() > 0)
 	{
-		size_t pos = _request.uri.size() - 1;
-		if (_request.uri[pos] == '/')
+		size_t pos = _request.get_uri().size() - 1;
+		if (_request.get_uri()[pos] == '/')
 			--pos;
 		while (pos)
 		{
-			if (_request.uri[pos] == '/')
+			if (_request.get_uri()[pos] == '/')
 				break ;
 			--pos;
 		}
-		link = _request.uri.substr(0, pos) + "/";
+		link = _request.get_uri().substr(0, pos) + "/";
 		_response_body += "<a href=\"" + link + "\">..</a>";
 	}
 };
@@ -30,10 +30,10 @@ void	Response::add_other_link(char d_name[256])
 {
 	std::string		link;
 
-	if (_request.uri.size() > 0 && _request.uri[_request.uri.size() - 1] != '/')
-		link = _request.uri + "/";
+	if (_request.get_uri().size() > 0 && _request.get_uri()[_request.get_uri().size() - 1] != '/')
+		link = _request.get_uri() + "/";
 	else
-		link = _request.uri;
+		link = _request.get_uri();
 	link += d_name;
 	_response_body += "<a href=\"" + link + "\">" + d_name + "</a>";
 };
@@ -90,7 +90,7 @@ void	Response::directory_listing_header(void)
 	const std::string	message = _status_code_map.find(200)->second;
 
 	_status_code = 200;
-	_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
+	_response_header = _request.get_http_version() + " " + code + " " + message + "\r\n\r\n";
 	return ;
 }
 

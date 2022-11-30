@@ -67,23 +67,23 @@ int	Request::get_boundary_content(void)
 	string boundary;
 	string boundary_end;
 
-	first_boundary = request.find("Content-Type: multipart/form-data; boundary=");
+	first_boundary = _request.find("Content-Type: multipart/form-data; boundary=");
 	if (first_boundary != std::string::npos)
 	{
-		while(request[first_boundary] != '\r' && request[first_boundary] != '\n')
-			boundary += request[first_boundary++];
+		while(_request[first_boundary] != '\r' && _request[first_boundary] != '\n')
+			boundary += _request[first_boundary++];
 		boundary = boundary.substr((boundary.find("=") + 1), first_boundary);
 		boundary = "--" + boundary;
 		boundary_end = boundary + "--";
 	}
-	while (request.find(boundary, first_boundary + 1) != std::string::npos)
+	while (_request.find(boundary, first_boundary + 1) != std::string::npos)
 	{
-		first_boundary = request.find(boundary, first_boundary);
-		second_boundary = request.find(boundary, first_boundary + 1);
+		first_boundary = _request.find(boundary, first_boundary);
+		second_boundary = _request.find(boundary, first_boundary + 1);
 		if (first_boundary != std::string::npos && second_boundary != std::string::npos)
-			content.push_back(request.substr((first_boundary + boundary.size() + 2),
+			content.push_back(_request.substr((first_boundary + boundary.size() + 2),
 			 (second_boundary - first_boundary - boundary.size() - 4)));
-		verif_last_boundary = request.find(boundary_end);
+		verif_last_boundary = _request.find(boundary_end);
 		if (second_boundary == verif_last_boundary)
 			break;
 		first_boundary = second_boundary;
@@ -99,14 +99,13 @@ void Request::reset(void)
 	body_content.clear();
 }
 
-
 // This function stores the different infos of files in 3 vectors : name, type, content
 // 1 stored the different contents of the form divided by the boundaries in a vector
 // 2 get the name of the file 
 // 3 if name="" it means no file was uploaded => delete this content from the vector
 // 4 get the type of content 
 // 5 get the content of the file
-int Request::get_content(void)
+int Request::get_content(void) // a renommer : content c'est trop vague
 {
 	size_t i = 0;
 	vector<string>::iterator pos_iterator;
