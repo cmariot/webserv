@@ -65,6 +65,7 @@ class Response
 		void					init_response(Request request);
 
 		void					post_response(Request request);
+		bool					init_post(void);
 		void 					delete_response(Request request);
 
 		int 					set_status_code(const int & status_code);

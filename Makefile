@@ -148,7 +148,8 @@ RESPONSE		= constructor.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \
 				  destructor.cpp \
-				  cgi_response.cpp 
+				  cgi_response.cpp \
+				  post.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
