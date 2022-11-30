@@ -20,7 +20,7 @@ int		Response::create_response_header(void)
 {
 	const std::string	code  = itostring(_status_code);
 
-	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
+	_response_header = _request.get_http_version() + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
 	_response_header += "Content-Length: " + itostring(_response_body.size()) + "\r\n\r\n";
 	return (0);
 };
@@ -59,14 +59,14 @@ void	Response::post(void)
 // main function used to send the response to the client
 void	Response::create(void)
 {
-	if (_request.method == "GET")
+	if (_request.get_method() == "GET")
 		get();
-	else if (_request.method == "POST")
+	else if (_request.get_method() == "POST")
 	{
 		post();
 		build_http_response();
 	}
-	else if (_request.method == "DELETE")
+	else if (_request.get_method() == "DELETE")
 	{
 		//delete();
 	}

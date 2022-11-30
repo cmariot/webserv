@@ -127,9 +127,14 @@ LOCATION		= constructor.cpp \
 				  set_upload_path.cpp
 
 REQUEST			= constructor.cpp \
-				  interpret.cpp \
 				  destructor.cpp \
-				  get_content.cpp
+				  getters.cpp \
+				  is_ready.cpp \
+				  modifiers.cpp \
+				  request_body.cpp \
+				  request_header.cpp \
+				  request_line.cpp
+
 
 CLIENT			= add_to_request.cpp \
 				  constructor.cpp \

@@ -78,7 +78,7 @@ int Response::build_cgi_response(string & path)
 		const std::string	code = "200";
 		const std::string	message = _status_code_map.find(200)->second;
 		_status_code = 200;
-		_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
+		_response_header = _request.get_http_version() + " " + code + " " + message + "\r\n\r\n";
 		_response_body = _response_body.substr(39, _response_body.size()); // Le 39 c'est degueu
 		_full_response = _response_header + _response_body;
 

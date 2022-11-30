@@ -25,7 +25,7 @@ int	Response::path_construction(void)
 	std::string	path;
 
 	_dir = false;
-	_file_path = _request.uri;
+	_file_path = _request.get_uri();
 	_file_path.replace(0, _location.get_uri().size(), _location.root());
 	if (is_a_file(_file_path) == true)
 	{

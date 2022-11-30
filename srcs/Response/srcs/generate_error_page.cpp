@@ -9,7 +9,7 @@ void	Response::generate_error_page(const int & error_code)
 	const std::string	code  = itostring(_status_code);
 	const std::string	message = _status_code_map.find(_status_code)->second;
 
-	_response_header = _request.http_version + " " + code + " " + message + "\r\n\r\n";
+	_response_header = _request.get_http_version() + " " + code + " " + message + "\r\n\r\n";
 
 	_response_body =  "<!DOCTYPE html>";
 	_response_body += "<html lang=\"en\">";
