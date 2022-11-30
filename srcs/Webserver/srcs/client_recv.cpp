@@ -32,7 +32,7 @@ int		Webserver::get_request(void)
 	{
 		print(INFO, "Server received data from client.");
 		buffer[recv_return] = '\0';
-		client.add_to_request(buffer);
+		client.add_to_request(buffer, recv_return);
 		if (client.request_is_ready())
 		{
 			struct epoll_event	new_event;

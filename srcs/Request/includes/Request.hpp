@@ -19,7 +19,7 @@ class	Request
 		Request(void);
 		~Request(void);
 
-		void	add_to_request(const char *buffer);
+		void	add_to_request(const char *buffer, const ssize_t &);
 		bool	is_ready(void);
 		void	clear(void);
 

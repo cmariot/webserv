@@ -2,7 +2,7 @@
 
 const char *	Client::get_response(void) const
 {
-	return (_response._full_response.c_str());
+	return (_response._full_response.data());
 };
 
 size_t	Client::get_response_size(void) const

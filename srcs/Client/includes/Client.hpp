@@ -20,7 +20,7 @@ class	Client
 		Client(const int &);
 		~Client(void);
 
-		int							add_to_request(char *);
+		int							add_to_request(char *, const ssize_t &);
 
 		bool						request_is_ready(void);
 
