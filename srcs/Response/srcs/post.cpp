@@ -27,7 +27,7 @@ bool    Response::init_post(void)
 
 void	Response::post(void)
 {
-    std::cout <<_request.uri << std::endl;
+    std::cout <<_request.get_uri() << std::endl;
     if (!init_post())
         return ;
 
