@@ -46,7 +46,8 @@ void	Response::create(void)
 	}
 	else if (_request.get_method() == "DELETE")
 	{
-		//delete();
+		delet();
+		build_http_response();
 	}
 	else
 	{
