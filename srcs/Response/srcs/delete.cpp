@@ -20,6 +20,5 @@ void    Response::delet(void)
         return ;
     }
     set_status_code(202);
-    _full_response = "HTTP/1.1 202 Accepted\r\n\r\n Created";
     print(INFO, "File was succesfully deleted from the server");
 }
