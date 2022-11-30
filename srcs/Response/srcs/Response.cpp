@@ -49,16 +49,10 @@ void	Response::create(void)
 		//delete();
 	}
 	else
-	{
 		set_status_code(501);
-<<<<<<< HEAD
-		build_http_response();
-	}
-=======
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
 	cout <<_full_response.c_str() << endl;
 	send(fd, _full_response.c_str(), _full_response.size(), 0);
 	print(INFO, "The response has been sent to the client");
->>>>>>> FolderPost
 };
