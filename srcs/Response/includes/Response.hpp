@@ -50,7 +50,7 @@ class Response
 
 		void 					get(void);
 		void					post(void);
-
+		void					delet(void);
 	private:
 
 		Request					_request;
