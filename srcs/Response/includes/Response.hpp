@@ -38,13 +38,13 @@ class Response
 		Response(void);
 		~Response(void);
 
-		map<int, string>		init_status_code_map(void) const;
+		map<int, string>			init_status_code_map(void) const;
 		void					update(Request &, Server &, char * const *env);
 		void					create();
 		int					get_location(void);
 		int					path_construction(void);
 
-		int						test_authorization(void);
+		int					test_authorization(void);
 		void 					get(void);
 		void					post(void);
 		void 					delet(void);
@@ -63,11 +63,11 @@ class Response
 		Server					_server;
 		Location				_location;
 
-		const char				**_env;
+		const * char *				_env;
 		std::string				_file_path;
 
 		// All variables needed to build the response
-		const map<int, string>	_status_code_map;
+		const map<int, string>			_status_code_map;
 		int 					_status_code;
 		string					_status_line;
 		string					_response_header;
@@ -81,7 +81,7 @@ class Response
 
 		void					get_response(void);
 		bool					is_a_directory(const std::string & path);
-		int						list_directories(void);
+		int					list_directories(void);
 		void					directory_listing_header(void);
 		void					directory_listing_body(void);
 		void					add_dot_link(void);
