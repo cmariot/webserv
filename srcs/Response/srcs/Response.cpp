@@ -55,7 +55,7 @@ int	Response::test_authorization(void)
 }
 
 // main function used to send the response to the client
-void	Response::create(int fd)
+void	Response::create()
 {
 	print(INFO, "Creating the server's response");
 	if (_request.method == "GET")
@@ -78,6 +78,5 @@ void	Response::create(int fd)
 		set_status_code(501);
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
-	send(fd, _full_response.c_str(), _full_response.size(), 0);
-	print(INFO, "The response has been sent to the client");
+	print(INFO, "The response is going to be sent to the client");
 };
