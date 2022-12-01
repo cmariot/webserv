@@ -40,7 +40,7 @@ class Response
 
 		map<int, string>		init_status_code_map(void) const;
 		void					update(Request &, Server &, const char *env[]);
-		void					create(int);
+		void					create(int fd);
 		int						get_location(void);
 		int						path_construction(void);
 
@@ -53,8 +53,8 @@ class Response
 		void 					build_http_response(void); 
 		// used for get_response
 		bool  					check_file_existance(string & path);
-		int						stored_file(const string & path);
-		int						build_cgi_response(void);
+		int					stored_file(const string & path);
+		int					build_cgi_response(void);
 		const char				**get_env(void);
 
 	private:
@@ -75,7 +75,7 @@ class Response
 		string					_full_response;
 
 		void					generate_error_page(const int &);
-		int						create_response_header(void);
+		int					reate_response_header(void);
 
 		bool					is_a_directory(const std::string & path);
 		int						list_directories(void);
