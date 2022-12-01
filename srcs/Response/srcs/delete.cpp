@@ -4,7 +4,7 @@
 void    Response::delet(void)
 {
 
-    string infile(_request.uri);
+    string infile(_request._uri);
     // if (check_file_existance(infile))
     // {
     //     print(ERR, "File to be deleted does not exist");
