@@ -10,7 +10,7 @@ bool	Response::is_a_directory(const std::string & path)
 };
 
 // get the body of the response which is the html file
-int		Response::stored_file(string & path)
+int		Response::stored_file(string  path)
 {
 	std::ifstream	file;
 	string			buf;
