@@ -1,129 +1,50 @@
 #include "Request.hpp"
 
-// get the name of the file and store it in file_name vector
-int Request::get_file_name(size_t i)
+bool	Request::unchunk(void)
 {
-	size_t		pos;
+	// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
+	// Sauf si le message se termine en fermant la connexion
+	// codage fragmente voir 3.6
+	// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
+	// it and the CGI will expect EOF as end of the body.
+	return (false);
+};
 
-	file_name.push_back("");
-	pos = content[i].find("filename=");
-	if (pos != std::string::npos)
+// Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
+bool	Request::body_isnot_complete(void)
+{
+	std::multimap<string, string>::iterator	transfert_encoding = _header.find("Transfert-Encoding");
+	std::multimap<string, string>::iterator	content_length = _header.find("Content-Length");
+	std::multimap<string, string>::iterator	content_type = _header.find("Content-Type");
+
+	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity")
 	{
-		pos += 10;
-		while(content[i][pos] != '"')
-			file_name.back() += content[i][pos++];
-		if (file_name.back().empty())
-			return (1);
-		return (0);
+		return (unchunk());
 	}
+	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	{
+		if (content_length->second == itostring(_request.size() - _header_size))
+			return (true);
+	}
+	else if (content_type != _header.end() && content_type->second.find("boundary") != std::string::npos)
+	{
+		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
+		// ce type de support auto délimitant définit la longueur de transfert
+		std::string	boundary = content_type->second;
+		std::cout << boundary << std::endl;
+		// return (get_content);
+	}
+	return (false);
+};
+
+// La présence d’un corps de message dans une demande est signalée par l’inclusion d’un champ d’en-tête
+// Content-Length ou Transfer-Encoding dans les en-têtes de message de la demande
+bool	Request::body_in_this_request(void) const
+{
+	if (_header.find("Content-Length") != _header.end())
+		return (true);
+	else if (_header.find("Transfert-Encoding") != _header.end())
+		return (true);
 	else
-		return (1);
+		return (false);
 };
-
-// store content type of the file in the vector
-int Request::get_content_type(size_t i)
-{
-	size_t		pos;
-	content_type.push_back("");
-
-	pos = content[i].find("Content-Type: ");
-	if (pos != std::string::npos)
-	{
-		pos += 13;
-		while(content[i][pos] != '\r' && content[i][pos] != '\n')
-			content_type[i] += content[i][pos++];
-	}
-	return (0);
-};
-
-// store body content of the file in the vector
-int Request::get_body_content(size_t i)
-{
-	size_t		pos;
-
-	// degueu mais fonctionnel
-	pos = content[i].find("filename");
-	pos = content[i].find("\n", ++pos);
-	pos = content[i].find("\n", ++pos);
-	pos = pos + 3;
-
-	if (pos != std::string::npos)
-	{
-		body_content.push_back("");
-		while (content[i][pos])
-		{
-			body_content[i] += content[i][pos++];
-		}
-	}
-	return (0);
-};
-
-// This function stored the different uploaded files into a vector content
-int	Request::get_boundary_content(void)
-{
-	size_t first_boundary;
-	size_t second_boundary;
-	size_t verif_last_boundary;
-	string boundary;
-	string boundary_end;
-
-	first_boundary = _request.find("Content-Type: multipart/form-data; boundary=");
-	if (first_boundary != std::string::npos)
-	{
-		while(_request[first_boundary] != '\r' && _request[first_boundary] != '\n')
-			boundary += _request[first_boundary++];
-		boundary = boundary.substr((boundary.find("=") + 1), first_boundary);
-		boundary = "--" + boundary;
-		boundary_end = boundary + "--";
-	}
-	while (_request.find(boundary, first_boundary + 1) != std::string::npos)
-	{
-		first_boundary = _request.find(boundary, first_boundary);
-		second_boundary = _request.find(boundary, first_boundary + 1);
-		if (first_boundary != std::string::npos && second_boundary != std::string::npos)
-			content.push_back(_request.substr((first_boundary + boundary.size() + 2),
-			 (second_boundary - first_boundary - boundary.size() - 4)));
-		verif_last_boundary = _request.find(boundary_end);
-		if (second_boundary == verif_last_boundary)
-			break;
-		first_boundary = second_boundary;
-	}
-	return 0;
-}
-
-void Request::reset(void)
-{
-	content.clear();
-	file_name.clear();
-	content_type.clear();
-	body_content.clear();
-}
-
-// This function stores the different infos of files in 3 vectors : name, type, content
-// 1 stored the different contents of the form divided by the boundaries in a vector
-// 2 get the name of the file 
-// 3 if name="" it means no file was uploaded => delete this content from the vector
-// 4 get the type of content 
-// 5 get the content of the file
-int Request::get_content(void)
-{
-	size_t i = 0;
-	vector<string>::iterator pos_iterator;
-
-	reset();
-	get_boundary_content();
-	while (i < content.size())
-	{
-		pos_iterator = content.begin() + i ;
-		if(get_file_name(i))
-		{
-			content.erase(pos_iterator);
-			file_name.pop_back();
-			continue;
-		}
-		get_content_type(i);
-		get_body_content(i);
-		i++;
-	}
-	return (0);
-}

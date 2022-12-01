@@ -43,17 +43,10 @@ int	Request::set_header(size_t & i)
 	size_t			key_len;
 	std::string		value;
 
+	std::cout << _request << std::endl;
 	_header.clear();
-	while (i + 3 < _request.size())
+	while (i + 1 < _request.size())
 	{
-		if (_request[i] == '\r' && _request[i + 1] == '\n'
-			&& _request[i + 2] == '\r' && _request[i + 3] == '\n')
-		{
-			_header_size = i + 4;
-			return (0);
-		}
-		else if (_request[i] == '\r' && _request[i + 1] == '\n')
-			i += 2;
 		line_len = 0;
 		while (i + line_len + 1 < _request.size())
 		{
@@ -63,18 +56,24 @@ int	Request::set_header(size_t & i)
 		}
 		line = _request.substr(i, line_len);
 		key_len = 0;
-		while (i + key_len < _request.size())
+		while (key_len < line_len)
 		{
 			if (_request[i + key_len] == ':')
 				break ;
 			++key_len;
 		}
 		key = line.substr(0, key_len);
-		if (key_len + 2 > line_len)
-			continue ;
+		if (key_len + 2 >= line_len)
+			break ;
 		value = line.substr(key_len + 2, (line_len - key_len + 2));
 		_header.insert(std::pair<std::string, std::string>(key, value));
-		i += line_len;
+		i += line_len + 2;
+		if (_request[i] == '\r' && _request[i + 1] == '\n')
+		{
+			_header_size = i + 2;
+			set_server_address();
+			return (0);
+		}
 	}
 	return (1);
 };

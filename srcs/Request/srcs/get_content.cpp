@@ -37,12 +37,14 @@ int Request::get_content_type(size_t i)
 };
 
 // store body content of the file in the vector
-// \n\r is to get to the body content
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
 
-	pos = content[i].find("\n\r");
+	// degueu mais fonctionnel
+	pos = content[i].find("filename");
+	pos = content[i].find("\n", ++pos);
+	pos = content[i].find("\n", ++pos);
 	pos = pos + 3;
 
 	if (pos != std::string::npos)
@@ -65,23 +67,23 @@ int	Request::get_boundary_content(void)
 	string boundary;
 	string boundary_end;
 
-	first_boundary = request.find("Content-Type: multipart/form-data; boundary=");
+	first_boundary = _request.find("Content-Type: multipart/form-data; boundary=");
 	if (first_boundary != std::string::npos)
 	{
-		while(request[first_boundary] != '\r' && request[first_boundary] != '\n')
-			boundary += request[first_boundary++];
+		while(_request[first_boundary] != '\r' && _request[first_boundary] != '\n')
+			boundary += _request[first_boundary++];
 		boundary = boundary.substr((boundary.find("=") + 1), first_boundary);
 		boundary = "--" + boundary;
 		boundary_end = boundary + "--";
 	}
-	while (request.find(boundary, first_boundary + 1) != std::string::npos)
+	while (_request.find(boundary, first_boundary + 1) != std::string::npos)
 	{
-		first_boundary = request.find(boundary, first_boundary);
-		second_boundary = request.find(boundary, first_boundary + 1);
+		first_boundary = _request.find(boundary, first_boundary);
+		second_boundary = _request.find(boundary, first_boundary + 1);
 		if (first_boundary != std::string::npos && second_boundary != std::string::npos)
-			content.push_back(request.substr((first_boundary + boundary.size() + 2),
+			content.push_back(_request.substr((first_boundary + boundary.size() + 2),
 			 (second_boundary - first_boundary - boundary.size() - 4)));
-		verif_last_boundary = request.find(boundary_end);
+		verif_last_boundary = _request.find(boundary_end);
 		if (second_boundary == verif_last_boundary)
 			break;
 		first_boundary = second_boundary;
@@ -89,7 +91,6 @@ int	Request::get_boundary_content(void)
 	return 0;
 }
 
-// reset all the vectors used to store the different files -> for new request
 void Request::reset(void)
 {
 	content.clear();

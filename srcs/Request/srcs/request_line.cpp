@@ -7,16 +7,18 @@ int	Request::set_http_version(size_t & i)
 
 	while (i < _request_line.size() && _request_line[i] == ' ')
 		++i;
-	while (i + version_len < _request_line.size())
+	while (i + version_len + 1 < _request_line.size())
 	{
-		if (_request_line[i + version_len] == ' ')
+		if (_request_line[i + version_len] == '\r' && _request_line[i + version_len + 1] == '\n')
 			break ;
 		++version_len;
 	}
 	_http_version = _request_line.substr(i, version_len);
-	i += version_len;
 	if (_http_version.empty())
 		return (error("Invalid HTTP version in the request line."));
+	if (_request[i + _http_version.size()] != '\r' && _request[i + _http_version.size() + 1] != '\n')
+		return (1);
+	i += _http_version.size() + 2;
 	return (0);
 };
 
@@ -75,8 +77,14 @@ int	Request::set_request_line(size_t & i)
 
 	if (pos == std::string::npos)
 		return (error("Invalid request line, missing CRLF."));
-	_request_line = _request.substr(i, pos);
+	_request_line = _request.substr(i, pos + 2);
 	if (_request_line.empty())
 		return (error("Empty request line."));
+	if (set_method(i))
+		return (1);
+	if (set_uri(i))
+		return (1);
+	if (set_http_version(i))
+		return (1);
 	return (0);
 };

@@ -56,7 +56,8 @@ class	Request
 
 		int									interpret(void);
 		bool								body_in_this_request(void) const;
-		bool								body_is_complete(void);
+		bool								body_isnot_complete(void);
+		bool								unchunk(void);
 
 	public:
 
