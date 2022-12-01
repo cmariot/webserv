@@ -9,7 +9,7 @@ void    Response::delet(void)
     // {
     //     print(ERR, "File to be deleted does not exist");
     // }
-    infile = "./" + infile;
+    infile = "." + infile;
     if (remove(infile.c_str()) != 0)
     {
         error("Error : while deleting the file", infile);
