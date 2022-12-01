@@ -1,33 +1,40 @@
 #include "Request.hpp"
 #include <stdlib.h>
 
+// Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf
+// Page 20
 bool	Request::body_is_complete(void)
 {
 	std::multimap<string, string>::iterator	transfert_encoding = _header.find("Transfert-Encoding");
 	std::multimap<string, string>::iterator	content_length = _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type = _header.find("Content-Type");
 
+	// CAS 1 ignore (seulement pour reponse)
 	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity")
 	{
 		// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
 		// Sauf si le message se termine en fermant la connexion
 		// codage fragmente voir 3.6
-		std::cout << "CAS 1" << std::endl;
+		// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
+		// it and the CGI will expect EOF as end of the body.
+		std::cout << "CAS 2" << std::endl;
+		std::cout << transfert_encoding->second << std::endl;
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfert_encoding == _header.end()) // Pas sur de cette condition, pourquoi dans on envoie plusieurs files ca passe la ???
 	{
 		// La valeur de content_length représente à la fois la longueur d’entité et la longueur de transfert
+		std::cout << "CAS 3" << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
-		{
-			std::cout << _request << std::endl;
 			return (true);
-		}
 	}
-	else if (content_type != _header.end() && content_type->second.find("multipart") != std::string::npos)
+	else if (content_type != _header.end() && content_type->second.find("boundary") != std::string::npos)
 	{
 		// ce type de support auto délimitant définit la longueur de transfert
-		std::cout << "CAS 3" << std::endl;
+		std::cout << "CAS 4" << std::endl;
+		std::string	boundary = content_type->second;
+		std::cout << boundary << std::endl;
 	}
+	// Cas 5 gere par epoll
 	return (false);
 };
 
