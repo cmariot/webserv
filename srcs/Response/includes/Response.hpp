@@ -57,7 +57,6 @@ class Response
 		int						build_cgi_response(string & path);
 		bool					match_extension(void);
 		char * const				*get_env(void);
-		void 					build_http_response(void);
 		bool					execute_script(char **arg);
 	private:
 		// Classes used to store the request, the server and the location
