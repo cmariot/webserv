@@ -1,16 +1,46 @@
 #include "Request.hpp"
+#include <stdlib.h>
 
-// Au moins un des deux doit etre present dans le header de la requete pour qu'on ait un body.
+bool	Request::body_is_complete(void)
+{
+	std::multimap<string, string>::iterator	transfert_encoding = _header.find("Transfert-Encoding");
+	std::multimap<string, string>::iterator	content_length = _header.find("Content-Length");
+	std::multimap<string, string>::iterator	content_type = _header.find("Content-Type");
+
+	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity")
+	{
+		// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
+		// Sauf si le message se termine en fermant la connexion
+		// codage fragmente voir 3.6
+		std::cout << "CAS 1" << std::endl;
+	}
+	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	{
+		// La valeur de content_length représente à la fois la longueur d’entité et la longueur de transfert
+		if (content_length->second == itostring(_request.size() - _header_size))
+		{
+			std::cout << _request << std::endl;
+			return (true);
+		}
+	}
+	else if (content_type != _header.end() && content_type->second.find("multipart") != std::string::npos)
+	{
+		// ce type de support auto délimitant définit la longueur de transfert
+		std::cout << "CAS 3" << std::endl;
+	}
+	return (false);
+};
+
+// La présence d’un corps de message dans une demande est signalée par l’inclusion d’un champ d’en-tête
+// Content-Length ou Transfer-Encoding dans les en-têtes de message de la demande
 bool	Request::body_in_this_request(void) const
 {
-	const std::multimap<string, string>::const_iterator	it_transfert_encoding
-		= _header.find("Transfert-Encoding");
-	const std::multimap<string, string>::const_iterator	it_content_length
-		= _header.find("Content-Length");
-
-	if (it_transfert_encoding != _header.end() || it_content_length != _header.end())
+	if (_header.find("Content-Length") != _header.end())
 		return (true);
-	return (false);
+	else if (_header.find("Transfert-Encoding") != _header.end())
+		return (true);
+	else
+		return (false);
 };
 
 // Un peu de parsing sur la requete pour obtenir les informations qui nous interessent
@@ -33,17 +63,14 @@ int	Request::interpret(void)
 		else if (set_server_address())
 			return (1);
 		_header_is_ready = true;
-	}
-
-	if (body_in_this_request() && _body_is_ready == false)
-	{
-		// A modifier, doit renvoyer 1 si le body n'est pas complet
-		if (get_content() == 0) // get_request_body()
+		if (body_in_this_request())
+		{
+			if (body_is_complete())
+				_body_is_ready = true;
+		}
+		else
 			_body_is_ready = true;
 	}
-	else
-		_body_is_ready = true;
-
 	return (0);
 };
 

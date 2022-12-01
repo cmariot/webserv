@@ -37,6 +37,7 @@ void	Response::build_http_response(void)
 // main function used to send the response to the client
 void	Response::create(void)
 {
+	// basic test ici
 	if (_request.get_method() == "GET")
 		get();
 	else if (_request.get_method() == "POST")

@@ -19,9 +19,9 @@ class	Request
 		Request(void);
 		~Request(void);
 
-		void	add_to_request(const char *buffer, const ssize_t &);
-		bool	is_ready(void);
-		void	clear(void);
+		void								add_to_request(const char *, const ssize_t &);
+		bool								is_ready(void);
+		void								clear(void);
 
 		const std::string					& get_request(void) const;
 		const std::string					& get_request_line(void) const;
@@ -41,6 +41,8 @@ class	Request
 		std::string							_http_version;		// HTTP/1.1
 		std::multimap<string, string>		_header;			// Map key/value
 		std::pair<std::string, int>			_address;			// Host:Port
+		size_t								_header_size;		// Request_line + Header
+		std::string							_body;				// Request body
 
 		bool								_header_is_ready;
 		bool								_body_is_ready;
@@ -54,6 +56,7 @@ class	Request
 
 		int									interpret(void);
 		bool								body_in_this_request(void) const;
+		bool								body_is_complete(void);
 
 	public:
 

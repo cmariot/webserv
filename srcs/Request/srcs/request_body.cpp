@@ -99,36 +99,13 @@ void Request::reset(void)
 	body_content.clear();
 }
 
-//	if (Single-resource bodies)
-//	{
-//		if (known length)
-//		{
-//			Content-Type && Content-Length
-//			if (request_body.size() == Content-Lenght)
-//				return (true)
-//		}
-//		else if (Unknown lenght)
-//		{
-//			Transfert-Encoding set to chuncked
-//			if (final_chunk found)
-//				return (true)
-//		}
-//	}
-//	else if (Multiple-resource bodies)
-//	{
-//		Multipart-form-data
-//		if ()
-//			return (true)
-//	}
-//	return (false);
-
 // This function stores the different infos of files in 3 vectors : name, type, content
 // 1 stored the different contents of the form divided by the boundaries in a vector
 // 2 get the name of the file 
 // 3 if name="" it means no file was uploaded => delete this content from the vector
 // 4 get the type of content 
 // 5 get the content of the file
-int Request::get_content(void) // a renommer : content c'est trop vague
+int Request::get_content(void)
 {
 	size_t i = 0;
 	vector<string>::iterator pos_iterator;

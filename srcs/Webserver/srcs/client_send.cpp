@@ -37,6 +37,7 @@ int		Webserver::send_response(void)
 		new_event.data.fd = it->first;
 		new_event.events = EPOLLIN;
 		epoll_ctl(epoll_socket, EPOLL_CTL_MOD, event.data.fd, &new_event);
+		// Reset request a la place de modif event ? Dans ce cas on met EPOLLIN | EPOLLOUT ?
 	}
 	return (0);
 };

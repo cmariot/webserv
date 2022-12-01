@@ -43,11 +43,15 @@ int	Request::set_header(size_t & i)
 	size_t			key_len;
 	std::string		value;
 
+	_header.clear();
 	while (i + 3 < _request.size())
 	{
 		if (_request[i] == '\r' && _request[i + 1] == '\n'
 			&& _request[i + 2] == '\r' && _request[i + 3] == '\n')
+		{
+			_header_size = i + 4;
 			return (0);
+		}
 		else if (_request[i] == '\r' && _request[i + 1] == '\n')
 			i += 2;
 		line_len = 0;
