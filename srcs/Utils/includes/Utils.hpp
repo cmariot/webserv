@@ -2,7 +2,7 @@
 # define UTILS_HPP
 
 # define INFO 0
-
+# define ERR 1
 # include <iostream>
 # include <string>
 # include <vector>

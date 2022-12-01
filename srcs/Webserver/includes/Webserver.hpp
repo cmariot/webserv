@@ -11,6 +11,7 @@
 # include <sys/epoll.h>
 # include <cstring>
 # include <utility>
+# include <signal.h>
 
 # include <string>
 # include <vector>
