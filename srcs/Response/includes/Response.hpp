@@ -39,7 +39,7 @@ class Response
 		~Response(void);
 
 		map<int, string>		init_status_code_map(void) const;
-		void					update(Request &, Server &, const char *env[]);
+		void					update(Request &, Server &, const char **env);
 		void					create(int fd);
 		int						get_location(void);
 		int						path_construction(void);
