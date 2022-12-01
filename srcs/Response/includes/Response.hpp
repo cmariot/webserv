@@ -75,11 +75,18 @@ class Response
 	public:
 		string					_full_response;
 
+		bool					_dir;
 		void					generate_error_page(const int &);
-		int					reate_response_header(void);
+		int					create_response_header(void);
 
+		void					get_response(void);
 		bool					is_a_directory(const std::string & path);
 		int						list_directories(void);
+		void					directory_listing_header(void);
+		void					directory_listing_body(void);
+		void					add_dot_link(void);
+		void					add_double_dot_link(void);
+		void					add_other_link(char d_name[256]);
 };
 
 #endif
