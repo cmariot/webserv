@@ -54,11 +54,11 @@ class Response
 		// used for get_response
 		bool  					check_file_existance(string & path);
 		int					stored_file(string  path);
-	
+		int						build_cgi_response(string & path);
 		bool					match_extension(void);
-		int					build_cgi_response(string & path);
-		const char				**get_env(void);
-
+		char * const				*get_env(void);
+		void 					build_http_response(void);
+		bool					execute_script(char **arg);
 	private:
 		// Classes used to store the request, the server and the location
 		Request					_request;
