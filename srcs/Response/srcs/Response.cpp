@@ -22,7 +22,7 @@ void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
 
-	_response_header = _request.get_http_version() + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	_response_header = _request.get_http_version() + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\nContent-length:"+_response_body.size() +"\r\n\r\n";
 
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) != _server.get_error_pages().end())
 		stored_file(_server.get_error_pages().find(_status_code)->second.get_path());
@@ -74,7 +74,6 @@ void	Response::create()
 		set_status_code(501);
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
-	send(fd, _full_response.c_str(), _full_response.size(), 0);
 
 	print(INFO, "The response is going to be sent to the client");
 };
