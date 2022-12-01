@@ -7,10 +7,6 @@
 # include <sys/stat.h>
 # include <fstream>
 # include <map>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <stdlib.h>
 
 
 
@@ -43,69 +39,46 @@ class Response
 		~Response(void);
 
 		map<int, string>		init_status_code_map(void) const;
-		void					update(Request &, Server &, char * const *env);
-		void					create(void);
+		void					update(Request &, Server &, const char *env[]);
+		void					create(int);
 		int						get_location(void);
 		int						path_construction(void);
 
+		int						test_authorization(void);
 		void 					get(void);
 		void					post(void);
+		void 					delet(void);
+
+		int 					set_status_code(const int & status_code);
+		void 					build_http_response(void); 
+		// used for get_response
+		bool  					check_file_existance(string & path);
+		int						stored_file(const string & path);
+		int						build_cgi_response(void);
+		const char				**get_env(void);
 
 	private:
-
+		// Classes used to store the request, the server and the location
 		Request					_request;
 		Server					_server;
 		Location				_location;
 
-		char * const			*_env;
+		const char				**_env;
 		std::string				_file_path;
 
-	public:
-
-		void					init_response(Request request);
-
-		void					post_response(Request request);
-		bool					init_post(void);
-		void 					delete_response(Request request);
-
-		int 					set_status_code(const int & status_code);
-		// used for get_response
-		bool  					check_file_existance(string & path);
-		int						stored_file(string & path);
-		int						build_cgi_response(string & path);
-		bool					match_extension(void);
-		char * const				*get_env(void);
-		void 					build_http_response(void);
-		bool					execute_script(char **arg);
-
-	//private:
-
-		// Which status code are mandatory ?
+		// All variables needed to build the response
 		const map<int, string>	_status_code_map;
 		int 					_status_code;
 		string					_status_line;
 		string					_response_header;
 		string					_response_body;
-
-	public:
-
 		string					_full_response;
-
-	private:
-
-		bool					_dir;
 
 		void					generate_error_page(const int &);
 		int						create_response_header(void);
 
-		void					get_response(void);
 		bool					is_a_directory(const std::string & path);
 		int						list_directories(void);
-		void					directory_listing_header(void);
-		void					directory_listing_body(void);
-		void					add_dot_link(void);
-		void					add_double_dot_link(void);
-		void					add_other_link(char d_name[256]);
 };
 
 #endif
