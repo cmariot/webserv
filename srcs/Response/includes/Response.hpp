@@ -63,7 +63,7 @@ class Response
 		Server					_server;
 		Location				_location;
 
-		const * char *				_env;
+		char * const *				_env;
 		std::string				_file_path;
 
 		// All variables needed to build the response
