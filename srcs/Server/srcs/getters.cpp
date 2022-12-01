@@ -34,13 +34,3 @@ const std::map<std::string, Location> &	Server::get_locations(void)		const
 {
 	return (_locations);
 };
-
-const int &		Server::get_server_socket(void)	const
-{
-	return (_server_socket);
-};
-
-const struct sockaddr_in &	Server::get_server_address(void)	const
-{
-	return (_server_address);
-};

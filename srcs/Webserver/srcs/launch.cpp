@@ -1,39 +1,24 @@
 #include "Webserver.hpp"
 
-# define SIGNAL_CAUGHT 1
-
-int		Webserver::launch(const char *env[])
+int		Webserver::launch(void)
 {
-	int			client_socket;
-	size_t		index;
-	Server		request_server;
-
 	if (init_sockets())
 		return (exit_webserv());
-	catch_signal();
-	print(INFO, "Webserv is waiting for clients connexion ...");
-	while (true)
+	print(INFO, "Waiting for new events ...");
+	while (new_events())
 	{
-		if (wait_event(events, nb_events) == SIGNAL_CAUGHT)
-			return (exit_webserv());
-		for (size_t i = 0 ; i < nb_events ; ++i)
+		for (int i = 0 ; i < nb_events ; ++i)
 		{
-			if (client_connexion(&index, events[i]))
-				accept_connexion(&client_socket, server[index], events);
-			else
-			{
-				_request.get(events[i].data.fd);
-				if (get_server(request_server))
-				{
-					// send error
-					remove_client(main_socket, client_socket, events);
-					continue ;
-				}
-				_response.update(_request, request_server, env);
-				_response.create(events[i].data.fd);
-				remove_client(main_socket, client_socket, events);
-			}
+			event = events[i];
+			if (client_error())
+				remove_client();
+			else if (client_connection())
+				add_client();
+			else if (client_recv() == READY)
+				get_request();
+			else if (client_send() == READY)
+				send_response();
 		}
 	}
-	return (0);
+	return (exit_webserv());
 };

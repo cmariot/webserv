@@ -1,11 +1,11 @@
 #include "Webserver.hpp"
 
-int	main(int argc, const char *argv[], const char *env[])
+int	main(const int argc, const char *argv[], char * const *env)
 {
 	Webserver	webserv;
 
-	if (webserv.parse(argc, argv))
+	if (webserv.parse(argc, argv, env))
 		return (0);
-	webserv.launch(env);
+	webserv.launch();
 	return (0);
 }

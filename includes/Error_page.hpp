@@ -1,1 +1,1 @@
-../srcs/Error_page/includes/Error_page.hpp
+../srcs/Server/Error_page/includes/Error_page.hpp

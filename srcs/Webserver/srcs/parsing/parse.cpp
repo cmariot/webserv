@@ -15,7 +15,7 @@ int	check_extension(const char *filename, const char *extension)
 	return (0);
 }
 
-int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
+int	Webserver::get_file(const char * & filename, std::vector<std::string> & vector)
 {
 	std::ifstream	configuration_file;
 	std::string		line;
@@ -50,7 +50,7 @@ int	Webserver::get_file(const char *filename, std::vector<std::string> & vector)
 	return (0);
 };
 
-int	Webserver::check_arguments(int argc, const char *argv[])
+int	Webserver::check_arguments(const int & argc, const char *argv[])
 {
 	print(INFO, "Checking the webserv's arguments");
 	if (argc > 2)
@@ -62,20 +62,33 @@ int	Webserver::check_arguments(int argc, const char *argv[])
 	return (0);
 }
 
+char * const *Webserver::get_env(void) const
+{
+	return (_env);
+};
+
+void	Webserver::set_env(char * const *env)
+{
+	_env = env;
+	return ;
+};
+
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
-int	Webserver::parse(int argc, const char *argv[])
+int	Webserver::parse(const int argc, const char *argv[], char * const *env)
 {
 	std::vector<std::string>	vector;
 
 	print(INFO, "Webserv is starting ...");
 	if (check_arguments(argc, argv))
 		return (1);
+	// check defined variables (BUFFER_SIZE ...)
 	if (get_file(argv[1], vector))
 		return (1);
 	if (parse_configuration_file(vector))
 		return (1);
+	set_env(env);
 	print(INFO, "The configuration file seems to be ok.");
 	print_config();
 	return (0);

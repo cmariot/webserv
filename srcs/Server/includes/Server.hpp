@@ -31,15 +31,15 @@ class	Server
 		Server(void);
 		~Server(void);
 
-		int		parse(std::vector<std::string> &);
+		int		parse(std::vector<string> &);
 
 	private:
 
-		std::pair<std::string, int>		_address;
-		std::set<std::string>			_server_names;
-		double							_client_max_body_size;
-		std::map<int, Error_page>		_error_pages;
-		std::map<std::string, Location>	_locations;
+		std::pair<string, int>		_address;
+		std::set<string>			_server_names;
+		double						_client_max_body_size;
+		std::map<int, Error_page>	_error_pages;
+		std::map<string, Location>	_locations;
 
 		bool	address_set;
 		bool	server_names_set;
@@ -47,33 +47,30 @@ class	Server
 		bool	error_page_set;
 		bool	locations_set;
 
-		int		set_listen(std::vector<std::string> &, size_t &);
-		int		set_server_names(std::vector<std::string> &, size_t &);
-		int		set_error_pages(std::vector<std::string> &, size_t &);
-		int		set_client_max_body_size(std::vector<std::string> &, size_t &);
-		int		set_client_max_body_size(std::string &);
-		int		set_location(std::vector<std::string> &, size_t &);
-		int		set_ip_and_port(std::vector<std::string> &, size_t &);
+		int		set_listen(std::vector<string> &, size_t &);
+		int		set_server_names(std::vector<string> &, size_t &);
+		int		set_error_pages(std::vector<string> &, size_t &);
+		int		set_client_max_body_size(std::vector<string> &, size_t &);
+		int		set_client_max_body_size(string &);
+		int		set_location(std::vector<string> &, size_t &);
+		int		set_ip_and_port(std::vector<string> &, size_t &);
 
 	public:
 
-		const std::pair<std::string, int> &		get_address(void)				const;
-		const std::string &						get_host(void)					const;
-		const int &								get_port(void)					const;
-		const std::set<std::string> &			get_server_names(void)			const;
-		const double &							get_max_size(void)				const;
-		const std::map<int, Error_page> &		get_error_pages(void)			const;
-		const std::map<std::string, Location> &	get_locations(void)				const;
-		const int &								get_server_socket(void)			const;
-		const struct sockaddr_in &				get_server_address(void)		const;
+		const std::pair<string, int> &		get_address(void)		const;
+		const string &						get_host(void)			const;
+		const int &							get_port(void)			const;
+		const std::set<string> &			get_server_names(void)	const;
+		const double &						get_max_size(void)		const;
+		const std::map<int, Error_page> &	get_error_pages(void)	const;
+		const std::map<string, Location> &	get_locations(void)		const;
 
-		int						_server_socket;
-		struct sockaddr_in		_server_address;
+	public:
 
-		int		create_server_socket(void);
-		int		set_server_socket_options(void);
-		int		bind_server_address(void);
-		int		listen_for_clients(void) const;
+		int					socket;
+		struct sockaddr		address;
+		struct epoll_event	event;
+		int					addrlen;
 
 };
 

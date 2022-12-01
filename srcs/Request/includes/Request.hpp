@@ -1,16 +1,16 @@
 #ifndef REQUEST_HPP
 # define REQUEST_HPP
 
-# define BUFFER_SIZE 1024
-
 # include "Utils.hpp"
 
 # include <iostream>
 # include <cstring>
-# include <sys/socket.h>
 # include <cstdio>
+# include <map>
 
 // Reference : https://www.rfc-editor.org/rfc/rfc2616#section-5
+
+# define CRLF		"\r\n"
 
 class	Request
 {
@@ -19,12 +19,43 @@ class	Request
 		Request(void);
 		~Request(void);
 
-		string				request;
-		string				method;
-		string				uri;
-		string				http_version;
-		string				host;
-		pair<string, int>	request_address;
+		void	add_to_request(const char *buffer, const ssize_t &);
+		bool	is_ready(void);
+		void	clear(void);
+
+		const std::string					& get_request(void) const;
+		const std::string					& get_request_line(void) const;
+		const std::string					& get_method(void) const;
+		const std::string					& get_uri(void) const;
+		const std::string					& get_http_version(void) const;
+		const std::string					& get_host(void) const;
+		const int							& get_port(void) const;
+		const std::pair<std::string, int>	& get_address(void) const;
+
+	private:
+
+		std::string							_request;			// Full request
+		std::string							_request_line;		// 1st line of the request
+		std::string							_method;			// GET, POST, DELETE
+		std::string							_uri;				// Location uri
+		std::string							_http_version;		// HTTP/1.1
+		std::multimap<string, string>		_header;			// Map key/value
+		std::pair<std::string, int>			_address;			// Host:Port
+
+		bool								_header_is_ready;
+		bool								_body_is_ready;
+
+		int									set_request_line(size_t &);
+		int									set_method(size_t &);
+		int 								set_uri(size_t &);
+		int									set_http_version(size_t &);
+		int									set_header(size_t &);
+		int									set_server_address(void);
+
+		int									interpret(void);
+		bool								body_in_this_request(void) const;
+
+	public:
 
 		string 				boundary;
 		vector<string>		content;
@@ -32,28 +63,15 @@ class	Request
 		vector<string>		content_type;
 		vector<string> 		file_name;
 
+		int					get_boundary_content(void);
+		int					get_body_content(size_t i);
+		int 				get_content_type(size_t i);
+		int 				get_file_name(size_t i);
+		int 				get_content(void);
 
-		int	get(int);
-		int	interpret(void);
+		int					set_content(void);
 
-	private:
-
-		int		get_request_line(string &);
-		int		get_method(string &, size_t &);
-		int 	get_request_uri(string &, size_t &);
-		int		get_http_version(string &, size_t &);
-		int		get_host(void);
-
-		int		get_boundary_content(void);
-		int		get_body_content(size_t i);
-		int 	get_content_type(size_t i);
-		int 	get_file_name(size_t i);
-		int 	get_content(void);
-
-		int		set_content(void);
-		int		host_to_address(void);
-
-		void	reset(void);
+		void				reset(void);
 
 };
 

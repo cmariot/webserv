@@ -59,37 +59,36 @@ SRC_ROOTDIR		= srcs/
 SRC_SUBDIR	    = $(MAIN) \
 				  $(addprefix Webserver/srcs/, $(WEBSERVER)) \
 				  $(addprefix Server/srcs/, $(SERVER)) \
-				  $(addprefix Error_page/srcs/, $(ERROR_PAGE)) \
-				  $(addprefix Location/srcs/, $(LOCATION)) \
+				  $(addprefix Server/Error_page/srcs/, $(ERROR_PAGE)) \
+				  $(addprefix Server/Location/srcs/, $(LOCATION)) \
+				  $(addprefix Client/srcs/, $(CLIENT)) \
 				  $(addprefix Request/srcs/, $(REQUEST)) \
 				  $(addprefix Response/srcs/, $(RESPONSE)) \
 				  $(addprefix Utils/srcs/, $(UTILS))
 
 MAIN			= main.cpp
 
-WEBSERVER		= accept_connexion.cpp \
-				  add_to_interest_list.cpp \
-				  client_connexion.cpp \
-				  constructor.cpp \
-				  create_epoll_socket.cpp \
-				  destructor.cpp \
-				  exit_webserv.cpp \
-				  init_sockets.cpp \
-				  launch.cpp \
+WEBSERVER		= parsing/remove_commentaries.cpp \
+				  parsing/replace_blank_characters.cpp \
+				  parsing/separate_braces.cpp \
+				  parsing/separate_semicolon.cpp \
 				  parsing/parse.cpp \
 				  parsing/parse_configuration_file.cpp \
 				  parsing/parse_server.cpp \
 				  parsing/print_config.cpp \
-				  get_server.cpp \
-				  remove_client.cpp \
-				  parsing/remove_commentaries.cpp \
-				  parsing/replace_blank_characters.cpp \
-				  parsing/separate_braces.cpp \
-				  parsing/separate_semicolon.cpp \
-				  signals.cpp \
 				  parsing/split_strings.cpp \
 				  parsing/usage.cpp \
-				  wait_event.cpp
+				  catch_signal.cpp \
+				  client_connection.cpp \
+				  client_error.cpp \
+				  client_recv.cpp \
+				  client_send.cpp \
+				  constructor.cpp \
+				  destructor.cpp \
+				  exit_webserv.cpp \
+				  init_sockets.cpp \
+				  launch.cpp \
+				  new_events.cpp
 
 UTILS			= error.cpp \
 				  invalid_directive_len.cpp \
@@ -106,13 +105,11 @@ SERVER			= constructor.cpp \
 				  set_error_page.cpp \
 				  set_location.cpp \
 				  getters.cpp \
-				  create_server_socket.cpp \
-				  bind_server_address.cpp \
-				  listen_for_clients.cpp \
 				  destructor.cpp
 
 ERROR_PAGE		= constructor.cpp \
 				  destructor.cpp \
+				  get_file.cpp \
 				  getters.cpp
 
 LOCATION		= constructor.cpp \
@@ -130,23 +127,34 @@ LOCATION		= constructor.cpp \
 				  set_upload_path.cpp
 
 REQUEST			= constructor.cpp \
-				  get_client_request.cpp \
-				  interpret.cpp \
 				  destructor.cpp \
-				  get_content.cpp
+				  getters.cpp \
+				  is_ready.cpp \
+				  modifiers.cpp \
+				  request_body.cpp \
+				  request_header.cpp \
+				  request_line.cpp
+
+
+CLIENT			= add_to_request.cpp \
+				  constructor.cpp \
+				  create_response.cpp \
+				  destructor.cpp \
+				  getters.cpp \
+				  request_is_ready.cpp \
+				  setters.cpp
 
 RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \
 				  update.cpp \
 				  get.cpp \
-				  post.cpp \
-				  delete.cpp \
 				  Response.cpp \
 				  generate_error_page.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \
 				  destructor.cpp \
-				  cgi_response.cpp 
+				  cgi_response.cpp \
+				  post.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

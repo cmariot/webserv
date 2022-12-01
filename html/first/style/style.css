@@ -1,22 +1,12 @@
-html
-{
-	height: 100%;
-	width: 100%;
-}
-
-body
-{
-	height: 100%;
-	width: 100%;
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-	text-align: center;
-}
-
 h1
 {
-	color: black;
+	color: green;
+}
+
+#link_list, 
+#link_list a:visited
+{
+	display: flex;
+	flex-direction: column;
+	color: green;
 }
