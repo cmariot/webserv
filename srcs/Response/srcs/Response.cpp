@@ -22,7 +22,7 @@ void	Response::build_http_response(void)
 {
 	const std::string	code  = itostring(_status_code);
 
-	_response_header = _request.http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
+	_response_header = _request._http_version + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n\r\n";
 
 	if (_status_code >= 300 && _server.get_error_pages().find(_status_code) != _server.get_error_pages().end())
 		stored_file(_server.get_error_pages().find(_status_code)->second.get_path());
@@ -61,7 +61,6 @@ void	Response::create()
 	if (_request.get_method() == "GET")
 	{
 		get();
-		// print(INFO, ("Response =\n" + _full_response).c_str());
 	}
 	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
 	{
