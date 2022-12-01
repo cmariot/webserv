@@ -148,13 +148,14 @@ RESPONSE		= constructor.cpp \
 				  directory_listing.cpp \
 				  update.cpp \
 				  get.cpp \
+				  post.cpp \
+				  delete.cpp \
 				  Response.cpp \
 				  generate_error_page.cpp \
 				  get_location.cpp \
 				  path_construction.cpp \
 				  destructor.cpp \
-				  cgi_response.cpp \
-				  post.cpp
+				  cgi_response.cpp 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
