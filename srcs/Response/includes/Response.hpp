@@ -53,7 +53,7 @@ class Response
 		void 					build_http_response(void); 
 		// used for get_response
 		bool  					check_file_existance(string & path);
-		int					stored_file(string & path);
+		int					stored_file(string  path);
 	
 		bool					match_extension(void);
 		int					build_cgi_response(string & path);
@@ -82,7 +82,7 @@ class Response
 		int					create_response_header(void);
 
 		void					get_response(void);
-		bool					is_a_directory(const std::string & path);
+		bool					is_a_directory(const string & path);
 		int					list_directories(void);
 		void					directory_listing_header(void);
 		void					directory_listing_body(void);
