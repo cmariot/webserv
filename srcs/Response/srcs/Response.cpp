@@ -43,11 +43,11 @@ int	Response::test_authorization(void)
 		generate_error_page(404);
 		return (1) ;
 	}
-	if (_request.method == "GET" && _location.get_allowed())
+	if (_request.get_method() == "GET" && _location.get_allowed())
 		return (0);
-	else if (_request.method == "DELETE" && _location.delete_allowed())
+	else if (_request.get_method() == "DELETE" && _location.delete_allowed())
 		return (0);
-	else if (_request.method == "POST" && _location.post_allowed())
+	else if (_request.get_method() == "POST" && _location.post_allowed())
 		return (0);
 	set_status_code(403);
 	build_http_response();
