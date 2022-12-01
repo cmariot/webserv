@@ -72,6 +72,7 @@ class Response
 		string					_status_line;
 		string					_response_header;
 		string					_response_body;
+	public:
 		string					_full_response;
 
 		void					generate_error_page(const int &);
