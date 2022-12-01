@@ -58,7 +58,7 @@ int	Response::test_authorization(void)
 void	Response::create()
 {
 	print(INFO, "Creating the server's response");
-	if (_request.method == "GET")
+	if (_request.get_method() == "GET")
 	{
 		get();
 		// print(INFO, ("Response =\n" + _full_response).c_str());
@@ -66,11 +66,11 @@ void	Response::create()
 		print(INFO, "The response has been sent to the client");
 		return ;
 	}
-	else if (_request.method == "POST" && !test_authorization() && _request.content.size())
+	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
 	{
 		post();
 	}
-	else if (_request.method == "DELETE" && !test_authorization())
+	else if (_request.get_method()  == "DELETE" && !test_authorization())
 	{
 		delet();
 	}
