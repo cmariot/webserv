@@ -53,8 +53,8 @@ class Response
 		void 					build_http_response(void); 
 		// used for get_response
 		bool  					check_file_existance(string & path);
-		int					stored_file(const string & path);
-		int					build_cgi_response(void);
+		int					stored_file(string & path);
+		int					build_cgi_response(string & path);
 		const char				**get_env(void);
 
 	private:
