@@ -22,13 +22,15 @@ void	Response::main_create(void)
 		// if (content_type_not_accepted())
 		//	return (generate_error_page(415));
 	}
-	if (request_block_not_ok())
+	if (request_block_not_ok()) // voir ce qu'on met dedans
 		return (generate_error_page(400));
+
 	if (_request.get_method() == "GET")
-		return (get());
+		return (get_method());
 	else if (_request.get_method() == "POST")
-		return (post());
+		return (post_method());
 	else if (_request.get_method() == "DELETE")
-		return (delet());
+		return (delete_method());
+
 	return ;
 };

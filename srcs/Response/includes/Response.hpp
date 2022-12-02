@@ -16,9 +16,7 @@ class Response
 		void								update(Request &, Server &, char * const *);
 		void								main_create(void);
 		const std::string &					get_response(void) const;
-		void								get(void);
-		void								post(void);
-		void								delaite(void);
+
 	private:
 
 		int									_status_code;
@@ -37,9 +35,9 @@ class Response
 		// Update
 		int									get_location(void);
 
-		void								get(void);
-		void								post(void);
-		void								delet(void);
+		void								get_method(void);
+		void								post_method(void);
+		void								delete_method(void);
 
 		// Create
 		bool								uri_too_long(void) const;
@@ -49,8 +47,21 @@ class Response
 		bool								expect_100_continue(void);
 		bool								has_content(void) const;
 		bool 						  		content_too_large(void) const;
-		bool								is_forbidden(void) const;
 		bool								request_block_not_ok(void) const;
+
+		// Get
+		bool								redirection(void) const;
+		void								generate_redirection(void);
+		bool								construct_path(void);
+		bool								is_forbidden(void) const;
+		bool								is_a_directory(void) const;
+		bool								directory_file_set(void) const;
+		void								generate_directory_file(void);
+		bool								directory_listing_set(void) const;
+		void								generate_directory_list(void);
+		bool								use_cgi(void) const;
+		void								generate_cgi_response(void);
+		void								generate_file_response(void);
 
 		// Error
 		void								generate_error_page(const int &);

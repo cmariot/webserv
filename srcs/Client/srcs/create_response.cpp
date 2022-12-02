@@ -20,7 +20,7 @@ int	Client::create_response(const std::vector<Server> & servers, char * const *e
 {
 	get_server(servers);
 	_response.update(_request, _server, env);
-	_response.create();
+	_response.main_create();
 	_request.clear();
 	return (0);
 };
