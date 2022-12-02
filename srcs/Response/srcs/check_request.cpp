@@ -12,8 +12,8 @@ static bool	method_allowed(const string &method)
 bool Response::uri_too_long(void)
 {
     if (_request.get_uri().size() > 255)
-        return (0);
-    return (1);
+        return (1);
+    return (0);
 }
 
 // check the differents headers errors
@@ -26,6 +26,11 @@ bool 		Response::headers_check(void)
 // check if the request is valid
 bool		Response::check_request(void)
 {
+    if(uri_too_long())
+    {
+        generate_error_page(414);
+        return (true);
+    }
 	if(get_location() && path_construction())
 	{
 		generate_error_page(404);
