@@ -24,13 +24,7 @@ bool	Request::set_body(void)
 		// Set un booleen sur _chunk = true
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end()) // (CAS 3 PDF)
-	{
-		// Known length
-		std::cout << "CAS 2 : unchunk" << std::endl;
-	
-		return (unchunk());
-	}
+
 	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
 	{
 		std::cout << "CAS 3 : content length is defined " << get_method() << std::endl;
