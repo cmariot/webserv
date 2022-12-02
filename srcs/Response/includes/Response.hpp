@@ -89,7 +89,8 @@ class Response
 		void					add_double_dot_link(void);
 		void					add_other_link(char d_name[256]);
 
-		bool						check_request(void);
+		bool 					headers_check(void);
+		bool					check_request(void);
 };
 
 #endif

@@ -39,3 +39,8 @@ const std::pair<std::string, int>		& Request::get_address(void) const
 {
 	return (_address);
 };
+
+const multimap<string, string>		& Request::get_header(void) const
+{
+	return (_header);
+};

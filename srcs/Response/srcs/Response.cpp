@@ -42,6 +42,11 @@ static bool	method_allowed(const string &method)
 	return (false);
 }
 
+bool 		Response::headers_check(void)
+{
+	cout << _request.
+}
+
 bool		Response::check_request(void)
 {
 	if(get_location() && path_construction())
@@ -52,6 +57,11 @@ bool		Response::check_request(void)
 	if(method_allowed(_request.get_method()) == false)
 	{
 		generate_error_page(405);
+		return (true);
+	}
+	if (hearders_check())
+	{
+		generate_error_page(400);
 		return (true);
 	}
 
