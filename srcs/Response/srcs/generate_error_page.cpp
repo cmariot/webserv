@@ -39,7 +39,6 @@ void	Response::generate_error_page(const int & error_code)
 	_response_body += "</html>";
 
 	content_length = "\r\nContent-length:" + itostring(_response_body.size()) + "\r\n\r\n";
-	cout << content_length << endl;
 	_full_response = _response_header + content_length + _response_body;
 
 	return ;
