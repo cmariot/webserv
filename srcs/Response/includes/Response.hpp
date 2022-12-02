@@ -90,7 +90,7 @@ class Response
 		void					add_other_link(char d_name[256]);
 
 
-		bool 					uri_tool_long(void);
+		bool 					uri_too_long(void);
 		bool 					headers_check(void);
 		bool					check_request(void);
 };
