@@ -44,3 +44,8 @@ const multimap<string, string>		& Request::get_header(void) const
 {
 	return (_header);
 };
+
+const string 		& Request::get_header_size(void) const
+{
+	return (_header_size);
+};

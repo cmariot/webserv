@@ -44,7 +44,6 @@ class Response
 		int					get_location(void);
 		int					path_construction(void);
 
-		int					test_authorization(void);
 		void 					get(void);
 		void					post(void);
 		void 					delet(void);
@@ -53,7 +52,7 @@ class Response
 		void 					build_http_response(void); 
 		// used for get_response
 		bool  					check_file_existance(string & path);
-		int					stored_file(string  path);
+		int						stored_file(string  path);
 		int						build_cgi_response(string & path);
 		bool					match_extension(void);
 		char * const				*get_env(void);
@@ -78,11 +77,11 @@ class Response
 
 		bool					_dir;
 		void					generate_error_page(const int &);
-		int					create_response_header(void);
+		int						create_response_header(void);
 
 		void					get_response(void);
 		bool					is_a_directory(const string & path);
-		int					list_directories(void);
+		int						list_directories(void);
 		void					directory_listing_header(void);
 		void					directory_listing_body(void);
 		void					add_dot_link(void);
@@ -90,6 +89,7 @@ class Response
 		void					add_other_link(char d_name[256]);
 
 
+		int						method_allowed(void);
 		bool 					uri_too_long(void);
 		bool 					headers_check(void);
 		bool					check_request(void);

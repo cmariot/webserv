@@ -36,6 +36,29 @@ void	Response::build_http_response(void)
 
 
 
+
+static bool	method_allowed(const string &method)
+{
+	if (method == "GET" || method == "POST" || method == "DELETE")
+		return (true);
+	return (false);
+}
+
+bool		Response::check_request(void)
+{
+	if(build_path())
+	{
+		generate_error_page(404);
+		return (true);
+	}
+	if(method_allowed(_request.get_method()) == false)
+	{
+		generate_error_page(405);
+		return (true);
+	}
+
+}
+
 // main function used to send the response to the client
 void	Response::create()
 {
@@ -43,17 +66,17 @@ void	Response::create()
 	
 	if (check_request())
 		return ;
-	else if (_request.get_method() == "GET")
+	if (_request.get_method() == "GET")
 	{
 		get();
 	}
-	else if (_request.get_method()  == "POST" && _request.content.size())
+	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
 	{
 		_request.get_content();
 		print(INFO, "POST request about to be processed");
 		post();
 	}
-	else if (_request.get_method()  == "DELETE" )
+	else if (_request.get_method()  == "DELETE" && !test_authorization())
 	{
 		delet();
 	}
