@@ -39,6 +39,19 @@ bool 		Response::headers_check(void)
         generate_error_page(431);
         return (1);
     }
+    if (_request.get_header().find("Host") == _request.get_header().end())
+    {
+        generate_error_page(400);
+        return (1);
+    }
+    if (_request.get_header().find("Content-Length") != _request.get_header().end())
+    {
+        if (_request.get_header().find("Content-Length")->second == "0")
+        {
+            generate_error_page(411);
+            return (1);
+        }
+    }
     return 0;
 }
 
