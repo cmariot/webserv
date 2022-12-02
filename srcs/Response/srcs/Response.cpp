@@ -64,6 +64,7 @@ void	Response::create()
 	}
 	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
 	{
+		_request.get_content();
 		print(INFO, "POST request about to be processed");
 		post();
 	}
