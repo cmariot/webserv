@@ -19,6 +19,5 @@ void    Response::delet(void)
         return ;
     }
     set_status_code(202);
-    generate_error_page(202);
     print(INFO, "File was succesfully deleted from the server");
 }
