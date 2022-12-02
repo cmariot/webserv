@@ -34,7 +34,7 @@ void	Response::build_http_response(void)
 	_full_response = _response_header + _response_body;
 };
 
-
+// check if the method is allowed
 static bool	method_allowed(const string &method)
 {
 	if (method == "GET" || method == "POST" || method == "DELETE")
@@ -42,11 +42,15 @@ static bool	method_allowed(const string &method)
 	return (false);
 }
 
+
+
+// check the differents headers errors
 bool 		Response::headers_check(void)
 {
-	cout << _request.
+	cout << _request.get_header().find("Host")->second << endl;
 }
 
+// check if the request is valid
 bool		Response::check_request(void)
 {
 	if(get_location() && path_construction())
