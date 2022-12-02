@@ -19,10 +19,13 @@ bool	Request::body_isnot_complete(void)
 
 	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity")
 	{
+		std::cout << "CAS 2 : unchunk" << std::endl;
+	
 		return (unchunk());
 	}
 	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
+		std::cout << "CAS 3 : utilisation des boundary" << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
