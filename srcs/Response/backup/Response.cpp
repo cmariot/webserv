@@ -41,7 +41,7 @@ int	Response::test_authorization(void)
 	if (get_location())
 	{
 		generate_error_page(404);
-		return (1) ;
+		return (1);
 	}
 	if (_request.get_method() == "GET" && _location.get_allowed())
 		return (0);
@@ -62,7 +62,7 @@ void	Response::create()
 	{
 		get();
 	}
-	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
+	else if (_request.get_method()  == "POST" && !test_authorization())
 	{
 		print(INFO, "POST request about to be processed");
 		post();

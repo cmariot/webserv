@@ -18,9 +18,7 @@ int	Client::get_server(const std::vector<Server> & servers)
 
 int	Client::create_response(const std::vector<Server> & servers, char * const *env)
 {
-	if (get_server(servers))
-		_response.set_status_code(404);
-
+	get_server(servers);
 	_response.update(_request, _server, env);
 	_response.create();
 	_request.clear();

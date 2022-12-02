@@ -146,17 +146,10 @@ CLIENT			= add_to_request.cpp \
 				  setters.cpp
 
 RESPONSE		= constructor.cpp \
-				  directory_listing.cpp \
-				  update.cpp \
-				  get.cpp \
-				  post.cpp \
-				  delete.cpp \
-				  Response.cpp \
-				  generate_error_page.cpp \
-				  get_location.cpp \
-				  path_construction.cpp \
+				  create.cpp \
 				  destructor.cpp \
-				  cgi_response.cpp 
+				  getters.cpp \
+				  update.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

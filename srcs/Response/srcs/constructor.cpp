@@ -1,7 +1,7 @@
 #include "Response.hpp"
 
 // basic http response status code
-std::map<int, std::string> 	Response::init_status_code_map(void) const
+static std::map<int, std::string> 	init_status_code_map(void)
 {
 	std::map<int, std::string>	tmp;
 
@@ -47,9 +47,8 @@ std::map<int, std::string> 	Response::init_status_code_map(void) const
 };
 
 Response::Response(void) :
-	_file_path(""),
-	_status_code_map(init_status_code_map()),
-	_status_code(0)
+	_status_code(0),
+	_status_code_map(init_status_code_map())
 {
 	return ;
 };

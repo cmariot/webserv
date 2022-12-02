@@ -2,12 +2,12 @@
 
 const char *	Client::get_response(void) const
 {
-	return (_response._full_response.data());
+	return (_response.get_response().data());
 };
 
 size_t	Client::get_response_size(void) const
 {
-	return (_response._full_response.size());
+	return (_response.get_response().size());
 };
 
 std::string		Client::get_hostname(void) const
