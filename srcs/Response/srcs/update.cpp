@@ -7,5 +7,7 @@ void	Response::update(Request & request, Server & server, char * const *env)
 	_env = env;
 	if (get_location())
 		_no_location = true;
+	_header.clear();
+	_body.clear();
 	_response.clear();
 };

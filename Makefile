@@ -146,7 +146,7 @@ CLIENT			= add_to_request.cpp \
 				  setters.cpp
 
 RESPONSE		= constructor.cpp \
-				  create.cpp \
+				  main_create.cpp \
 				  destructor.cpp \
 				  expect_100_continue.cpp \
 				  generate_100_continue.cpp \
@@ -154,8 +154,11 @@ RESPONSE		= constructor.cpp \
 				  get_location.cpp \
 				  getters.cpp \
 				  has_content.cpp \
+				  header_too_large.cpp \
+				  is_forbidden.cpp \                          																																			*-*
 				  method_not_implemented.cpp \
 				  method_not_allowed.cpp \
+				  request_block_not_ok.cpp \
 				  update.cpp \
 				  uri_too_long.cpp
 

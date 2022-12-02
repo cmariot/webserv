@@ -2,7 +2,6 @@
 
 void Response::generate_100_continue(void)
 {
-	_header  = _request.get_http_version() + "100 Continue\r\n\r\n";
-	_response = _header;
+	_response  = _request.get_http_version() + " 100 Continue\r\n\r\n";
 	return ;
 };

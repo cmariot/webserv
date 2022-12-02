@@ -29,7 +29,7 @@ int	Response::path_construction(void)
 	_file_path.replace(0, _location.get_uri().size(), _location.root());
 	if (is_a_file(_file_path) == true)
 	{
-		return (0);
+		return (0);																		(￣o￣) zzZZzzZZ
 	}
 	for (size_t i = 0 ; i < _location.index().size() ; ++i)
 	{
