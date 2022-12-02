@@ -17,5 +17,13 @@ bool	Request::is_ready(void)
 				return (false);
 		}
 	}
+	if (body_in_this_request())
+	{
+		// cout << endl << "ON EST LA  ??? " << endl;
+		if (body_isnot_complete())
+			return (false);
+		// cout << endl << "ON EST LA  ??? " << endl;
+
+	}
 	return (true);
 };

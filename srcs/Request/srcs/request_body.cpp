@@ -27,6 +27,13 @@ bool	Request::set_body(void)
 	else if (content_length != _header.end() && transfert_encoding == _header.end()) // (CAS 3 PDF)
 	{
 		// Known length
+		std::cout << "CAS 2 : unchunk" << std::endl;
+	
+		return (unchunk());
+	}
+	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
+	{
+		std::cout << "CAS 3 : utilisation des boundary " << get_method() << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
@@ -40,6 +47,21 @@ bool	Request::set_body(void)
 		std::string	final_boundary = "--" + boundary + "--";
 		if (_request.find(final_boundary) != std::string::npos)
 			return (true);
+		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
+		// ce type de support auto délimitant définit la longueur de transfert
+		std::string	boundary = content_type->second;
+
+		boundary = boundary.substr((boundary.find("=") + 1), boundary.find("\r\n"));
+		boundary = "--" + boundary + "--";
+		
+		// cout << boundary << endl;
+		// cout << _request.find(boundary) << endl;
+		// cout << _request << endl;
+
+		if(_request.find(boundary) == string::npos)
+			return (true);
+		get_content();
+		return (false);
 	}
 	return (false);
 };

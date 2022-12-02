@@ -22,7 +22,7 @@ class	Request
 		void								add_to_request(const char *, const ssize_t &);
 		bool								is_ready(void);
 		void								clear(void);
-
+	
 		const std::string					& get_request(void) const;
 		const std::string					& get_request_line(void) const;
 		const std::string					& get_method(void) const;
