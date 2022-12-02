@@ -9,7 +9,7 @@ static bool	method_allowed(const string &method)
 }
 
 // check if the uri is too long
-Bool Response::uri_too_long(void)
+bool Response::uri_too_long(void)
 {
     if (_request.uri.size() > 255)
         return (0);
@@ -35,7 +35,7 @@ bool		Response::check_request(void)
 		generate_error_page(405);
 		return (true);
 	}
-	if (hearders_check())
+	if (headers_check())
 	{
 		generate_error_page(400);
 		return (true);
