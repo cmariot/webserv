@@ -148,8 +148,18 @@ CLIENT			= add_to_request.cpp \
 RESPONSE		= constructor.cpp \
 				  create.cpp \
 				  destructor.cpp \
+				  expect_100_continue.cpp \
+				  generate_100_continue.cpp \
+				  generate_error_page.cpp \
+				  get_location.cpp \
 				  getters.cpp \
-				  update.cpp
+				  has_content.cpp \
+				  method_not_implemented.cpp \
+				  method_not_allowed.cpp \
+				  update.cpp \
+				  uri_too_long.cpp
+				  
+
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

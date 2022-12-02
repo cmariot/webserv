@@ -25,9 +25,28 @@ class Response
 
 		Request								_request;
 		Server								_server;
+		Location							_location;
+		bool								_no_location;
 		char * const *						_env;
 
+		std::string							_header;
+		std::string							_body;
 		std::string							_response;
+
+		// Update
+		int									get_location(void);
+
+		// Create
+		bool								uri_too_long(void) const;
+		bool								method_not_implemented(void) const;
+		bool 								method_not_allowed(void) const;
+		bool								expect_100_continue(void);
+		bool								has_content(void) const;
+		bool 						  		content_too_large(void) const;
+
+		// Error
+		void								generate_error_page(const int &);
+		void								generate_100_continue(void);
 
 };
 

@@ -31,6 +31,8 @@ class	Request
 		const std::string					& get_host(void) const;
 		const int							& get_port(void) const;
 		const std::pair<std::string, int>	& get_address(void) const;
+		const std::multimap<string, string> & get_header(void) const;
+		const bool							& has_body(void) const;
 
 	private:
 
@@ -42,6 +44,7 @@ class	Request
 		std::multimap<string, string>		_header;			// Map key/value
 		std::pair<std::string, int>			_address;			// Host:Port
 		size_t								_header_size;		// Request_line + Header
+		bool								_has_body;			// True if body in the request
 
 		int									set_request_line(size_t &);
 		int									set_method(size_t &);
@@ -52,7 +55,7 @@ class	Request
 		int									set_header(size_t &);
 		int									set_server_address(void);
 
-		bool								body_in_this_request(void) const;
+		bool								body_in_this_request(void);
 		bool								set_body(void);
 		bool								unchunk(void);
 

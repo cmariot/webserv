@@ -22,13 +22,16 @@ bool	Request::set_body(void)
 		// Chunk request
 		// Verif qu'on ait le chunk de taille 0 final
 		// Set un booleen sur _chunk = true
+
 		return (unchunk());
 	}
 
 	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
+		{
 			return (true);
+		}
 	}
 	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
 	{
@@ -44,6 +47,7 @@ bool	Request::set_body(void)
 		if (_request.find(final_boundary) != string::npos)
 		{
 			get_content();
+			// A FAIRE : _body_size = _request.size() - _header_size;
 			return (true);
 		}
 	}
@@ -52,12 +56,14 @@ bool	Request::set_body(void)
 
 // La présence d’un corps de message dans une demande est signalée par l’inclusion d’un champ d’en-tête
 // Content-Length ou Transfer-Encoding dans les en-têtes de message de la demande
-bool	Request::body_in_this_request(void) const
+bool	Request::body_in_this_request(void)
 {
-	if (_header.find("Content-Length") != _header.end())
+	if (_header.find("Content-Length") != _header.end() 
+		|| _header.find("Transfert-Encoding") != _header.end())
+	{
+		_has_body = true;
 		return (true);
-	else if (_header.find("Transfert-Encoding") != _header.end())
-		return (true);
+	}
 	else
 		return (false);
 };

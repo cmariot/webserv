@@ -48,7 +48,11 @@ static std::map<int, std::string> 	init_status_code_map(void)
 
 Response::Response(void) :
 	_status_code(0),
-	_status_code_map(init_status_code_map())
+	_status_code_map(init_status_code_map()),
+	_no_location(false),
+	_header(""),
+	_body(""),
+	_response("")
 {
 	return ;
 };
