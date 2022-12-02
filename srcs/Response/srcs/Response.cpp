@@ -44,7 +44,7 @@ static bool	method_allowed(const string &method)
 
 bool		Response::check_request(void)
 {
-	if(path_construction())
+	if(get_location() && path_construction())
 	{
 		generate_error_page(404);
 		return (true);
