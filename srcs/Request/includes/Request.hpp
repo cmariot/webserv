@@ -32,7 +32,7 @@ class	Request
 		const int							& get_port(void) const;
 		const std::pair<std::string, int>	& get_address(void) const;
 		const multimap<string, string>		& get_header(void) const;
-		const string 						& get_header_size(void) const;
+		const size_t 						& get_header_size(void) const;
 
 	private:
 
