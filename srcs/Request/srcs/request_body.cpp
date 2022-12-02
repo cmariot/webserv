@@ -23,12 +23,12 @@ bool	Request::body_isnot_complete(void)
 	
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
-	{
-		std::cout << "CAS 3 : utilisation des boundary" << std::endl;
-		if (content_length->second == itostring(_request.size() - _header_size))
-			return (true);
-	}
+	// else if (content_length != _header.end() && transfert_encoding == _header.end())
+	// {
+	// 	std::cout << "CAS 3 : utilisation des boundary" << std::endl;
+	// 	if (content_length->second == itostring(_request.size() - _header_size))
+	// 		return (true);
+	// }
 	else if (content_type != _header.end() && content_type->second.find("boundary") != std::string::npos)
 	{
 		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
