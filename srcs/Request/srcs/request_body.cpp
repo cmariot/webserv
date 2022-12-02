@@ -23,9 +23,9 @@ bool	Request::body_isnot_complete(void)
 	
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
 	{
-		std::cout << "CAS 3 : utilisation des boundary " << get_method() << std::endl;
+		std::cout << "CAS 3 : utilisation des boundary " <<  << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
