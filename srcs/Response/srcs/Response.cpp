@@ -35,25 +35,6 @@ void	Response::build_http_response(void)
 };
 
 
-// Check if methods allowed in the location
-int	Response::test_authorization(void)
-{
-	if (get_location())
-	{
-		generate_error_page(404);
-		return (1) ;
-	}
-	if (_request.get_method() == "GET" && _location.get_allowed())
-		return (0);
-	else if (_request.get_method() == "DELETE" && _location.delete_allowed())
-		return (0);
-	else if (_request.get_method() == "POST" && _location.post_allowed())
-		return (0);
-	set_status_code(403);
-	build_http_response();
-	return (1);
-}
-
 static bool	method_allowed(const string &method)
 {
 	if (method == "GET" || method == "POST" || method == "DELETE")
@@ -63,7 +44,7 @@ static bool	method_allowed(const string &method)
 
 bool		Response::check_request(void)
 {
-	if(build_path())
+	if(path_construction())
 	{
 		generate_error_page(404);
 		return (true);
@@ -73,6 +54,9 @@ bool		Response::check_request(void)
 		generate_error_page(405);
 		return (true);
 	}
+
+	return (false);
+
 }
 
 // main function used to send the response to the client
@@ -82,17 +66,17 @@ void	Response::create()
 	
 	if (check_request())
 		return ;
-	if (_request.get_method() == "GET")
+	else if (_request.get_method() == "GET")
 	{
 		get();
 	}
-	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
+	else if (_request.get_method()  == "POST" && _request.content.size())
 	{
 		_request.get_content();
 		print(INFO, "POST request about to be processed");
 		post();
 	}
-	else if (_request.get_method()  == "DELETE" && !test_authorization())
+	else if (_request.get_method()  == "DELETE" )
 	{
 		delet();
 	}
