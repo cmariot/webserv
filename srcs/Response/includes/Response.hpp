@@ -88,8 +88,8 @@ class Response
 		void					add_double_dot_link(void);
 		void					add_other_link(char d_name[256]);
 
-
-		bool						method_allowed(void);
+		bool 					check_access(void);
+		bool					method_allowed(void);
 		bool 					uri_too_long(void);
 		bool 					headers_check(void);
 		bool					check_request(void);
