@@ -24,6 +24,7 @@ bool	Request::is_ready(void)
 	}
 	if (body_in_this_request())
 	{
+		cout << endl << "ON EST LA  ??? " << endl;
 		if (body_isnot_complete())
 			return (false);
 	}
