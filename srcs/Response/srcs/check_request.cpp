@@ -42,12 +42,14 @@ bool 		Response::headers_check(void)
     return 0;
 }
 
-bool        Response::check_rights(void)
+// check if the rights are good for the file or directory
+bool        Response::check_access(void)
 {
     // add check for the rights of the file / directory
 
     return (0);
 }
+
 // check if the request is valid
 bool		Response::check_request(void)
 {
