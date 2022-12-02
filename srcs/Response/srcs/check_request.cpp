@@ -20,6 +20,7 @@ bool Response::uri_too_long(void)
 bool 		Response::headers_check(void)
 {
 	cout << _request.get_header().find("Host")->second << endl;
+    return 0;
 }
 
 // check if the request is valid
@@ -36,10 +37,7 @@ bool		Response::check_request(void)
 		return (true);
 	}
 	if (headers_check())
-	{
-		generate_error_page(400);
 		return (true);
-	}
 
 	return (false);
 
