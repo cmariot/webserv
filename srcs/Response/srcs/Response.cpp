@@ -58,6 +58,7 @@ int	Response::test_authorization(void)
 void	Response::create()
 {
 	print(INFO, "Creating the server's response");
+	cout << _request.get_method() << endl;
 	if (_request.get_method() == "GET")
 	{
 		get();
