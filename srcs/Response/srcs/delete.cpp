@@ -15,6 +15,8 @@ void    Response::delet(void)
         error("Error : while deleting the file", infile);
         print(ERR, "Error while deleting the file");
         print(ERR, "File not deleted");
+        set_status_code(500);
+
         generate_error_page(500);
         return ;
     }
