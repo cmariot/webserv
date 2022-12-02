@@ -17,6 +17,7 @@ using std::pair;
 using std::string;
 using std::endl;
 using std::max;
+using std::multimap;
 
 // error.cpp
 int			error(string);
