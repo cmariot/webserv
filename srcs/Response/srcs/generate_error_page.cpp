@@ -8,8 +8,8 @@ void	Response::generate_error_page(const int & error_code)
 
 	const std::string	code  = itostring(_status_code);
 	const std::string	message = _status_code_map.find(_status_code)->second;
-
-	_response_header = _request.get_http_version() + " " + code + " " + message + "\r\n\r\n";
+	const string 		content_length;
+	_response_header = _request.get_http_version() + " " + code + " " + message;
 
 	_response_body =  "<!DOCTYPE html>";
 	_response_body += "<html lang=\"en\">";
@@ -38,6 +38,8 @@ void	Response::generate_error_page(const int & error_code)
 	_response_body += 	"</body>";
 	_response_body += "</html>";
 
+	content_length = "\r\nContent-length:" + itostring(_response_body.size()) + "\r\n\r\n";
+	_full_response = _response_header + 
 	_full_response = _response_header + _response_body;
 
 	return ;
