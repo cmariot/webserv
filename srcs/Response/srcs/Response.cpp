@@ -34,44 +34,7 @@ void	Response::build_http_response(void)
 	_full_response = _response_header + _response_body;
 };
 
-// check if the method is allowed
-static bool	method_allowed(const string &method)
-{
-	if (method == "GET" || method == "POST" || method == "DELETE")
-		return (true);
-	return (false);
-}
 
-
-
-// check the differents headers errors
-bool 		Response::headers_check(void)
-{
-	cout << _request.get_header().find("Host")->second << endl;
-}
-
-// check if the request is valid
-bool		Response::check_request(void)
-{
-	if(get_location() && path_construction())
-	{
-		generate_error_page(404);
-		return (true);
-	}
-	if(method_allowed(_request.get_method()) == false)
-	{
-		generate_error_page(405);
-		return (true);
-	}
-	if (hearders_check())
-	{
-		generate_error_page(400);
-		return (true);
-	}
-
-	return (false);
-
-}
 
 // main function used to send the response to the client
 void	Response::create()
