@@ -25,9 +25,8 @@ bool	Request::set_body(void)
 		return (unchunk());
 	}
 
-	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
+	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
-		std::cout << "CAS 3 : content length is defined " << get_method() << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
@@ -35,28 +34,19 @@ bool	Request::set_body(void)
 	{
 		// Boundary
 		// A tester !!!
-		// On reccupere le boundary dans le header, on construit le final boundary et on cherche si il est dans le requete
-		// std::string	boundary = content_type->second.substr(content_type->second.find("boundary=") + 9,
-		// 													content_type->second.size() - (content_type->second.find("boundary=") + 9));
-		// std::string	final_boundary = "--" + boundary + "--";
-		// if (_request.find(final_boundary) != std::string::npos)
-		// 	return (true);
-		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
-		// ce type de support auto délimitant définit la longueur de transfert
-		std::string	boundary = content_type->second;
+		std::string		content_type_value;
+		std::string		boundary;
+		std::string		final_boundary;
 
-		boundary = boundary.substr((boundary.find("=") + 1), boundary.find("\r\n"));
-		boundary = "--" + boundary + "--";
-		
-		// cout << boundary << endl;
-		// cout << _request.find(boundary) << endl;
-		// cout << _request << endl;
-
-		if(_request.find(boundary) == string::npos)
+		content_type_value = content_type->second;
+		boundary = content_type_value.substr((content_type_value.find("boundary=") + 9), std::string::npos);
+		final_boundary = "--" + boundary + "--";
+		if (_request.find(final_boundary) != string::npos)
+		{
+			get_content();
 			return (true);
-		return (false);
+		}
 	}
-	get_content();
 	return (false);
 };
 
