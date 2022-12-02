@@ -46,13 +46,13 @@ void	Response::create()
 	{
 		get();
 	}
-	else if (_request.get_method()  == "POST" && !test_authorization() && _request.content.size())
+	else if (_request.get_method()  == "POST" && _request.content.size())
 	{
 		_request.get_content();
 		print(INFO, "POST request about to be processed");
 		post();
 	}
-	else if (_request.get_method()  == "DELETE" && !test_authorization())
+	else if (_request.get_method()  == "DELETE")
 	{
 		delet();
 	}
