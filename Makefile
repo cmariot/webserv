@@ -133,7 +133,8 @@ REQUEST			= constructor.cpp \
 				  modifiers.cpp \
 				  request_body.cpp \
 				  request_header.cpp \
-				  request_line.cpp
+				  request_line.cpp	\
+				  get_content.cpp
 
 
 CLIENT			= add_to_request.cpp \
