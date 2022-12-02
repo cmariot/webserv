@@ -34,7 +34,7 @@ bool	Request::body_isnot_complete(void)
 		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
 		// ce type de support auto délimitant définit la longueur de transfert
 		std::string	boundary = content_type->second;
-		std::cout << boundary << std::endl;
+		cout << boundary << endl;
 		get_content();
 		return (false);
 	}
