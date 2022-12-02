@@ -20,7 +20,7 @@ bool	Request::is_ready(void)
 	if (body_in_this_request())
 	{
 		// cout << endl << "ON EST LA  ??? " << endl;
-		if (body_isnot_complete())
+		if (set_body())
 			return (false);
 		// cout << endl << "ON EST LA  ??? " << endl;
 
