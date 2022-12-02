@@ -33,7 +33,7 @@ bool	Request::body_isnot_complete(void)
 		std::string	boundary = content_type->second;
 		std::cout << boundary << std::endl;
 		get_content();
-		// return (get_content);
+		return (true);
 	}
 	return (false);
 };
