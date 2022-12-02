@@ -11,7 +11,7 @@ static bool	method_allowed(const string &method)
 // check if the uri is too long
 bool Response::uri_too_long(void)
 {
-    if (_request.uri.size() > 255)
+    if (_request.get_uri().size() > 255)
         return (0);
     return (1);
 }
