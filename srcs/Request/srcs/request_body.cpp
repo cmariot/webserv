@@ -33,7 +33,7 @@ bool	Request::set_body(void)
 	}
 	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
 	{
-		std::cout << "CAS 3 : utilisation des boundary " << get_method() << std::endl;
+		std::cout << "CAS 3 : content length is defined " << get_method() << std::endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
