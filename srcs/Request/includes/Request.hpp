@@ -42,21 +42,18 @@ class	Request
 		std::multimap<string, string>		_header;			// Map key/value
 		std::pair<std::string, int>			_address;			// Host:Port
 		size_t								_header_size;		// Request_line + Header
-		std::string							_body;				// Request body
-
-		bool								_header_is_ready;
-		bool								_body_is_ready;
 
 		int									set_request_line(size_t &);
 		int									set_method(size_t &);
 		int 								set_uri(size_t &);
 		int									set_http_version(size_t &);
+
+		bool								header_in_this_request(size_t &);
 		int									set_header(size_t &);
 		int									set_server_address(void);
 
-		int									interpret(void);
 		bool								body_in_this_request(void) const;
-		bool								body_isnot_complete(void);
+		bool								set_body(void);
 		bool								unchunk(void);
 
 	public:

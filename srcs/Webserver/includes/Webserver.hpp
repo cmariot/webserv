@@ -26,11 +26,11 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define MAX_EVENTS		20
+# define MAX_EVENTS		500
 # define SIGNAL_CAUGHT	1
 # define READY			1
 # define INFO			0
-# define BUFFER_SIZE	4096
+# define BUFFER_SIZE	20
 
 using std::string;
 using std::cout;

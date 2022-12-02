@@ -11,28 +11,35 @@ bool	Request::unchunk(void)
 };
 
 // Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
-bool	Request::body_isnot_complete(void)
+bool	Request::set_body(void)
 {
-	std::multimap<string, string>::iterator	transfert_encoding = _header.find("Transfert-Encoding");
-	std::multimap<string, string>::iterator	content_length = _header.find("Content-Length");
-	std::multimap<string, string>::iterator	content_type = _header.find("Content-Type");
+	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfert-Encoding");
+	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
+	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity")
+	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity") // (CAS 2 PDF)
 	{
+		// Chunk request
+		// Verif qu'on ait le chunk de taille 0 final
+		// Set un booleen sur _chunk = true
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfert_encoding == _header.end()) // (CAS 3 PDF)
 	{
+		// Known length
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
-	else if (content_type != _header.end() && content_type->second.find("boundary") != std::string::npos)
+	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
 	{
-		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
-		// ce type de support auto délimitant définit la longueur de transfert
-		std::string	boundary = content_type->second;
-		std::cout << boundary << std::endl;
-		// return (get_content);
+		// Boundary
+		// A tester !!!
+		// On reccupere le boundary dans le header, on construit le final boundary et on cherche si il est dans le requete
+		std::string	boundary = content_type->second.substr(content_type->second.find("boundary=") + 9,
+															content_type->second.size() - (content_type->second.find("boundary=") + 9));
+		std::string	final_boundary = "--" + boundary + "--";
+		if (_request.find(final_boundary) != std::string::npos)
+			return (true);
 	}
 	return (false);
 };

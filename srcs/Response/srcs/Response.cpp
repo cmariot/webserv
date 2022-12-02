@@ -74,6 +74,4 @@ void	Response::create()
 		set_status_code(501);
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
-
-	print(INFO, "The response is going to be sent to the client");
 };

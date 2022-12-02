@@ -68,7 +68,7 @@ int	Request::set_header(size_t & i)
 		value = line.substr(key_len + 2, (line_len - key_len + 2));
 		_header.insert(std::pair<std::string, std::string>(key, value));
 		i += line_len + 2;
-		if (_request[i] == '\r' && _request[i + 1] == '\n')
+		if (i + 1 < _request.size() && _request[i] == '\r' && _request[i + 1] == '\n')
 		{
 			_header_size = i + 2;
 			set_server_address();
@@ -76,4 +76,11 @@ int	Request::set_header(size_t & i)
 		}
 	}
 	return (1);
+};
+
+bool	Request::header_in_this_request(size_t & i)
+{
+	if (i + 1 <= _request.size() && _request[i] == '\r' && _request[i + 1] == '\n')
+		return (false);
+	return (true);
 };
