@@ -40,11 +40,8 @@ bool	Request::body_isnot_complete(void)
 		cout << boundary << endl;
 		cout << _request.find(boundary) << endl;
 		cout << _request << endl;
-		if(_request.find(boundary) == std::string::npos)
-		{
-			cout << "Il y a le boundary" << endl;
+		if(_request.find(boundary) != std::string::npos)
 			return (true);
-		}
 		get_content();
 		return (false);
 	}
