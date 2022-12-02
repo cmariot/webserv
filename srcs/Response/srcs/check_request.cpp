@@ -68,7 +68,7 @@ bool		Response::check_request(void)
         generate_error_page(501);
     	return (true);
 	}
-    if(method_allowed() == false)
+    if(method_allowed())
     {
         generate_error_page(405);
         return (true);
