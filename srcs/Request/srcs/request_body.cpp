@@ -32,7 +32,7 @@ bool	Request::body_isnot_complete(void)
 		// ce type de support auto délimitant définit la longueur de transfert
 		std::string	boundary = content_type->second;
 		std::cout << boundary << std::endl;
-		get_body_content();
+		get_content();
 		// return (get_content);
 	}
 	return (false);
