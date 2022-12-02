@@ -35,7 +35,7 @@ bool	Request::body_isnot_complete(void)
 		// ce type de support auto délimitant définit la longueur de transfert
 		std::string	boundary = content_type->second;
 
-		boundary = boundary.substr((boundary.find("=") + 1), boundary.find("\r\n"));
+		boundary = boundary.substr((boundary.find("=") + 1), boundary.find("\n"));
 		boundary = "--" + boundary + "--";
 		if(_request.find(boundary) != std::string::npos)
 			return (true);
