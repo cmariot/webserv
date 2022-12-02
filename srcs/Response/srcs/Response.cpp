@@ -46,7 +46,7 @@ void	Response::create()
 	{
 		get();
 	}
-	else if (_request.get_method()  == "POST" && _request.content.size())
+	else if (_request.get_method()  == "POST")
 	{
 		_request.get_content();
 		print(INFO, "POST request about to be processed");
@@ -56,8 +56,7 @@ void	Response::create()
 	{
 		delet();
 	}
-	else
-		set_status_code(501);
+
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
 };
