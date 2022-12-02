@@ -42,11 +42,11 @@ bool	Request::set_body(void)
 		// Boundary
 		// A tester !!!
 		// On reccupere le boundary dans le header, on construit le final boundary et on cherche si il est dans le requete
-		std::string	boundary = content_type->second.substr(content_type->second.find("boundary=") + 9,
-															content_type->second.size() - (content_type->second.find("boundary=") + 9));
-		std::string	final_boundary = "--" + boundary + "--";
-		if (_request.find(final_boundary) != std::string::npos)
-			return (true);
+		// std::string	boundary = content_type->second.substr(content_type->second.find("boundary=") + 9,
+		// 													content_type->second.size() - (content_type->second.find("boundary=") + 9));
+		// std::string	final_boundary = "--" + boundary + "--";
+		// if (_request.find(final_boundary) != std::string::npos)
+		// 	return (true);
 		std::cout << "CAS 4 : utilisation des boundary" << std::endl;
 		// ce type de support auto délimitant définit la longueur de transfert
 		std::string	boundary = content_type->second;
