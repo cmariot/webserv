@@ -31,7 +31,7 @@ bool	Request::set_body(void)
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
 	}
-	else if (content_type != _header.end() && content_type->second.find("multipart/") != std::string::npos) // (CAS 4 PDF)
+	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
 	{
 		// Boundary
 		// A tester !!!
@@ -54,9 +54,9 @@ bool	Request::set_body(void)
 
 		if(_request.find(boundary) == string::npos)
 			return (true);
-		get_content();
 		return (false);
 	}
+	get_content();
 	return (false);
 };
 
