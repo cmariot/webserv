@@ -3,7 +3,7 @@
 void	Response::create(void)
 {
 	if (_no_location)
-		return (generate_error_page(404));
+		return (generate_error_page(400));
 	if (uri_too_long())
 		return (generate_error_page(414));
 	if (method_not_implemented())

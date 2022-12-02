@@ -26,7 +26,7 @@ bool	Request::set_body(void)
 		return (unchunk());
 	}
 
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfert_encoding == _header.end() && get_method() != "POST")
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
 		{

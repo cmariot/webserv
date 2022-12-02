@@ -13,10 +13,9 @@ class Response
 		Response(void);
 		~Response(void);
 
-		void	update(Request &, Server &, char * const *);
-		void	create(void);
-
-		const std::string	& get_response(void) const;
+		void								update(Request &, Server &, char * const *);
+		void								create(void);
+		const std::string &					get_response(void) const;
 
 	private:
 

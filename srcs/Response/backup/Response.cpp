@@ -35,6 +35,7 @@ void	Response::build_http_response(void)
 };
 
 
+<<<<<<< HEAD:srcs/Response/backup/Response.cpp
 // Check if methods allowed in the location
 int	Response::test_authorization(void)
 {
@@ -54,25 +55,34 @@ int	Response::test_authorization(void)
 	return (1);
 }
 
+=======
+>>>>>>> d43fe919a4fa1de27050bbf9b7c808933b13712d:srcs/Response/srcs/Response.cpp
 // main function used to send the response to the client
 void	Response::create()
 {
 	print(INFO, "Creating the server's response");
+	
+	if (check_request())
+		return ;
 	if (_request.get_method() == "GET")
 	{
 		get();
 	}
+<<<<<<< HEAD:srcs/Response/backup/Response.cpp
 	else if (_request.get_method()  == "POST" && !test_authorization())
+=======
+	else if (_request.get_method()  == "POST")
+>>>>>>> d43fe919a4fa1de27050bbf9b7c808933b13712d:srcs/Response/srcs/Response.cpp
 	{
+		_request.get_content();
 		print(INFO, "POST request about to be processed");
 		post();
 	}
-	else if (_request.get_method()  == "DELETE" && !test_authorization())
+	else if (_request.get_method()  == "DELETE")
 	{
 		delet();
 	}
-	else
-		set_status_code(501);
+
 	build_http_response();
 	// print(INFO, ("Response =\n" + _full_response).c_str());
 };

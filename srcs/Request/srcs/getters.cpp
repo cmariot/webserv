@@ -49,3 +49,8 @@ const bool &	Request::has_body(void) const
 {
 	return (_has_body);
 };
+
+const size_t 		& Request::get_header_size(void) const
+{
+	return (_header_size);
+};

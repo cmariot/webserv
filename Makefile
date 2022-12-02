@@ -158,8 +158,6 @@ RESPONSE		= constructor.cpp \
 				  method_not_allowed.cpp \
 				  update.cpp \
 				  uri_too_long.cpp
-				  
-
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
