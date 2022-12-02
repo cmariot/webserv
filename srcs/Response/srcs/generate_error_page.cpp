@@ -8,7 +8,7 @@ void	Response::generate_error_page(const int & error_code)
 
 	const std::string	code  = itostring(_status_code);
 	const std::string	message = _status_code_map.find(_status_code)->second;
-	const string 		content_length;
+	string 		content_length;
 	_response_header = _request.get_http_version() + " " + code + " " + message;
 
 	_response_body =  "<!DOCTYPE html>";
