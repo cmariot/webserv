@@ -35,30 +35,6 @@ void	Response::build_http_response(void)
 };
 
 
-
-
-static bool	method_allowed(const string &method)
-{
-	if (method == "GET" || method == "POST" || method == "DELETE")
-		return (true);
-	return (false);
-}
-
-bool		Response::check_request(void)
-{
-	if(build_path())
-	{
-		generate_error_page(404);
-		return (true);
-	}
-	if(method_allowed(_request.get_method()) == false)
-	{
-		generate_error_page(405);
-		return (true);
-	}
-
-}
-
 // main function used to send the response to the client
 void	Response::create()
 {
