@@ -38,6 +38,7 @@ bool	Request::body_isnot_complete(void)
 		boundary = boundary.substr((boundary.find("=") + 1), boundary.find("\r\n"));
 		boundary = "--" + boundary + "--";
 		cout << boundary << endl;
+		cout << _request.find(boundary) << endl;
 		if(_request.find(boundary) != std::string::npos)
 			return (true);
 		get_content();
