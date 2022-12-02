@@ -19,10 +19,8 @@ bool	Request::is_ready(void)
 	}
 	if (body_in_this_request())
 	{
-		// cout << endl << "ON EST LA  ??? " << endl;
 		if (set_body())
 			return (false);
-		// cout << endl << "ON EST LA  ??? " << endl;
 
 	}
 	return (true);
