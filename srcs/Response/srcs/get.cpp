@@ -1,13 +1,54 @@
 #include "Response.hpp"
 
+static bool	is_a_dir(const std::string & path)
+{
+	struct stat	path_stat;
+
+	bzero(&path_stat, sizeof(path_stat));
+	stat(path.c_str(), &path_stat);
+	return (S_ISDIR(path_stat.st_mode));
+};
+
+static	bool	is_a_file(const std::string & path)
+{
+	struct stat path_stat;
+
+	bzero(&path_stat, sizeof(path_stat));
+	if (stat(path.c_str(), &path_stat) != 0)
+		return (false);
+	return (S_ISREG(path_stat.st_mode));
+};
+
+static bool	get_file(const std::string & path, std::string & file_content)
+{
+	std::ifstream	file;
+	string			buf;
+
+	file.open(path.c_str(), std::ios::in);
+	if (file.is_open() == false)
+		return (false);
+	while (!file.eof())
+	{
+		getline(file, buf);
+		file_content += buf;
+	}
+	file.close();
+	return (true);
+};
+
 void	Response::generate_file_response(void)
 {
-	//_status_code = 415;
-	//const std::string	message = _status_code_map.find(_status_code)->second;
-	//_response_header = _request.get_http_version() + " 415 " + message + "\r\n\r\n";
-	//_response_body = _location.get_directory_file();
-	//_full_response = _response_header + _response_body;
-	return ;
+	if (get_file(_path, _body))
+	{
+		const int			& status_code	= 200;
+		const std::string	& code			= itostring(status_code);
+
+		_header  = _request.get_http_version() + " " + code + " " + _status_code_map.find(status_code)->second + "\r\n";
+		_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
+		_response = _header + _body;
+	}
+	else
+		return (generate_error_page(404));
 };
 
 void	Response::generate_cgi_response(void)
@@ -65,24 +106,40 @@ bool	Response::is_forbidden(void) const
 	return (false);
 };
 
-bool	Response::construct_path(void)
+bool	Response::file_not_found(void)
 {
-	return (false);
+	_path = _request.get_uri();
+	_path.replace(0, _location.get_uri().size(), _location.root());
+	if (is_a_file(_path))
+		return (false);	 /* (￣o￣) zzZZzzZZ */
+	for (size_t i = 0 ; i < _location.index().size() ; ++i)
+	{
+		std::string test_path = _path + _location.index()[i];
+		if (is_a_file(test_path))
+		{
+			_path = test_path;
+			return (false);
+		}
+	}
+	if (is_a_dir(_path))
+		return (false);
+	return (true);
 };
 
 void	Response::generate_redirection(void)
 {
-	//_status_code = _location.get_redirection_code();
-	//const std::string	code  = itostring(_status_code);
-	//_response_header = _request.get_http_version() + " " + code + " " + _status_code_map.find(_status_code)->second + "\r\n";
-	//_response_header += "Location: " + _location.get_redirection_path() + "\r\n\r\n";
-	//_response_body = "";
-	//_full_response = _response_header + _response_body;
+	const int			& status_code	= _location.get_redirection_code();
+	const std::string	& code			= itostring(status_code);
+
+	_response  = _request.get_http_version() + " " + code + " " + _status_code_map.find(status_code)->second + "\r\n";
+	_response += "Location: " + _location.get_redirection_path() + "\r\n\r\n";
 	return ;
 };
 
 bool	Response::redirection(void) const
 {
+	if (_location.redirection())
+		return (true);
 	return (false);
 };
 
@@ -90,11 +147,11 @@ void    Response::get_method(void)
 {
 	if (redirection())
         return (generate_redirection());
-	if (construct_path())
+	if (file_not_found())
 		return (generate_error_page(404));
-	if (is_forbidden())
+	else if (is_forbidden())
          return (generate_error_page(403));
-    if (is_a_directory())
+	else if (is_a_directory())
 	{
 		if (directory_file_set())
 			return (generate_directory_file());
@@ -105,5 +162,6 @@ void    Response::get_method(void)
 	}
 	if (use_cgi())
 		return (generate_cgi_response());
-	return (generate_file_response());
+	else
+		return (generate_file_response());
 };

@@ -5,6 +5,8 @@
 # include "Request.hpp"
 # include "Server.hpp"
 
+# include <sys/stat.h>
+
 class Response
 {
 
@@ -32,12 +34,10 @@ class Response
 		std::string							_body;
 		std::string							_response;
 
+		std::string							_path;
+
 		// Update
 		int									get_location(void);
-
-		void								get_method(void);
-		void								post_method(void);
-		void								delete_method(void);
 
 		// Create
 		bool								uri_too_long(void) const;
@@ -49,23 +49,28 @@ class Response
 		bool 						  		content_too_large(void) const;
 		bool								request_block_not_ok(void) const;
 
+		// Methods
+		void								get_method(void);
+		void								post_method(void);
+		void								delete_method(void);
+
 		// Get
 		bool								redirection(void) const;
-		void								generate_redirection(void);
-		bool								construct_path(void);
+		bool								file_not_found(void);
 		bool								is_forbidden(void) const;
 		bool								is_a_directory(void) const;
 		bool								directory_file_set(void) const;
-		void								generate_directory_file(void);
 		bool								directory_listing_set(void) const;
-		void								generate_directory_list(void);
 		bool								use_cgi(void) const;
-		void								generate_cgi_response(void);
-		void								generate_file_response(void);
 
-		// Error
+		// Generate
 		void								generate_error_page(const int &);
 		void								generate_100_continue(void);
+		void								generate_redirection(void);
+		void								generate_directory_file(void);
+		void								generate_directory_list(void);
+		void								generate_cgi_response(void);
+		void								generate_file_response(void);
 
 };
 
