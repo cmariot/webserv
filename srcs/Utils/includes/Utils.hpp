@@ -1,5 +1,6 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
+#include "Webserver.hpp"
 
 # define INFO 0
 # define ERR 1
