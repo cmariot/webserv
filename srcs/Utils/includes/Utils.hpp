@@ -1,6 +1,5 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
-#include "Webserver.hpp"
 
 # define INFO 0
 # define ERR 1
@@ -9,6 +8,8 @@
 # include <vector>
 # include <map>
 # include <set>
+# include <sys/stat.h>
+# include <sys/types.h>
 
 using std::map;
 using std::set;
