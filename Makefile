@@ -95,7 +95,8 @@ UTILS			= error.cpp \
 				  print.cpp \
 				  itostring.cpp \
 				  only_digit.cpp \
-				  set_ip_and_port.cpp
+				  set_ip_and_port.cpp \
+				  check_file_RWrights.cpp
 
 SERVER			= constructor.cpp \
 				  parse.cpp \

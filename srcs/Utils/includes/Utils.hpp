@@ -8,6 +8,8 @@
 # include <vector>
 # include <map>
 # include <set>
+# include <sys/stat.h>
+# include <sys/types.h>
 
 using std::map;
 using std::set;
@@ -30,13 +32,16 @@ bool		no_semicolon(std::vector<string> &, size_t &);
 // set_ip_and_port.hpp
 size_t		ft_atoi(string str);
 size_t		set_port(string port);
-string	set_ip(string ip);
+string	    set_ip(string ip);
 
 // print.cpp
 void		print(int, const char *);
 void		print(int code, const char *, const char *);
 
-string	itostring(int);
+string	    itostring(int);
 bool		only_digit(string str);
+
+// check rights
+bool	check_file_rights(string	&path);
 
 #endif

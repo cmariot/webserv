@@ -26,6 +26,13 @@ void    Response::post_method(void)
 //
 //		infile = folder + infile;
 //		cout << "file about to be added :" << infile << endl;
+//      if (!check_file_rights(infile))
+//      {
+//          print(ERR, "The user can't open the file : Permission denied"); 
+//          print(ERR, "Files not uploaded");
+//          generate_error_page(403);
+//          return();
+//       }  
 //		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 //		if (fout.is_open() == false)
 //		{
@@ -40,6 +47,6 @@ void    Response::post_method(void)
 //		i++;
 //	}
 //	set_status_code(201);
-//	_full_response = "HTTP/1.1 201 Created\r\n\r\n Created";
+//	_full_response = "HTTP/1.1 201 Created\r\n\r\n ";
 //	print(INFO, "Files were succesfully uploaded to the server");
 }
