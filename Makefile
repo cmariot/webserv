@@ -152,6 +152,7 @@ RESPONSE		= constructor.cpp \
 				  destructor.cpp \
 				  expect_100_continue.cpp \
 				  generate_100_continue.cpp \
+				  generate_cgi_response.cpp \
 				  generate_error_page.cpp \
 				  get.cpp \
 				  get_location.cpp \

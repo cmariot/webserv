@@ -60,6 +60,7 @@ class	Server
 		const std::pair<string, int> &		get_address(void)		const;
 		const string &						get_host(void)			const;
 		const int &							get_port(void)			const;
+		const bool &						error_pages_set(void)	const;
 		const std::set<string> &			get_server_names(void)	const;
 		const double &						get_max_size(void)		const;
 		const std::map<int, Error_page> &	get_error_pages(void)	const;

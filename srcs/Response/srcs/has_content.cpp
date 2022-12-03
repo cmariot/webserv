@@ -11,9 +11,8 @@ bool Response::content_too_large(void) const
 
 	if (max_size != 0)
 	{
-		// Depend de la taille du body de la requete. avant ou apres modifs ?
-		//if (_request.get_body_size() >= max_size)
-		//	return (true);
+		if (_request.get_request().size() - _request.get_header_size() >= max_size)
+			return (true);
 	}
 	return (false);	
 }

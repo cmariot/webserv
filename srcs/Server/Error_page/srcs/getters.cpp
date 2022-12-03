@@ -20,6 +20,11 @@ const int &	Error_page::get_changed_code(void) const
 	return (_changed_response);
 };
 
+const std::string & Error_page::get_error_page_content(void) const
+{
+	return (_file_content);
+};
+
 const std::string &	Error_page::get_path(void) const
 {
 	return (_path);

@@ -22,5 +22,6 @@ int	Client::create_response(const std::vector<Server> & servers, char * const *e
 	_response.update(_request, _server, env);
 	_response.main_create();
 	_request.clear();
+	std::cout << _response.get_response() << std::endl;
 	return (0);
 };

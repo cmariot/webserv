@@ -25,6 +25,11 @@ const double &	Server::get_max_size(void)	const
 	return (_client_max_body_size);
 };
 
+const bool &	Server::error_pages_set(void)	const
+{
+	return (error_page_set);
+};
+
 const std::map<int, Error_page> &	Server::get_error_pages(void)	const
 {
 	return (_error_pages);

@@ -4,6 +4,25 @@
 
 void	Response::generate_error_page(const int & error_code)
 {
+	const std::map<int, Error_page>::const_iterator it = _server.get_error_pages().find(error_code);
+
+	if (_server.error_pages_set() && it != _server.get_error_pages().end())
+	{
+		const Error_page error_page = it->second;
+
+		_status_code = error_code;
+		if (error_page.change_response() && error_page.specified_response())
+			_status_code = error_page.get_changed_code();
+
+		const std::string	code  = itostring(_status_code);
+		const std::string	message = _status_code_map.find(_status_code)->second;
+		_header  = _request.get_http_version() + " " + code + " " + message + "\r\n";
+		_body    = error_page.get_error_page_content();
+		_header += "Content-length:" + itostring(_body.size()) + "\r\n\r\n";
+		_response = _header + _body;
+		return ;
+	}
+
 	_status_code = error_code;
 
 	const std::string	code  = itostring(_status_code);

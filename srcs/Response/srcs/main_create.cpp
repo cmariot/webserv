@@ -16,7 +16,7 @@ void	Response::main_create(void)
 		return (generate_100_continue());
 	if (has_content())
 	{
-		// decoder ici
+		// decoder ici ?
 		if (content_too_large()) // Voir taille body
 			return (generate_error_page(413));
 		// if (content_type_not_accepted())

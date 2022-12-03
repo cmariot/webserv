@@ -6,6 +6,13 @@
 # include "Server.hpp"
 
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <unistd.h>
+# include <sstream>
+# include <iterator>
+
+# define BUFFER_SIZE 4096
 
 class Response
 {
@@ -61,6 +68,10 @@ class Response
 		bool								is_a_directory(void) const;
 		bool								directory_file_set(void) const;
 		bool								directory_listing_set(void) const;
+		int									directory_listing_body(void);
+		const std::string 					add_dot_link(void);
+		const std::string 					add_double_dot_link(void);
+		const std::string 					add_other_link(char d_name[256]);
 		bool								use_cgi(void) const;
 
 		// Generate
@@ -69,7 +80,7 @@ class Response
 		void								generate_redirection(void);
 		void								generate_directory_file(void);
 		void								generate_directory_list(void);
-		void								generate_cgi_response(void);
+		int									generate_cgi_response(void);
 		void								generate_file_response(void);
 
 };

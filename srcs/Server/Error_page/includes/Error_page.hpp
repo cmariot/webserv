@@ -25,6 +25,7 @@ class	Error_page
 		const bool &		specified_response(void) const;
 		const int &			get_changed_code(void) const;
 		const std::string &	get_path(void) const;
+		const std::string & get_error_page_content(void) const;
 
 		int					get_file(void);
 
