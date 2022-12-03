@@ -11,4 +11,5 @@ bool	check_file_rights(string	&path)
 		else
 			return (false);
 	}
+    return (false);
 }

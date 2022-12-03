@@ -28,7 +28,7 @@ void    Response::post_method(void)
 //		cout << "file about to be added :" << infile << endl;
 //      if (!check_file_rights(infile))
 //      {
-//          print(ERR, "The user does not have the rights to read/write in the upload folder"); 
+//          print(ERR, "The user can't open the file : Permission denied"); 
 //          print(ERR, "Files not uploaded");
 //          generate_error_page(403);
 //          return();
