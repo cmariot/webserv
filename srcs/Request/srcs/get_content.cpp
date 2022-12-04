@@ -46,6 +46,7 @@ int Request::get_body_content(size_t i)
 	pos = content[i].find("\r\n");
 	pos = pos + 3;
 
+	cout << "boundary :" <<boundary << endl;
 	pos2 = content[i].find(boundary, pos);
 	cout << "pos2 = " << pos2 << endl;
 	cout << "pos = " << pos << endl;
