@@ -41,20 +41,14 @@ int Request::get_content_type(size_t i)
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
-	size_t 		pos2;
 	// degueu mais fonctionnel
 	pos = content[i].find("\r\n");
 	pos = pos + 3;
 
-	cout << "boundary :" <<boundary << endl;
-	pos2 = content[i].find(boundary, pos);
-	cout << "content :" << content[i] << endl;
-	cout << "pos2 = " << pos2 << endl;
-	cout << "pos = " << pos << endl;
 	if (pos != std::string::npos)
 	{
 		body_content.push_back("");
-		while (pos != pos2 && pos2 != std::string::npos)
+		while (pos < content[i].size())
 		{
 			body_content[i] += content[i][pos++];
 		}
