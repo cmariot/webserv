@@ -41,7 +41,7 @@ int Request::get_content_type(size_t i)
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
-	// degueu mais fonctionnel
+	
 	pos = content[i].find("\r\n");
 	pos = content[i].find("\r\n", ++pos);
 	pos = pos + 4;
