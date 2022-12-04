@@ -48,6 +48,7 @@ int Request::get_body_content(size_t i)
 
 	cout << "boundary :" <<boundary << endl;
 	pos2 = content[i].find(boundary, pos);
+	cout << "content :" << content[i] << endl;
 	cout << "pos2 = " << pos2 << endl;
 	cout << "pos = " << pos << endl;
 	if (pos != std::string::npos)
