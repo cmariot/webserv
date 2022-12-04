@@ -31,7 +31,7 @@ void    Response::post_method(void)
          print(ERR, "The user can't open the file : Permission denied"); 
          print(ERR, "Files not uploaded");
          generate_error_page(403);
-         return();
+         return;
       }  
 		fout.open(infile.c_str(), std::ios::out | std::ios::app);
 		if (fout.is_open() == false)
