@@ -26,7 +26,7 @@ void    Response::post_method(void)
 
 		infile = folder + infile;
 		cout << "file about to be added :" << infile << endl;
-     if (!check_file_rights(infile))
+     if (is_file(infile) &&!check_file_rights(infile))
      {
          print(ERR, "The user can't open the file : Permission denied"); 
          print(ERR, "Files not uploaded");
