@@ -47,6 +47,8 @@ int Request::get_body_content(size_t i)
 	pos = pos + 3;
 
 	pos2 = content[i].find("\r\n", pos);
+	cout << "pos2 = " << pos2 << endl;
+	cout << "pos = " << pos << endl;
 	if (pos != std::string::npos)
 	{
 		body_content.push_back("");
