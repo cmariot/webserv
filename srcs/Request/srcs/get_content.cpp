@@ -54,7 +54,7 @@ int Request::get_body_content(size_t i)
 		}
 	}
 	cout << "size : "<<content[i].size() << endl;
-	// cout << body_content[i] << endl;
+	cout << body_content[i] << endl;
 	return (0);
 };
 
