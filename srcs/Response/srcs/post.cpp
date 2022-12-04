@@ -46,5 +46,7 @@ void    Response::post_method(void)
 		fout.close();
 		i++;
 	}
+	generate_error_page(201);
+
 	print(INFO, "Files were succesfully uploaded to the server");
 }

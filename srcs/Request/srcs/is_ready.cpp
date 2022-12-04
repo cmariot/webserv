@@ -13,7 +13,7 @@ bool	Request::is_ready(void)
 			return (false);
 		if (body_in_this_request())
 		{
-			if (set_body())
+			if (body_is_ready())
 				return (false);
 		}
 	}

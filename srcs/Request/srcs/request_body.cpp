@@ -11,7 +11,7 @@ bool	Request::unchunk(void)
 };
 
 // Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
-bool	Request::set_body(void)
+bool	Request::body_is_ready(void)
 {
 	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfert-Encoding");
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
@@ -28,11 +28,9 @@ bool	Request::set_body(void)
 
 	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
-		cout << "on bloque pas la" << endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 		{
-			cout << "on  rentre ici" << endl;
-			return (true);	
+			return (false);	
 		}
 	}
 	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
@@ -53,7 +51,9 @@ bool	Request::set_body(void)
 			return (true);
 		}
 	}
-	return (false);
+	else
+		return (false);
+	return (true);
 };
 
 // La présence d’un corps de message dans une demande est signalée par l’inclusion d’un champ d’en-tête

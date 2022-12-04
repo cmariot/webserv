@@ -57,7 +57,7 @@ class	Request
 		int									set_server_address(void);
 
 		bool								body_in_this_request(void);
-		bool								set_body(void);
+		bool								body_is_ready(void);
 		bool								unchunk(void);
 
 	public:
