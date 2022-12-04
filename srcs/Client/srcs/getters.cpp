@@ -24,4 +24,3 @@ std::pair<std::string, int>	Client::get_address(void) const
 {
 	return (_server.get_address());
 };
-

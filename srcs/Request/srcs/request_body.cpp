@@ -7,11 +7,11 @@ bool	Request::unchunk(void)
 	// codage fragmente voir 3.6
 	// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
 	// it and the CGI will expect EOF as end of the body.
-	return (false);
+	return (true);
 };
 
 // Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
-bool	Request::set_body(void)
+bool	Request::body_is_ready(void)
 {
 	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfert-Encoding");
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
@@ -25,13 +25,10 @@ bool	Request::set_body(void)
 
 		return (unchunk());
 	}
-
 	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
-		{
 			return (true);
-		}
 	}
 	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
 	{
@@ -46,11 +43,13 @@ bool	Request::set_body(void)
 		final_boundary = "--" + boundary + "--";
 		if (_request.find(final_boundary) != string::npos)
 		{
-			get_content();
+			//get_content();
 			// A FAIRE : _body_size = _request.size() - _header_size;
 			return (true);
 		}
 	}
+	else
+		return (true);
 	return (false);
 };
 
