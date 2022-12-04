@@ -2,7 +2,7 @@
 
 void    Response::post_method(void)
 {
-   get_content();
+   _request.get_content();
    size_t i = 0;
 
 	string folder = "." + _location.get_upload_path();
