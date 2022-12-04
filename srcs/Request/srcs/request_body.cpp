@@ -28,9 +28,11 @@ bool	Request::set_body(void)
 
 	else if (content_length != _header.end() && transfert_encoding == _header.end())
 	{
+		cout << "on bloque pas la" << endl;
 		if (content_length->second == itostring(_request.size() - _header_size))
 		{
-			return (true);
+			cout << "on  rentre ici" << endl;
+			return (true);	
 		}
 	}
 	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
