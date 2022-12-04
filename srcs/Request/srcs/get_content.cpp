@@ -53,6 +53,7 @@ int Request::get_body_content(size_t i)
 			body_content[i] += content[i][pos++];
 		}
 	}
+	cout << "size : "<<content[i].size() << endl;
 	// cout << body_content[i] << endl;
 	return (0);
 };
