@@ -27,6 +27,7 @@ int Request::get_content_type(size_t i)
 	content_type.push_back("");
 
 	pos = content[i].find("Content-Type: ");
+
 	if (pos != std::string::npos)
 	{
 		pos += 13;
@@ -40,15 +41,16 @@ int Request::get_content_type(size_t i)
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
-
+	size_t 		pos2;
 	// degueu mais fonctionnel
 	pos = content[i].find("\r\n");
 	pos = pos + 3;
 
+	pos2 = content[i].find("\r\n", pos);
 	if (pos != std::string::npos)
 	{
 		body_content.push_back("");
-		while (content[i][pos])
+		while (pos != pos2)
 		{
 			body_content[i] += content[i][pos++];
 		}
