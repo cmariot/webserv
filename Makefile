@@ -130,13 +130,12 @@ LOCATION		= constructor.cpp \
 REQUEST			= constructor.cpp \
 				  destructor.cpp \
 				  getters.cpp \
+				  get_content.cpp \
 				  is_ready.cpp \
 				  modifiers.cpp \
 				  request_body.cpp \
 				  request_header.cpp \
-				  request_line.cpp	\
-				  get_content.cpp
-
+				  request_line.cpp
 
 CLIENT			= add_to_request.cpp \
 				  constructor.cpp \
@@ -147,9 +146,9 @@ CLIENT			= add_to_request.cpp \
 				  setters.cpp
 
 RESPONSE		= constructor.cpp \
-				  main_create.cpp \
 				  delete.cpp \
 				  destructor.cpp \
+				  directory_listing.cpp \
 				  expect_100_continue.cpp \
 				  generate_100_continue.cpp \
 				  generate_cgi_response.cpp \
@@ -159,6 +158,7 @@ RESPONSE		= constructor.cpp \
 				  getters.cpp \
 				  has_content.cpp \
 				  header_too_large.cpp \
+				  main_create.cpp \
 				  method_not_implemented.cpp \
 				  method_not_allowed.cpp \
 				  post.cpp \

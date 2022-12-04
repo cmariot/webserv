@@ -1,0 +1,18 @@
+- [ ] DELETE
+	- Permissions on teste quand meme de rm meme si write non autorise ?
+	- Modifs pages renvoyees, pas besoin d'HTML ?
+
+- [ ] POST
+	- A implementer
+
+- [ ] REQUEST
+	- Verif taille du body a finir
+
+- [ ] VERIFS
+	- Voir sujet correction et faire des fichiers/config de test
+	- Multiple ports ??
+	- Hostnames ??
+	- Curl --resolve ??
+
+- [ ] Flex
+	- Faire un beau CSS pour le site de demo

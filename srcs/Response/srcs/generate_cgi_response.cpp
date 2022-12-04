@@ -64,6 +64,7 @@ int Response::generate_cgi_response(void)
 		close(pipes[PARENT_WRITE_PIPE][0]);
 		close(pipes[PARENT_WRITE_PIPE][1]);
 	}
+
 	const std::string	code = "200";
 	const std::string	message = _status_code_map.find(200)->second;
 	_header = _request.get_http_version() + " " + code + " " + message + "\r\n";
@@ -73,5 +74,6 @@ int Response::generate_cgi_response(void)
 	else
 		_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
 	_response = _header + _body;
+
 	return (0);
 };

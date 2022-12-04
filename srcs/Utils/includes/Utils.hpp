@@ -3,6 +3,7 @@
 
 # define INFO 0
 # define ERR 1
+
 # include <iostream>
 # include <string>
 # include <vector>
@@ -10,6 +11,7 @@
 # include <set>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <cstring>
 
 using std::map;
 using std::set;
@@ -42,6 +44,8 @@ string	    itostring(int);
 bool		only_digit(string str);
 
 // check rights
-bool	check_file_rights(string	&path);
+bool	check_file_rights(const string &);
+bool	is_a_file(const std::string &);
+bool	is_a_dir(const std::string &);
 
 #endif

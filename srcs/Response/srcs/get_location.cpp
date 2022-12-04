@@ -8,6 +8,8 @@ int	Response::get_location(void)
 {
 	std::map<std::string, Location>::const_iterator			ite = _server.get_locations().begin();
 	const std::map<std::string, Location>::const_iterator	end = _server.get_locations().end();
+	size_t	best_match = 0;
+	size_t	current_match_len = 0;
 
 	while (ite != end)
 	{
@@ -18,10 +20,6 @@ int	Response::get_location(void)
 		}
 		++ite;
 	}
-
-	size_t	best_match = 0;
-	size_t	current_match_len = 0;
-
 	ite = _server.get_locations().begin();
 	while (ite != end)
 	{
@@ -37,9 +35,6 @@ int	Response::get_location(void)
 		++ite;
 	}
 	if (best_match == 0)
-	{
-		error("No location block found.");
-		return (1);
-	}
+		return (error("No location block found."));
 	return (0);
 };
