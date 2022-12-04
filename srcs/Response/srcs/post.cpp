@@ -46,7 +46,5 @@ void    Response::post_method(void)
 		fout.close();
 		i++;
 	}
-	set_status_code(201);
-	_full_response = "HTTP/1.1 201 Created\r\n\r\n ";
 	print(INFO, "Files were succesfully uploaded to the server");
 }
