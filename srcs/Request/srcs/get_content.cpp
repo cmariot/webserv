@@ -46,7 +46,7 @@ int Request::get_body_content(size_t i)
 	pos = content[i].find("\r\n");
 	pos = pos + 3;
 
-	pos2 = content[i].find("\r\n", pos);
+	pos2 = content[i].find(boundary, pos);
 	cout << "pos2 = " << pos2 << endl;
 	cout << "pos = " << pos << endl;
 	if (pos != std::string::npos)
@@ -67,7 +67,6 @@ int	Request::get_boundary_content(void)
 	size_t first_boundary;
 	size_t second_boundary;
 	size_t verif_last_boundary;
-	string boundary;
 	string boundary_end;
 
 	first_boundary = _request.find("Content-Type: multipart/form-data; boundary=");
