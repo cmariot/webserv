@@ -6,7 +6,7 @@ void    Response::post_method(void)
    size_t i = 0;
 
 	string folder = "." + _location.get_upload_path();
-	if (is_a_directory(_location.get_upload_path()))
+	if (is_a_dir(_location.get_upload_path()))
 	{
 		print(ERR, "The upload folder was not found");
 		print(ERR, "Files not uploaded");
