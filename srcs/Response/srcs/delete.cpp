@@ -16,30 +16,13 @@ void    Response::delete_method(void)
 	_path = _request.get_uri();
 	_path.replace(0, _location.get_uri().size(), _location.root());
 
-	if (is_a_file(_path))
-	{
-		if (has_write_rights(_path) == false)
-		{
-			if (unlink(_path.c_str()) == 0)			// On teste quand meme
-				return (generate_error_page(200));	// OK
-			return (generate_error_page(403));		// Permission denied
-		}
-		if (unlink(_path.c_str()) != 0)
-			return (generate_error_page(403));		// Permission denied
-		return (generate_error_page(200));			// File removed
-	}
-	else if (is_a_dir(_path))
-	{
-		if (has_write_rights(_path) == false)
-		{
-			if (rmdir(_path.c_str()) == 0)			// On teste quand meme
-				return (generate_error_page(200));	// OK
-			return (generate_error_page(403));		// Permission denied
-		}
-		if (rmdir(_path.c_str()) != 0)
-			return (generate_error_page(403));		// Permissions denied
-		return (generate_error_page(200));			// Dir removed
-	}
-	else
-		return (generate_error_page(404));			// not found
+	print(INFO, ("Trying to delete the file " + _path).c_str());
+
+	if (is_a_file(_path) == false && is_a_dir(_path) == false)
+		return (generate_error_page(404));	// Not found
+	if (has_write_rights(_path) == false)
+		return (generate_error_page(403));	// Forbidden
+	if (remove(_path.c_str()) != 0)
+		return (generate_error_page(500));	// Internal error
+	return (generate_error_page(200));		// File removed
 };

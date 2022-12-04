@@ -52,7 +52,16 @@ void	Response::generate_error_page(const int & error_code)
 	_body += 		"</style>";
 	_body += 	"</head>";
 	_body += 	"<body>";
-	_body +=		"<h1>Webserv : Error " + code + "</h1>";
+	if (100 < _status_code && _status_code < 200)
+		_body +=	"<h1>Webserv : Information " + code + "</h1>";
+	else if (_status_code < 300)
+		_body +=	"<h1>Webserv : Success " + code + "</h1>";
+	else if (_status_code < 400)
+		_body +=	"<h1>Webserv : Redirection " + code + "</h1>";
+	else if (_status_code < 500)
+		_body +=	"<h1>Webserv : Request-Error " + code + "</h1>";
+	else if (_status_code < 600)
+		_body +=	"<h1>Webserv : Server-Error " + code + "</h1>";
 	_body +=		"<h2>" + message + "</h2>";
 	_body += 	"</body>";
 	_body += "</html>";
