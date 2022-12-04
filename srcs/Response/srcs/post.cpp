@@ -33,7 +33,7 @@ void    Response::post_method(void)
          generate_error_page(403);
          return;
       }  
-		fout.open(infile.c_str(), std::ios::out | std::ios::app);
+		fout.open(infile.c_str(), std::ios::out | std::ios::app | std::ios::binary);
 		if (fout.is_open() == false)
 		{
 			error("Error : while opening the file", infile);
