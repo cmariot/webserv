@@ -1,4 +1,5 @@
 #include "Response.hpp"
+#include <sys/wait.h>
 
 # define NUM_PIPES			2
 
@@ -21,6 +22,19 @@ int Response::generate_cgi_response(void)
 	int		pipes[NUM_PIPES][2];
 
 	_body.clear();
+
+	//if (_path.empty() == false && _path[0] == '.')
+	//{
+	//	char	*pwd = getcwd(NULL, 0);
+
+	//	if (pwd == NULL)
+	//		return (1);
+	//	std::string	cwd = pwd + std::string("/");
+	//	std::string	new_path = cwd + _path;
+	//	std::cout << "PATH_INFO = " << new_path << std::endl;
+	//}
+
+
 	if (pipe(pipes[PARENT_READ_PIPE]) == -1
 		|| pipe(pipes[PARENT_WRITE_PIPE]) == -1)
 		return (error("Pipe failed in the CGI."));
@@ -29,15 +43,16 @@ int Response::generate_cgi_response(void)
 		return (error("Fork failed in the CGI."));
 	else if (pid == 0)
 	{
+		cgi_args[0] = (char *)"/bin/php-cgi";
+		cgi_args[1] = (char *)_path.c_str();
+		cgi_args[2] = NULL; 
+
 		dup2(CHILD_READ_FD, STDIN_FILENO);
 		dup2(CHILD_WRITE_FD, STDOUT_FILENO);
 		close(CHILD_READ_FD);
         close(CHILD_WRITE_FD);
         close(PARENT_READ_FD);
         close(PARENT_WRITE_FD);
-		cgi_args[0] = (char *)"/bin/php-cgi";
-		cgi_args[1] = (char *)_path.c_str();
-		cgi_args[2] = NULL; 
 		execve(cgi_args[0], cgi_args, _env);
 		return (1);
 	}
@@ -56,7 +71,12 @@ int Response::generate_cgi_response(void)
 				return (error("Read failed in the CGI."));
 			buffer[read_return] = 0;
 			if (read_return == 0)
+			{
+				char zero[1];
+				zero[0] = '\0';
+				_body.append(zero, 1);
 				break ;
+			}
 			_body.append(buffer, read_return);
 		}
 		close(pipes[PARENT_READ_PIPE][0]);

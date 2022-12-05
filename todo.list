@@ -1,17 +1,17 @@
-- [ ] GENERAL
-	- Multiple ports
-
 - [ ] REQUEST
 	- Verif taille du body (chunk + multipart)
 
 - [ ] RESPONSE
 	- Unchunk
 
+- [ ] GENERAL
+	- Proteger les exceptions
+
 - [ ] VERIFS
 	- Voir sujet correction et faire des fichiers/config de test
-	- Multiple ports ??
 	- Hostnames ??
 	- Curl --resolve ??
+	- Verif complete du sujet + correction
 
 - [ ] Flex
 	- Faire un beau CSS pour le site de demo

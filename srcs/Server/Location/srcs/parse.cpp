@@ -68,5 +68,7 @@ int	Location::parse(std::vector<std::string> & vector)
 		_root = "/var/www/";
 	if (_index.size() == 0)
 		_index.push_back("index.html"); // default
+	if (_upload == true && upload_path_set == false)
+		return (error("You must specify an upload_path."));
 	return (0);
 };
