@@ -1,7 +1,7 @@
 #include "Response.hpp"
 
 
-static	int	make_dir_if_not_exist(const & path)
+static	int	make_dir_if_not_exist(const string & path)
 {
 	if (is_a_dir(path))
 	{
