@@ -3,16 +3,20 @@
 
 static	int	make_dir_if_not_exist(const string & path)
 {
-	if (is_a_dir("."+path))
+	if (is_a_dir("." + path))
 	{
-		print(ERR, "The upload folder was found");
-		print(ERR, "Files about to be uploaded");
+		print(INFO, "The upload folder was found");
+		print(INFO, "Files about to be uploaded");
 		return (0);
 	}
 	else
 	{
+		print(INFO, "The upload folder was not found");
 		if(mkdir(("." + path).c_str(), 0777))
+		{
+			print(ERR, "Error while creating the upload folder");
 			return(1);
+		}
 		print(INFO, "Upload folder created ");
 		return (0);
 	}
@@ -24,9 +28,9 @@ void    Response::post_method(void)
    _request.get_content();
    size_t i = 0;
 
-	string folder = "." + _location.get_upload_path();
+	string folder_path = "." + _location.get_upload_path();
 
-	if (make_dir_if_not_exist(_location.get_upload_path()))
+	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
 
 	while (i < _request.content.size())
@@ -34,7 +38,7 @@ void    Response::post_method(void)
 		string infile(_request.file_name[i]);
 		std::ofstream fout;
 
-		infile = folder + infile;
+		infile = folder_path + infile;
 		cout << "file about to be added :" << infile << endl;
      if (is_a_file(infile) &&!check_file_rights(infile))
      {
