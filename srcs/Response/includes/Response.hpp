@@ -77,7 +77,7 @@ class Response
 
 
 		// Post
-		int									post_file_creation(const string & path);
+		int									post_files_creation(const string & path);
 
 
 		// Generate

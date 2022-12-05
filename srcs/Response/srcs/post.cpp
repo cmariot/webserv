@@ -22,16 +22,17 @@ static	int	make_dir_if_not_exist(const string & path)
 	}
 }
 
-int		Response::post_file_creation(const string & path)
+int		Response::post_files_creation(const string & path)
 {
 	size_t i = 0;
 	
-	if (_location.upload_allowed() == false)
+	if (!_location.upload_allowed() )
 	{
 		print(ERR, "The user can't upload files on this server");
 		generate_error_page(403);
 		return (1);
 	}
+	print(INFO, "The user can upload files on this server")
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
@@ -74,7 +75,7 @@ void    Response::post_method(void)
 
 	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
-	if (post_file_creation(folder_path))
+	if (post_files_creation(folder_path) && _request.content.size())
 		return;
 
 	generate_error_page(201);
