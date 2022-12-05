@@ -68,7 +68,7 @@ int		Response::post_files_creation(const string & path)
 
 void 	Response::generate_post_response(int	status_code)
 {
-	_header  = _request.get_http_version() + " " + status_code + " " + _status_code_map.find(status_code)->second + "\r\n";
+	_header  = _request.get_http_version() + " " + iostring(status_code) + " " + _status_code_map.find(status_code)->second + "\r\n";
 	if (status_code == 201)
 	{
 		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
