@@ -90,7 +90,7 @@ void	Response::post_response(void)
 
 void    Response::post_method(void)
 {
-   _request.get_content();
+   	_request.get_content();
 
 	string folder_path = "." + _location.get_upload_path();
 
