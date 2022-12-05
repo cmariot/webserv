@@ -75,7 +75,7 @@ void 	Response::generate_post_response(int	status_code)
 		_body = "Your files have been uploaded ! Click <A href=";
 		_body +=  _location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
 	}
-	_header += "Content-type: text/html" + "\r\n";
+	_header += "Content-type: text/html charset=utf-8 \r\n";
 	_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
 	_response = _header + _body;
 }
