@@ -100,5 +100,6 @@ void    Response::post_method(void)
 		return;
 	post_response();
 	cout << _response << endl;
+	cout << _location.root() << endl;
 }
 
