@@ -1,8 +1,11 @@
-- [ ] POST
-	- A implementer
+- [ ] GENERAL
+	- Multiple ports
 
 - [ ] REQUEST
-	- Verif taille du body a finir
+	- Verif taille du body (chunk + multipart)
+
+- [ ] RESPONSE
+	- Unchunk
 
 - [ ] VERIFS
 	- Voir sujet correction et faire des fichiers/config de test

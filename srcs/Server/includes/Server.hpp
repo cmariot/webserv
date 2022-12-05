@@ -31,7 +31,7 @@ class	Server
 		Server(void);
 		~Server(void);
 
-		int		parse(std::vector<string> &);
+		int		parse(std::vector<string> &, const std::vector<class Server> &);
 
 	private:
 
@@ -47,7 +47,7 @@ class	Server
 		bool	error_page_set;
 		bool	locations_set;
 
-		int		set_listen(std::vector<string> &, size_t &);
+		int		set_listen(std::vector<string> &, size_t &, const std::vector<Server> &);
 		int		set_server_names(std::vector<string> &, size_t &);
 		int		set_error_pages(std::vector<string> &, size_t &);
 		int		set_client_max_body_size(std::vector<string> &, size_t &);

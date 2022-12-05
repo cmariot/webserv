@@ -43,7 +43,7 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 		server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
 		print(INFO, "Creating a new server context");
 		servers.push_back(Server());
-		if (servers[nb_of_servers++].parse(server_directives))
+		if (servers[nb_of_servers++].parse(server_directives, servers))
 			return (1);
 	}
 	return (0);

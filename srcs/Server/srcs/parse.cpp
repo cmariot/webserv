@@ -1,13 +1,13 @@
 #include "Server.hpp"
 
-int	Server::parse(std::vector<std::string> & vector)
+int	Server::parse(std::vector<std::string> & vector, const std::vector<Server> & servers)
 {
 	for (size_t i = 0 ; i < vector.size() ; i++)
 	{
 		if (vector[i] == "listen")
 		{
 			print(INFO, "Parsing of the listen directive in the server.");
-			if (set_listen(vector, i))
+			if (set_listen(vector, i, servers))
 				return (1);
 		}
 		else if (vector[i] == "server_names")

@@ -34,7 +34,7 @@ int	Server::set_ip_and_port(std::vector<std::string> & vector, size_t & i)
 	return (0);
 };
 
-int	Server::set_listen(std::vector<std::string> & vector, size_t & i)
+int	Server::set_listen(std::vector<std::string> & vector, size_t & i, const std::vector<Server> & servers)
 {
 	if (address_set)
 		return (error("Syntax error, multiple listen directives."));
@@ -44,6 +44,11 @@ int	Server::set_listen(std::vector<std::string> & vector, size_t & i)
 		return (1);
 	else if (vector[++i] != ";")
 		return (error("Syntax error : the listen directive doesn't ends by ';'."));
+	for (size_t j = 0 ; j < servers.size() - 1 ; ++j)
+	{
+		if (_address == servers[j].get_address())
+			return (error("This address is already used by another server."));
+	}
 	address_set = true;
 	return (0);
 };

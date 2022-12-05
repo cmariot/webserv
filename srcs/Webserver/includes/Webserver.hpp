@@ -88,15 +88,19 @@ class Webserver
 		int				catch_signal(void);
 		int				new_events(void);
 
+		// client_error
 		bool			client_error(void) const;
 		void			remove_client(void);
 
+		// client_connection
 		bool			client_connection(void);
 		int				add_client(void);
 
+		// client_recv
 		bool			client_recv(void);
 		int				get_request(void);
 
+		// client_send
 		bool			client_send(void);
 		int				send_response(void);
 
