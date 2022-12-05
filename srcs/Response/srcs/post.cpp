@@ -66,7 +66,6 @@ int		Response::post_files_creation(const string & path)
 	return(0);
 }
 
-
 void    Response::post_method(void)
 {
    _request.get_content();
