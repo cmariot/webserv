@@ -32,7 +32,7 @@ int		Response::post_files_creation(const string & path)
 		generate_error_page(403);
 		return (1);
 	}
-	print(INFO, "The user can upload files on this server")
+	print(INFO, "The user can upload files on this server");
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
