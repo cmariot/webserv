@@ -7,7 +7,7 @@ static	int	make_dir_if_not_exist(const string & path)
 	{
 		print(ERR, "The upload folder was not found");
 		print(ERR, "Files not uploaded");
-		return (generate_error_page(500));
+		return (1);
 	}
 	else
 	{
@@ -26,7 +26,7 @@ void    Response::post_method(void)
 	string folder = "." + _location.get_upload_path();
 
 	if (make_dir_if_not_exist(_locatation.get_upload_path()))
-		return ;
+		return(generate_error_page(500));
 
 	while (i < _request.content.size())
 	{
