@@ -26,7 +26,12 @@ int		Response::post_file_creation(const string & path)
 {
 	size_t i = 0;
 	
-	cout << "upload allowed" << _location.upload_allowed() << endl;
+	if (_location.upload_allowed() == false)
+	{
+		print(ERR, "The user can't upload files on this server");
+		generate_error_page(403);
+		return (1);
+	}
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
