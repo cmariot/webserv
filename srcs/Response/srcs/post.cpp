@@ -25,7 +25,7 @@ void    Response::post_method(void)
 
 	string folder = "." + _location.get_upload_path();
 
-	if (make_dir_if_not_exist(_locatation.get_upload_path()))
+	if (make_dir_if_not_exist(_location.get_upload_path()))
 		return(generate_error_page(500));
 
 	while (i < _request.content.size())
