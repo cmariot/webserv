@@ -3,7 +3,7 @@
 
 static	int	make_dir_if_not_exist(const string & path)
 {
-	if (is_a_dir("." + path))
+	if (is_a_dir(path))
 	{
 		print(INFO, "The upload folder was found");
 		print(INFO, "Files about to be uploaded");
@@ -12,7 +12,7 @@ static	int	make_dir_if_not_exist(const string & path)
 	else
 	{
 		print(INFO, "The upload folder was not found");
-		if(mkdir(("." + path).c_str(), 0777))
+		if(mkdir((path).c_str(), 0777))
 		{
 			print(ERR, "Error while creating the upload folder");
 			return(1);
