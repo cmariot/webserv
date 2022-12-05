@@ -68,7 +68,7 @@ void    Response::post_method(void)
 
 	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
-	if (_location.upload_allowed() && post_file_creation(folder_path))
+	if (!_location.upload_allowed() && post_file_creation(folder_path))
 		return;
 
 	generate_error_page(201);
