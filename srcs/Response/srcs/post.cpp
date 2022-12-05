@@ -71,9 +71,9 @@ void 	Response::generate_post_response(int	status_code)
 	_header  = _request.get_http_version() + " " + itostring(status_code) + " " + _status_code_map.find(status_code)->second + "\r\n";
 	if (status_code == 201)
 	{
-		_header += "Location: ./" + _location.get_upload_path() + _request.file_name[0] + "\r\n";
+		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
 		_body = "Your files have been uploaded ! Click <A href=";
-		_body +=  _location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
+		_body +=  "./" +_location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
 	}
 	_header += "Content-type: text/html charset=utf-8 \r\n";
 	_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
