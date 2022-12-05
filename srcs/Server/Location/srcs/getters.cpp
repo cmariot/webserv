@@ -1,4 +1,4 @@
-u#include "Location.hpp"
+#include "Location.hpp"
 
 const std::string &		Location::get_uri(void) const
 {
