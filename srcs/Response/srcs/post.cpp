@@ -12,7 +12,7 @@ static	int	make_dir_if_not_exist(const string & path)
 	else
 	{
 		if(mkdir(("." + path).c_str(), 0777))
-			return(1)
+			return(1);
 		print(INFO, "Upload folder created ");
 		return (0);
 	}
