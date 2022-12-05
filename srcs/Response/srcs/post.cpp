@@ -72,8 +72,8 @@ void 	Response::generate_post_response(int	status_code)
 	if (status_code == 201)
 	{
 		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
-		// _body = "Your files have been uploaded ! 
-		// 	Click <A href="/a/36373586/12597">here</A> to view it."
+		_body = "Your files have been uploaded ! 
+			Click <A href="/a/36373586/12597">here</A> to view it."
 	}
 	_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
 	_response = _header + _body;
