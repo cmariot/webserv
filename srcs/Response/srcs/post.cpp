@@ -66,6 +66,27 @@ int		Response::post_files_creation(const string & path)
 	return(0);
 }
 
+void 	Response::generate_post_response(int	status_code)
+{
+	_header  = _request.get_http_version() + " " + code + " " + _status_code_map.find(status_code)->second + "\r\n";
+	if (status_code == 201)
+	{
+		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
+		// _body = "Your files have been uploaded ! 
+		// 	Click <A href="/a/36373586/12597">here</A> to view it."
+	}
+	_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
+	_response = _header + _body;
+}
+
+void	reponse_post(void)
+{
+	if (_request.content.size())
+		generate_post_response(201);
+	else
+		generate_post_response(204);
+}
+
 void    Response::post_method(void)
 {
    _request.get_content();
@@ -76,10 +97,7 @@ void    Response::post_method(void)
 		return(generate_error_page(500));
 	if (post_files_creation(folder_path) && _request.content.size())
 		return;
-	if (_request.content.size())
-		generate_error_page(201);
-	else
-		generate_error_page(204);
+	response_post();
 	print(INFO, "Files were succesfully uploaded to the server");
 }
 

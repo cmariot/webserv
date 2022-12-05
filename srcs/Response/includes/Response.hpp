@@ -78,7 +78,7 @@ class Response
 
 		// Post
 		int									post_files_creation(const string & path);
-
+		void 								generate_post_response(void);
 
 		// Generate
 		void								generate_error_page(const int &);
