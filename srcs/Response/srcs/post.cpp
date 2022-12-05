@@ -26,6 +26,7 @@ int		Response::post_file_creation(const string & path)
 {
 	size_t i = 0;
 	
+	cout << "upload allowed" << _location.upload_allowed() << endl;
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
@@ -68,7 +69,7 @@ void    Response::post_method(void)
 
 	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
-	if (!_location.upload_allowed() && post_file_creation(folder_path))
+	if (post_file_creation(folder_path))
 		return;
 
 	generate_error_page(201);
