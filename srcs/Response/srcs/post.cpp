@@ -77,8 +77,10 @@ void    Response::post_method(void)
 		return(generate_error_page(500));
 	if (post_files_creation(folder_path) && _request.content.size())
 		return;
-
-	generate_error_page(201);
+	if (_request.content.size())
+		generate_error_page(201);
+	else
+		generate_error_page(204);
 	print(INFO, "Files were succesfully uploaded to the server");
 }
 
