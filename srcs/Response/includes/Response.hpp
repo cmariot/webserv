@@ -42,6 +42,7 @@ class Response
 		std::string							_response;
 
 		std::string							_path;
+		
 
 		// Update
 		int									get_location(void);

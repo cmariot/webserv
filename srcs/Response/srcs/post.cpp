@@ -1,24 +1,33 @@
 #include "Response.hpp"
 
+
+static	int	make_dir_if_not_exist(const & path)
+{
+	if (is_a_dir(path()))
+	{
+		print(ERR, "The upload folder was not found");
+		print(ERR, "Files not uploaded");
+		return (generate_error_page(500));
+	}
+	else
+	{
+		mkdir(("." + path).c_str(), 0777);
+		print(INFO, "Upload folder created ");
+		return (0);
+	}
+}
+
+
 void    Response::post_method(void)
 {
    _request.get_content();
    size_t i = 0;
 
 	string folder = "." + _location.get_upload_path();
-	if (is_a_dir(_location.get_upload_path()))
-	{
-		print(ERR, "The upload folder was not found");
-		print(ERR, "Files not uploaded");
-		generate_error_page(500);
+
+	if (make_dir_if_not_exist(_locatation.get_upload_path()))
 		return ;
-	}
-	else
-	{
-		mkdir(("." + _location.get_upload_path()).c_str(), 0777);
-		print(INFO, "Upload folder created ");
-	}
-	
+
 	while (i < _request.content.size())
 	{
 		string infile(_request.file_name[i]);
@@ -47,6 +56,6 @@ void    Response::post_method(void)
 		i++;
 	}
 	generate_error_page(201);
-
 	print(INFO, "Files were succesfully uploaded to the server");
 }
+
