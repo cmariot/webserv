@@ -42,6 +42,7 @@ class Response
 		std::string							_response;
 
 		std::string							_path;
+		
 
 		// Update
 		int									get_location(void);
@@ -69,10 +70,16 @@ class Response
 		bool								directory_file_set(void) const;
 		bool								directory_listing_set(void) const;
 		int									directory_listing_body(void);
-		const std::string 					add_dot_link(void);
-		const std::string 					add_double_dot_link(void);
-		const std::string 					add_other_link(char d_name[256]);
+		const string 						add_dot_link(void);
+		const string 						add_double_dot_link(void);
+		const string 						add_other_link(char d_name[256]);
 		bool								use_cgi(void) const;
+
+
+		// Post
+		int									post_files_creation(const string & path);
+		void 								generate_post_response(int status_code);
+		void 								post_response(void);
 
 		// Generate
 		void								generate_error_page(const int &);
