@@ -79,7 +79,7 @@ void 	Response::generate_post_response(int	status_code)
 	_response = _header + _body;
 }
 
-void	reponse_post(void)
+void	Response::post_response(void)
 {
 	if (_request.content.size())
 		generate_post_response(201);
