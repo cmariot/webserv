@@ -13,6 +13,7 @@ bool	Request::is_ready(void)
 			return (false);
 		if (body_in_this_request())
 		{
+			cout << "body_in_this_request" << endl;
 			if (body_is_ready() == false)
 				return (false);
 		}

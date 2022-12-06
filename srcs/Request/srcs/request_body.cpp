@@ -65,7 +65,7 @@ bool	Request::body_is_ready(void)
 bool	Request::body_in_this_request(void)
 {
 	if (_header.find("Content-Length") != _header.end() 
-		|| _header.find("Transfert-Encoding") != _header.end())
+		|| _header.find("Transfer-Encoding") != _header.end())
 	{
 		_has_body = true;
 		return (true);
