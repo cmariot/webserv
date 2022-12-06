@@ -72,7 +72,8 @@ int	Request::set_request_line(size_t & i)
 			&& _request[i] == '\r'
 			&& _request[i + 1] == '\n')
 		i += 2;
-
+	
+	cout << _request<< endl;
 	const size_t	pos = _request.find(CRLF, i);
 
 	if (pos == std::string::npos)
