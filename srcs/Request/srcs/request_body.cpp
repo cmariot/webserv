@@ -39,7 +39,7 @@ bool	Request::unchunk(void)
 	cout << "REQUEST TMP : " << request_tmp << endl;
 	pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk)) + 2;
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	cout << "REQUEST CHUNKED 2 : " << _request << endl << endl;
+	cout << "Size CHUNKED 2 : " << size_chunk << endl << endl;
 
 	// On supprime les chunks
 	while (size_chunk != "0")
