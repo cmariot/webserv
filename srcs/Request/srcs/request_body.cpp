@@ -21,13 +21,13 @@ bool	Request::unchunk(void)
 	}
 	cout <<  endl << _request.find("\r\n0\r\n\r\n") << endl;
 
-	// while (pos != _request.find("\r\n0\r\n\r\n"))
-	// {
-	// 	pos = _request.find("\r\n");
-	// 	// On verifie que le rchunk est bien en hexa
-	// 	_request.erase(pos, 2);
-	// }
-	// cout << "REQUEST : " << _request << endl;
+	while (pos != _request.find("\r\n0\r\n\r\n"))
+	{
+		pos = _request.find("\r\n");
+		// On verifie que le rchunk est bien en hexa
+		_request.erase(pos, 2);
+	}
+	cout << "REQUEST : " << _request << endl;
 	return (true);
 };
 
