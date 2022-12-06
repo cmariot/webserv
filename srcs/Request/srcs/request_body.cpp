@@ -15,7 +15,10 @@ bool	Request::unchunk(void)
 	// size_t pos = 0;
 	cout << "REQUEST in unchunk : " << _request << endl;
 	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
+	{
+		cout << "c bon ?" << endl;
 		return (false);
+	}
 	cout <<  endl << _request.find("\r\n0\r\n\r\n") << endl;
 
 	// while (pos != _request.find("\r\n0\r\n\r\n"))
