@@ -10,8 +10,8 @@ bool	Request::unchunk(void)
 
 	
 	// On cherche le chunk de taille 0
-	// size_t pos;
-	cout << "REQUEST in unchum : " << _request << endl;
+	size_t pos = get_body_content();
+	cout << "REQUEST in unchunk : " << _request << endl;
 	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
 		return (false);
 
