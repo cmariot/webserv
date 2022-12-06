@@ -12,7 +12,8 @@ size_t		hex_to_unsigned_int( const string & hexadecimal)
 }
 
 // To do : [] check eof
-//		   [] clean commentaires
+//		   [x] clean commentaires
+//		   []  check with multipart/form-data (it should work but im tired)
 
 bool	Request::unchunk(void)
 {
@@ -28,7 +29,6 @@ bool	Request::unchunk(void)
 	string request_tmp;
 
 	size_chunk = _request.substr(pos , _request.find("\r\n", pos) - pos);
-
 	// Let's concatanate all the chunk by calculating the size of each chunk and adding it to the request_tmp
 	while (size_chunk != "0")
 	{
@@ -37,8 +37,6 @@ bool	Request::unchunk(void)
 		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
 	}
 	_request = _request.substr(0, get_header_size()) + request_tmp;
-
-	cout << "REQUEST TMP : " << _request << endl;
 
 	return (true);
 };
