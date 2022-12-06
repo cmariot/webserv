@@ -41,9 +41,9 @@ bool	Request::unchunk(void)
 	// size_t	pos = get_header_size();	
 	while (size_chunk != "0")
 	{
-		size_chunk = hex_to_unsigned_int(size_chunk);
-		cout << "SIZE :"<<size_chunk << endl;
 
+		cout << "SIZE :"<< hex_to_unsigned_int(size_chunk) << endl;
+		size_chunk = "0"
 		// pos = _request.find("\r\n", pos);
 		// if (pos == std::string::npos)
 		// 	break;
