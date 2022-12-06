@@ -43,7 +43,7 @@ bool	Request::unchunk(void)
 	{
 
 		cout << "SIZE :"<< hex_to_unsigned_int(size_chunk) << endl;
-		size_chunk = "0"
+		size_chunk = "0";
 		// pos = _request.find("\r\n", pos);
 		// if (pos == std::string::npos)
 		// 	break;
