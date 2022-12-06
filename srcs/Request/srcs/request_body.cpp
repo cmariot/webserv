@@ -7,6 +7,21 @@ bool	Request::unchunk(void)
 	// codage fragmente voir 3.6
 	// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
 	// it and the CGI will expect EOF as end of the body.
+
+	
+	// On cherche le chunk de taille 0
+	size_t pos;
+	cout << "REQUEST : " << _request << endl;
+	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
+		return (false);
+
+	while (pos != _request.find("\r\n0\r\n\r\n"))
+	{
+		pos = _request.find("\r\n");
+		// On verifie que le chunk est bien en hexa
+		_request.erase(pos, 2);
+	}
+	cout << "REQUEST : " << _request << endl;
 	return (true);
 };
 
@@ -17,12 +32,6 @@ bool	Request::body_is_ready(void)
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	cout << "On test" << endl;
-	for ( std::multimap< string, string >::const_iterator iter =_header.begin();
-      iter != _header.end(); ++iter )
-    	cout << iter->first << '\t' << iter->second << '\n';
-	if (transfer_encoding != _header.end())
-		cout <<"TRANSFER ENCODING ?" <<transfer_encoding->second << endl;
 	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
 	{
 		cout << "we do enter here" << endl;
