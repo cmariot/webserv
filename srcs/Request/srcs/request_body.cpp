@@ -36,7 +36,6 @@ bool	Request::unchunk(void)
 	//  cout << "REQUEST CHUNKED : " << _request << endl << endl;
 
 	// On supprime les chunks
-	size_t	pos = get_header_size();	
 	while (size_chunk != "0")
 	{
 
