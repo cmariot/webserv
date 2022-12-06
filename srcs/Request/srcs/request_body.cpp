@@ -1,4 +1,5 @@
 #include "Request.hpp"
+# include <sstream>
 
 size_t		hex_to_unsigned_int( const string & hexadecimal)
 {
