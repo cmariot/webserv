@@ -12,6 +12,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <cstring>
+# include <sstream>
 
 using std::map;
 using std::set;
@@ -22,6 +23,7 @@ using std::string;
 using std::endl;
 using std::max;
 using std::multimap;
+using std::stringstream;
 
 // error.cpp
 int			error(string);
