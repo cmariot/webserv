@@ -90,16 +90,14 @@ void	Response::post_response(void)
 
 void    Response::post_method(void)
 {
-	// if (_request.get_header().find("Transfer-Encoding") != _request.get_header().end())
-	// 	request_unchunking();
    	_request.get_content();
 
 	string folder_path = "." + _location.get_upload_path();
+
 	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
 	if (post_files_creation(folder_path) && _request.content.size())
 		return;
-
 	post_response();
 }
 
