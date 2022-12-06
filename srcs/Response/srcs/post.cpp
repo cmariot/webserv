@@ -40,7 +40,6 @@ int		Response::post_files_creation(const string & path)
 		std::ofstream fout;
 		infile = path + infile;
 		print(INFO, "File(s) about to be uploaded");
-
 		if (is_a_file(infile) && !check_file_rights(infile))
 		{
 			print(ERR, "The user can't open the file : Permission denied"); 
@@ -62,6 +61,7 @@ int		Response::post_files_creation(const string & path)
 		fout << _request.body_content[i];
 		fout.close();
 		i++;
+		print(INFO, "Files were succesfully uploaded to the server");
 	}
 	return(0);
 }
@@ -90,7 +90,7 @@ void	Response::post_response(void)
 
 void    Response::post_method(void)
 {
-   _request.get_content();
+   	_request.get_content();
 
 	string folder_path = "." + _location.get_upload_path();
 
@@ -99,6 +99,5 @@ void    Response::post_method(void)
 	if (post_files_creation(folder_path) && _request.content.size())
 		return;
 	post_response();
-	print(INFO, "Files were succesfully uploaded to the server");
 }
 

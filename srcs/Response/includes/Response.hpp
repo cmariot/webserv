@@ -77,8 +77,9 @@ class Response
 
 
 		// Post
+		void 								request_unchunking(void);
 		int									post_files_creation(const string & path);
-		void 								generate_post_response(int status_code);
+		void 								generate_post_response(int status_codep);
 		void 								post_response(void);
 
 		// Generate

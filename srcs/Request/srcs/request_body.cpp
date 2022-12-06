@@ -1,5 +1,20 @@
 #include "Request.hpp"
 
+size_t		hex_to_unsigned_int( const string & hexadecimal)
+{
+	size_t 		decimal;
+    stringstream sstream;
+
+    sstream << std::hex << hexadecimal;
+    sstream >> decimal;
+
+    return decimal;
+}
+
+// To do : [] check eof
+//		   [x] clean commentaires
+//		   []  check with multipart/form-data (it should work but im tired)
+
 bool	Request::unchunk(void)
 {
 	// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
@@ -7,25 +22,42 @@ bool	Request::unchunk(void)
 	// codage fragmente voir 3.6
 	// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
 	// it and the CGI will expect EOF as end of the body.
+
+	size_t pos = get_header_size();
+
+	string size_chunk;
+	string request_tmp;
+
+	size_chunk = _request.substr(pos , _request.find("\r\n", pos) - pos);
+	// Let's concatanate all the chunk by calculating the size of each chunk and adding it to the request_tmp
+	while (size_chunk != "0")
+	{
+		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
+		pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
+		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
+	}
+	_request = _request.substr(0, get_header_size()) + request_tmp;
+
 	return (true);
 };
 
 // Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
 bool	Request::body_is_ready(void)
 {
-	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfert-Encoding");
+	std::multimap<string, string>::iterator	transfer_encoding	= _header.find("Transfer-Encoding");
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity") // (CAS 2 PDF)
+	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
 	{
+		cout << "we do enter here" << endl;
 		// Chunk request
 		// Verif qu'on ait le chunk de taille 0 final
 		// Set un booleen sur _chunk = true
 
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfer_encoding == _header.end())
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
@@ -58,7 +90,7 @@ bool	Request::body_is_ready(void)
 bool	Request::body_in_this_request(void)
 {
 	if (_header.find("Content-Length") != _header.end() 
-		|| _header.find("Transfert-Encoding") != _header.end())
+		|| _header.find("Transfer-Encoding") != _header.end())
 	{
 		_has_body = true;
 		return (true);
