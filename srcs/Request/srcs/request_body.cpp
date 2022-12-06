@@ -21,7 +21,7 @@ bool	Request::unchunk(void)
 	cout <<  endl << _request.find("\r\n0\r\n\r\n") << endl;
 
 	// On supprime les chunks
-	size_t	pos = 0;
+	size_t	pos = get_header_size();
 	while (pos != _request.find("\r\n0\r\n\r\n"))
 	{
 		pos = _request.find("\r\n");
