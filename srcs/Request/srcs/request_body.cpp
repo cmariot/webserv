@@ -36,8 +36,10 @@ bool	Request::unchunk(void)
 		pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
 		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
 	}
-	cout << "REQUEST TMP : " << request_tmp << endl;
 	_request = _request.substr(0, get_header_size()) + request_tmp;
+
+	cout << "REQUEST TMP : " << request_tmp << endl;
+
 	return (true);
 };
 
