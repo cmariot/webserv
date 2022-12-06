@@ -25,28 +25,33 @@ bool	Request::unchunk(void)
 	size_t pos = get_header_size();
 
 	string size_chunk;
+	string request_tmp;
+
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
 	cout << "SIZE :"<<size_chunk << endl;
 	// On cherche le chunk de taille 0
-	cout << "REQUEST in unchunk : " << _request << endl;
+	 cout << "REQUEST CHUNKED : " << _request << endl << endl;
 	// if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
 	// {
 	// 	cout << "c bon ?" << endl;
 	// 	return (false);
 	// }
 
-	// // On supprime les chunks
+	// On supprime les chunks
 	// size_t	pos = get_header_size();	
-	// while (pos != _request.find("\r\n0\r\n\r\n"))
-	// {
-	// 	pos = _request.find("\r\n", pos);
-	// 	if (pos == std::string::npos)
-	// 		break;
-	// 	cout << "pos : " << pos << endl;
-	// 	// On verifie que le rchunk est bien en hexa
-	// 	_request.erase(pos, 2);
-	// }
-	cout << "REQUEST : " << _request << endl;
+	while (size_chunk != "0")
+	{
+		size_chunk = hex_to_unsigned_int(size_chunk);
+		cout << "SIZE :"<<size_chunk << endl;
+
+		// pos = _request.find("\r\n", pos);
+		// if (pos == std::string::npos)
+		// 	break;
+		// cout << "pos : " << pos << endl;
+		// // On verifie que le rchunk est bien en hexa
+		// _request.erase(pos, 2);
+	}
+	cout << "REQUEST AFTER UNCHUNK: " << _request << endl;
 	return (true);
 };
 
