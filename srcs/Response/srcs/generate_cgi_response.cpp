@@ -1,5 +1,6 @@
 #include "Response.hpp"
 #include <sys/wait.h>
+#include <cstdlib>
 
 # define NUM_PIPES			2
 
@@ -20,20 +21,22 @@ int Response::generate_cgi_response(void)
     int		pid;
 	char	*cgi_args[3];
 	int		pipes[NUM_PIPES][2];
+	std::string	full_path;
 
 	_body.clear();
 
-	//if (_path.empty() == false && _path[0] == '.')
-	//{
-	//	char	*pwd = getcwd(NULL, 0);
+	// Full path as PATH_INFO
+	if (_path.empty() == false && _path[0] != '/')
+	{
+		char	*pwd = getcwd(NULL, 0);
 
-	//	if (pwd == NULL)
-	//		return (1);
-	//	std::string	cwd = pwd + std::string("/");
-	//	std::string	new_path = cwd + _path;
-	//	std::cout << "PATH_INFO = " << new_path << std::endl;
-	//}
-
+		if (pwd == NULL)
+			return (1);
+		full_path = pwd + std::string("/") + _path;
+		free(pwd);
+	}
+	else
+		full_path = _path;
 
 	if (pipe(pipes[PARENT_READ_PIPE]) == -1
 		|| pipe(pipes[PARENT_WRITE_PIPE]) == -1)
@@ -44,9 +47,19 @@ int Response::generate_cgi_response(void)
 	else if (pid == 0)
 	{
 		cgi_args[0] = (char *)"/bin/php-cgi";
-		cgi_args[1] = (char *)_path.c_str();
-		cgi_args[2] = NULL; 
-
+		cgi_args[1] = (char *)full_path.c_str();
+		cgi_args[2] = NULL;
+		// Chdir path
+		size_t		file_len = 0;
+		for (size_t i = full_path.size() - 1 ; i > 0 ; --i)
+		{
+			if (full_path[i] == '/')
+				break ;
+			++file_len;
+		}
+		std::string	cd_path = full_path.substr(0, full_path.size() - file_len);
+		if (chdir(cd_path.c_str()) != 0)
+			return (1);
 		dup2(CHILD_READ_FD, STDIN_FILENO);
 		dup2(CHILD_WRITE_FD, STDOUT_FILENO);
 		close(CHILD_READ_FD);
