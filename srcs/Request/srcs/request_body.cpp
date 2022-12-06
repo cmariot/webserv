@@ -13,12 +13,12 @@ bool	Request::unchunk(void)
 // Reference : http://abcdrfc.free.fr/rfc-vf/pdf/rfc2616.pdf  Page 20
 bool	Request::body_is_ready(void)
 {
-	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfert-Encoding");
+	std::multimap<string, string>::iterator	transfert_encoding	= _header.find("Transfer-Encoding");
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	cout << transfert_encoding->second << endl;
-	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity") // (CAS 2 PDF)
+	cout << transfer_encoding->second << endl;
+	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
 	{
 		cout << "we do enter here" << cout;
 		// Chunk request
