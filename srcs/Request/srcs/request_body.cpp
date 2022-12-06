@@ -27,7 +27,7 @@ bool	Request::unchunk(void)
 	string size_chunk;
 	string request_tmp;
 
-	size_chunk = _request.substr(pos + 1, _request.find("\r\n", pos) - pos);
+	size_chunk = _request.substr(pos , _request.find("\r\n", pos) - pos);
 
 	// Let's concatanate all the chunk by calculating the size of each chunk and adding it to the request_tmp
 	while (size_chunk != "0")
