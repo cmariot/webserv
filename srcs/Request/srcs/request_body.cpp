@@ -26,7 +26,7 @@ bool	Request::unchunk(void)
 
 	string size_chunk;
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	cout << size_chunk << endl;
+	cout << "SIZE :"<<size_chunk << endl;
 	// On cherche le chunk de taille 0
 	cout << "REQUEST in unchunk : " << _request << endl;
 	// if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
