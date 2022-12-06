@@ -19,6 +19,7 @@ bool	Request::body_is_ready(void)
 
 	if (transfert_encoding != _header.end() && transfert_encoding->second != "identity") // (CAS 2 PDF)
 	{
+		cout << "we do enter here" << out;
 		// Chunk request
 		// Verif qu'on ait le chunk de taille 0 final
 		// Set un booleen sur _chunk = true
