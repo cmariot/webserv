@@ -46,8 +46,8 @@ bool	Request::unchunk(void)
 		cout << "SIZE CHUNK :"<< size_chunk << endl;
 		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
 		cout << "REQUEST TMP : " << request_tmp << endl;
-		pos = _request.find("\r\n", pos) + 2;
-		size_chunk = "0";
+		pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk)) + 2;
+		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
 		// size_chunk = _request.substr(pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk) + 2, _request.find("\r\n", pos) - pos);
 		// pos = _request.find("\r\n", pos);
 		// if (pos == std::string::npos)
