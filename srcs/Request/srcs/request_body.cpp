@@ -27,7 +27,7 @@ bool	Request::body_is_ready(void)
 
 		return (unchunk());
 	}
-	else if (content_length != _header.end() && transfert_encoding == _header.end())
+	else if (content_length != _header.end() && transfer_encoding == _header.end())
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
 			return (true);
