@@ -38,7 +38,7 @@ bool	Request::unchunk(void)
 	}
 	_request = _request.substr(0, get_header_size()) + request_tmp;
 
-	cout << "REQUEST TMP : " << request_tmp << endl;
+	cout << "REQUEST TMP : " << _request << endl;
 
 	return (true);
 };
