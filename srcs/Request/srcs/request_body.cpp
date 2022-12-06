@@ -42,8 +42,8 @@ bool	Request::unchunk(void)
 	while (size_chunk != "0")
 	{
 
-		cout << "SIZE :"<< hex_to_unsigned_int(size_chunk) << endl;
-		
+		cout << "SIZE DECIMAL:"<< hex_to_unsigned_int(size_chunk) << endl;
+		cout << "SIZE CHUNK :"<< size_chunk << endl;
 		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
 		size_chunk = _request.substr(pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk) + 2, _request.find("\r\n", pos) - pos);
 		// pos = _request.find("\r\n", pos);
