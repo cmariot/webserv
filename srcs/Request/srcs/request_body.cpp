@@ -37,7 +37,7 @@ bool	Request::unchunk(void)
 	cout << "SIZE CHUNK :"<< size_chunk << endl;
 	request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
 	cout << "REQUEST TMP : " << request_tmp << endl;
-	pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk)) + 2;
+	pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk) + 1) + 2;
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
 	cout << "Size CHUNKED 2 : " << size_chunk << endl << endl;
 
