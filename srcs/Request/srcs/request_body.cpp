@@ -13,6 +13,9 @@ size_t		hex_to_unsigned_int( const string & hexadecimal)
     return decimal;
 }
 
+// To do : [] check eof
+//		   [] clean commentaires
+
 bool	Request::unchunk(void)
 {
 	// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
@@ -28,35 +31,23 @@ bool	Request::unchunk(void)
 	string request_tmp;
 
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	cout << "SIZE :"<<size_chunk << endl;
+	// cout << "SIZE :"<<size_chunk << endl;
 	// On cherche le chunk de taille 0
-	 cout << "REQUEST CHUNKED : " << _request << endl << endl;
-	// if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
-	// {
-	// 	cout << "c bon ?" << endl;
-	// 	return (false);
-	// }
+	//  cout << "REQUEST CHUNKED : " << _request << endl << endl;
 
 	// On supprime les chunks
-	// size_t	pos = get_header_size();	
+	size_t	pos = get_header_size();	
 	while (size_chunk != "0")
 	{
 
-		cout << "SIZE DECIMAL:"<< hex_to_unsigned_int(size_chunk) << endl;
+		// cout << "SIZE DECIMAL:"<< hex_to_unsigned_int(size_chunk) << endl;
 		cout << "SIZE CHUNK :"<< size_chunk << endl;
 		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
-		cout << "REQUEST TMP : " << request_tmp << endl;
+		// cout << "REQUEST TMP : " << request_tmp << endl;
 		pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk)) + 2;
 		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-		// size_chunk = _request.substr(pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk) + 2, _request.find("\r\n", pos) - pos);
-		// pos = _request.find("\r\n", pos);
-		// if (pos == std::string::npos)
-		// 	break;
-		// cout << "pos : " << pos << endl;
-		// // On verifie que le rchunk est bien en hexa
-		// _request.erase(pos, 2);
 	}
-	cout << "REQUEST AFTER UNCHUNK: " << _request << endl;
+	// cout << "REQUEST AFTER UNCHUNK: " << _request << endl;
 	return (true);
 };
 
