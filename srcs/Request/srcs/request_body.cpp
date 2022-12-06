@@ -35,7 +35,8 @@ bool	Request::unchunk(void)
 	// On cherche le chunk de taille 0
 	 cout << "REQUEST CHUNKED : " << _request << endl << endl;
 	cout << "SIZE CHUNK :"<< size_chunk << endl;
-
+	request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
+	cout << "REQUEST TMP : " << request_tmp << endl;
 	// On supprime les chunks
 	while (size_chunk != "0")
 	{
