@@ -12,7 +12,6 @@ bool	Request::unchunk(void)
 	for (std::vector<string>::iterator it = body_content.begin(); it != body_content.end(); it++)	
 		cout << "BODY CONTENT : " << *it << endl;
 	// On cherche le chunk de taille 0
-	// size_t pos = 0;
 	cout << "REQUEST in unchunk : " << _request << endl;
 	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
 	{
@@ -21,6 +20,8 @@ bool	Request::unchunk(void)
 	}
 	cout <<  endl << _request.find("\r\n0\r\n\r\n") << endl;
 
+	// On supprime les chunks
+	size_t	pos = 0;
 	while (pos != _request.find("\r\n0\r\n\r\n"))
 	{
 		pos = _request.find("\r\n");
