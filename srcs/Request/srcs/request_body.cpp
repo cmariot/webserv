@@ -17,7 +17,7 @@ bool	Request::body_is_ready(void)
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	cout << transfer_encoding->second << endl;
+	cout <<"TRANSFER ENCODING ?" <<transfer_encoding->second << endl;
 	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
 	{
 		cout << "we do enter here" << cout;
