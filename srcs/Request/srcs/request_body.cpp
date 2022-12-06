@@ -11,9 +11,9 @@ bool	Request::unchunk(void)
 	
 	// On cherche le chunk de taille 0
 	// size_t pos;
-	cout << "REQUEST : " << _request << endl;
-	// if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
-	// 	return (false);
+	cout << "REQUEST in unchum : " << _request << endl;
+	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
+		return (false);
 
 	// while (pos != _request.find("\r\n0\r\n\r\n"))
 	// {
