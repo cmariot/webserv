@@ -12,16 +12,16 @@ bool	Request::unchunk(void)
 	// On cherche le chunk de taille 0
 	size_t pos;
 	cout << "REQUEST : " << _request << endl;
-	if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
-		return (false);
+	// if ( _request.find("\r\n0\r\n\r\n") == std::string::npos)
+	// 	return (false);
 
-	while (pos != _request.find("\r\n0\r\n\r\n"))
-	{
-		pos = _request.find("\r\n");
-		// On verifie que le chunk est bien en hexa
-		_request.erase(pos, 2);
-	}
-	cout << "REQUEST : " << _request << endl;
+	// while (pos != _request.find("\r\n0\r\n\r\n"))
+	// {
+	// 	pos = _request.find("\r\n");
+	// 	// On verifie que le chunk est bien en hexa
+	// 	_request.erase(pos, 2);
+	// }
+	// cout << "REQUEST : " << _request << endl;
 	return (true);
 };
 
