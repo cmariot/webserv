@@ -24,40 +24,22 @@ bool	Request::unchunk(void)
 	// Dans le sujet webserv : Just remember that, for chunked request, your server needs to unchunked
 	// it and the CGI will expect EOF as end of the body.
 
-	// print body content vector
 	size_t pos = get_header_size();
 
 	string size_chunk;
 	string request_tmp;
 
 	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	// cout << "SIZE :"<<size_chunk << endl;
-	// On cherche le chunk de taille 0
-	 cout << "REQUEST CHUNKED : " << _request << endl << endl;
-	cout << "SIZE CHUNK :"<< size_chunk << endl;
-	request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
-	cout << "REQUEST TMP : " << request_tmp << endl;
-	pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
-	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	cout << "Size CHUNKED 2 : " << size_chunk << endl << endl;
-	request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
-	cout << "REQUEST TMP : " << request_tmp << endl;
-	pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
-	size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-	cout << "Size CHUNKED 3 : " << size_chunk << endl << endl;
-	// On supprime les chunks
+
+	// Let's concatanate all the chunk by calculating the size of each chunk and adding it to the request_tmp
 	while (size_chunk != "0")
 	{
-
-		// cout << "SIZE DECIMAL:"<< hex_to_unsigned_int(size_chunk) << endl;
-		cout << "SIZE CHUNK :"<< size_chunk << endl;
 		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
-		// cout << "REQUEST TMP : " << request_tmp << endl;
-		pos = _request.find("\r\n", pos + hex_to_unsigned_int(size_chunk)) + 2;
+		pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
 		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
-		size_chunk = "0";
 	}
-	// cout << "REQUEST AFTER UNCHUNK: " << _request << endl;
+	cout << "REQUEST TMP : " << request_tmp << endl;
+	_request = request_tmp;
 	return (true);
 };
 
