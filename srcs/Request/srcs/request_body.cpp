@@ -27,7 +27,7 @@ bool	Request::unchunk(void)
 		pos = _request.find("\r\n");
 		cout << "pos : " << pos << endl;
 		// On verifie que le rchunk est bien en hexa
-		// _request.erase(pos, 2);
+		_request.erase(pos, 2);
 	}
 	cout << "REQUEST : " << _request << endl;
 	return (true);
