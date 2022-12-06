@@ -17,5 +17,7 @@ bool	Request::is_ready(void)
 				return (false);
 		}
 	}
+	print(INFO, "Request :");
+	std::cout << _request << std::endl;
 	return (true);
 };

@@ -43,7 +43,6 @@ int	Request::set_header(size_t & i)
 	size_t			key_len;
 	std::string		value;
 
-	std::cout << _request << std::endl;
 	_header.clear();
 	while (i + 1 < _request.size())
 	{
