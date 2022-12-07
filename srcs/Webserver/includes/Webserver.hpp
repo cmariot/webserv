@@ -1,41 +1,12 @@
 #ifndef WEBSERVER_HPP
 # define WEBSERVER_HPP
 
-# include <cstdio>
-# include <cstdlib>
-# include <unistd.h>
-# include <errno.h>
-# include <sys/socket.h>
-# include <netdb.h>
-# include <fcntl.h>
-# include <sys/epoll.h>
-# include <cstring>
-# include <utility>
-# include <signal.h>
-
-
-# include <string>
-# include <vector>
-# include <sstream>
-
 # include "Client.hpp"
 # include "Server.hpp"
 # include "Utils.hpp"
 # include "Request.hpp"
 # include "Response.hpp"
 
-# define STDIN			0
-# define STDOUT			1
-# define STDERR			2
-# define MAX_EVENTS		500
-# define SIGNAL_CAUGHT	1
-# define READY			1
-# define INFO			0
-# define BUFFER_SIZE	10
-
-using std::string;
-using std::cout;
-using std::endl;
 
 class Webserver
 {

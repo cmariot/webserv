@@ -3,6 +3,14 @@
 
 # define INFO 0
 # define ERR 1
+# define STDIN			0
+# define STDOUT			1
+# define STDERR			2
+# define MAX_EVENTS		500
+# define SIGNAL_CAUGHT	1
+# define READY			1
+# define INFO			0
+# define BUFFER_SIZE	10
 
 # include <iostream>
 # include <string>
@@ -12,6 +20,20 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <cstring>
+# include <sstream>
+# include <errno.h>
+# include <sys/socket.h>
+# include <netdb.h>
+# include <fcntl.h>
+# include <sys/epoll.h>
+# include <cstring>
+# include <utility>
+# include <signal.h>
+# include <cstdio>
+# include <cstdlib>
+# include <unistd.h>
+# include <string>
+# include <vector>
 # include <sstream>
 
 using std::map;
@@ -24,6 +46,9 @@ using std::endl;
 using std::max;
 using std::multimap;
 using std::stringstream;
+using std::string;
+using std::cout;
+using std::endl;
 
 // error.cpp
 int			error(string);
