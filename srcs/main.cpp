@@ -6,6 +6,13 @@ int	main(const int argc, const char *argv[], char * const *env)
 
 	if (webserv.parse(argc, argv, env))
 		return (0);
-	webserv.launch();
+	try
+	{
+		webserv.launch();
+	}
+	catch (const std::bad_alloc & exception)
+	{
+		return (error(exception.what(), " - Allocation failed."));
+	}
 	return (0);
 };

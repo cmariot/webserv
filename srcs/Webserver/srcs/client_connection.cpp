@@ -16,7 +16,7 @@ static int	set_non_blocking_client(int client_socket)
 {
 	int	flags = fcntl(client_socket, F_GETFL, 0);
 
-	if (flags == -1 || fcntl(client_socket, F_SETFL, O_NONBLOCK) == -1)
+	if (flags == -1 || fcntl(client_socket, F_SETFL, flags | O_NONBLOCK) == -1)
 		return (error(strerror(errno)));
 	return (0);
 };

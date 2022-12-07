@@ -76,9 +76,9 @@ void	Webserver::set_env(char * const *env)
 int	Webserver::check_define(void) const
 {
 	if (BUFFER_SIZE < 2)
-		return (1);
+		return (error("BUFFER_SIZE"));
 	else if (MAX_EVENTS <= 0)
-		return (1);
+		return (error("MAX_EVENTS"));
 	return (0);
 };
 

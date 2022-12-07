@@ -3,7 +3,8 @@
 void	Webserver::remove_client(void)
 {
 	clients.erase(event.data.fd);
-	epoll_ctl(epoll_socket, EPOLL_CTL_DEL, event.data.fd, NULL);
+	if (epoll_ctl(epoll_socket, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
+		error("Epoll_ctl DEL failed.");
 	close(event.data.fd);
 };
 

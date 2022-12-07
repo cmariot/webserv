@@ -1,12 +1,3 @@
-- [ ] REQUEST
-	- Verif taille du body (chunk + multipart)
-
-- [ ] RESPONSE
-	- Unchunk
-
-- [ ] GENERAL
-	- Proteger les exceptions
-
 - [ ] VERIFS
 	- Voir sujet correction et faire des fichiers/config de test
 

@@ -72,7 +72,9 @@ bool	Response::is_forbidden(void) const
 bool	Response::file_not_found(void)
 {
 	_path = _request.get_uri();
+	std::cout << "PATH 1 : " <<  _path << std::endl;
 	_path.replace(0, _location.get_uri().size(), _location.root());
+	std::cout << "PATH 2 : " << _path << std::endl;
 	if (is_a_file(_path))
 		return (false);	 /* (￣o￣) zzZZzzZZ */
 	for (size_t i = 0 ; i < _location.index().size() ; ++i)

@@ -14,6 +14,7 @@ int		Webserver::send_response(void)
 
 	client.create_response(servers, get_env());
 
+	print(INFO, "The server is sending a response to the client.");
 	const ssize_t send_return = send(it->first,
 					client.get_response(),
 					client.get_response_size(),
@@ -30,13 +31,16 @@ int		Webserver::send_response(void)
 	}
 	else
 	{
-		print(INFO, "The server is sending a response to the client.");
+		print(INFO, "Response :");
+		std::cout << client.get_response() << std::endl;
+
 		struct epoll_event	new_event;
 
 		bzero(&new_event, sizeof(struct epoll_event));
 		new_event.data.fd = it->first;
 		new_event.events = EPOLLIN;
-		epoll_ctl(epoll_socket, EPOLL_CTL_MOD, event.data.fd, &new_event);
+		if (epoll_ctl(epoll_socket, EPOLL_CTL_MOD, event.data.fd, &new_event) == -1)
+			error("Epoll_ctl MOD failed.");
 	}
 	return (0);
 };
