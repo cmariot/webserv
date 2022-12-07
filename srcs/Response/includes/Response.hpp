@@ -12,7 +12,6 @@
 # include <sstream>
 # include <iterator>
 
-# define BUFFER_SIZE 4096
 
 class Response
 {
