@@ -12,7 +12,6 @@ size_t		hex_to_unsigned_int( const string & hexadecimal)
 }
 
 // To do : [] check eof
-//		   [x] clean commentaires
 //		   []  check with multipart/form-data (it should work but im tired)
 
 bool	Request::unchunk(void)
@@ -48,15 +47,11 @@ bool	Request::body_is_ready(void)
 	std::multimap<string, string>::iterator	content_length		= _header.find("Content-Length");
 	std::multimap<string, string>::iterator	content_type		= _header.find("Content-Type");
 
-	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
-	{
-		cout << "we do enter here" << endl;
-		// Chunk request
-		// Verif qu'on ait le chunk de taille 0 final
-		// Set un booleen sur _chunk = true
 
+	cout << "Request " << _request << endl;
+	if (transfer_encoding != _header.end() && transfer_encoding->second != "identity") // (CAS 2 PDF)
 		return (unchunk());
-	}
+
 	else if (content_length != _header.end() && transfer_encoding == _header.end())
 	{
 		if (content_length->second == itostring(_request.size() - _header_size))
@@ -64,8 +59,6 @@ bool	Request::body_is_ready(void)
 	}
 	else if (content_type != _header.end() && content_type->second.find("multipart/byteranges") != std::string::npos) // (CAS 4 PDF)
 	{
-		// Boundary
-		// A tester !!!
 		std::string		content_type_value;
 		std::string		boundary;
 		std::string		final_boundary;
@@ -74,11 +67,7 @@ bool	Request::body_is_ready(void)
 		boundary = content_type_value.substr((content_type_value.find("boundary=") + 9), std::string::npos);
 		final_boundary = "--" + boundary + "--";
 		if (_request.find(final_boundary) != string::npos)
-		{
-			//get_content();
-			// A FAIRE : _body_size = _request.size() - _header_size;
 			return (true);
-		}
 	}
 	else
 		return (true);

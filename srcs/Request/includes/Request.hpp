@@ -64,9 +64,9 @@ class	Request
 
 		string 				boundary;
 		vector<string>		content;
+		vector<string> 		file_name;
 		vector<string>		body_content;
 		vector<string>		content_type;
-		vector<string> 		file_name;
 
 		int					get_boundary_content(void);
 		int					get_body_content(size_t i);

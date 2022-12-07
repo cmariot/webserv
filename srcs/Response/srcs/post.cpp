@@ -12,12 +12,12 @@ static	int	make_dir_if_not_exist(const string & path)
 	else
 	{
 		print(INFO, "The upload folder was not found");
-		if(mkdir((path).c_str(), 0777))
+		if(mkdir((path).c_str(), 0775))
 		{
 			print(ERR, "Error while creating the upload folder");
 			return(1);
 		}
-		print(INFO, "Upload folder created ");
+		print(INFO, "Upload folder created");
 		return (0);
 	}
 }
@@ -39,7 +39,7 @@ int		Response::post_files_creation(const string & path)
 
 		std::ofstream fout;
 		infile = path + infile;
-		print(INFO, "File(s) about to be uploaded");
+		print(INFO, "File about to be uploaded");
 		if (is_a_file(infile) && !check_file_rights(infile))
 		{
 			print(ERR, "The user can't open the file : Permission denied"); 
