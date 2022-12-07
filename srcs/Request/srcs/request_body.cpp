@@ -11,9 +11,6 @@ size_t		hex_to_unsigned_int( const string & hexadecimal)
     return decimal;
 }
 
-// To do : [] check eof
-//		   []  check with multipart/form-data (it should work but im tired)
-
 bool	Request::unchunk(void)
 {
 	// La longueur de transfert esr definie par l'utilisation du transfert de codage fragmente
@@ -29,11 +26,13 @@ bool	Request::unchunk(void)
 
 	size_chunk = _request.substr(pos , _request.find("\r\n", pos) - pos);
 	// Let's concatanate all the chunk by calculating the size of each chunk and adding it to the request_tmp
-	while (size_chunk != "0")
+	while (size_chunk != "0" )
 	{
 		request_tmp += _request.substr(pos + size_chunk.size() + 2, hex_to_unsigned_int(size_chunk));
 		pos = _request.find("\r\n", pos + size_chunk.size() + 2 + hex_to_unsigned_int(size_chunk)) + 2 ;
 		size_chunk = _request.substr(pos, _request.find("\r\n", pos) - pos);
+		if (pos == string::npos)
+			return (false);
 	}
 	_request = _request.substr(0, get_header_size()) + request_tmp;
 
