@@ -73,6 +73,15 @@ void	Webserver::set_env(char * const *env)
 	return ;
 };
 
+int	Webserver::check_define(void) const
+{
+	if (BUFFER_SIZE < 2)
+		return (1);
+	else if (MAX_EVENTS <= 0)
+		return (1);
+	return (0);
+};
+
 // Check the number of arguments,
 // if the file can be opened and
 // store the file content in a string vector.
@@ -83,7 +92,8 @@ int	Webserver::parse(const int argc, const char *argv[], char * const *env)
 	print(INFO, "Webserv is starting ...");
 	if (check_arguments(argc, argv))
 		return (1);
-	// check defined variables (BUFFER_SIZE ...)
+	if (check_define())
+		return (1);
 	if (get_file(argv[1], vector))
 		return (1);
 	if (parse_configuration_file(vector))

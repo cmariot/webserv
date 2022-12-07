@@ -65,6 +65,7 @@ class Webserver
 
 		//	parsing
 		int				check_arguments(const int & argc, const char *argv[]);
+		int				check_define(void) const;
 		int				get_file(const char * &, std::vector<std::string> &);
 		int				parse_configuration_file(std::vector<std::string> &);
 		int				remove_commentaries(std::vector<std::string> &) const;

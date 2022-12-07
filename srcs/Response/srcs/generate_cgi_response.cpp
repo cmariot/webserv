@@ -31,7 +31,7 @@ int Response::generate_cgi_response(void)
 		char	*pwd = getcwd(NULL, 0);
 
 		if (pwd == NULL)
-			return (1);
+			return (error("getcwd() failed"));
 		full_path = pwd + std::string("/") + _path;
 		free(pwd);
 	}
@@ -59,14 +59,14 @@ int Response::generate_cgi_response(void)
 		}
 		std::string	cd_path = full_path.substr(0, full_path.size() - file_len);
 		if (chdir(cd_path.c_str()) != 0)
-			return (1);
+			return (error("chdir() failed"));
 		dup2(CHILD_READ_FD, STDIN_FILENO);
 		dup2(CHILD_WRITE_FD, STDOUT_FILENO);
 		close(CHILD_READ_FD);
         close(CHILD_WRITE_FD);
         close(PARENT_READ_FD);
         close(PARENT_WRITE_FD);
-		execve(cgi_args[0], cgi_args, _env);
+		pid = execve(cgi_args[0], cgi_args, _env);
 		return (1);
 	}
 	else

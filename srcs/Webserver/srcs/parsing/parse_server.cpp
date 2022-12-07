@@ -35,16 +35,27 @@ int		Webserver::parse_server(std::vector<std::string> & vector)
 	size_t						end = 0;
 	std::vector<std::string>	server_directives;
 
-	print(INFO, "Looking for 'server' blocks in the configuration file.");
-	for (size_t i = 0 ; i < vector_size && nb_of_servers < servers.max_size() ; ++i)
+	try
 	{
-		if (get_server_directives(vector, i, begin, end))
-			return (1);
-		server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
-		print(INFO, "Creating a new server context");
-		servers.push_back(Server());
-		if (servers[nb_of_servers++].parse(server_directives, servers))
-			return (1);
+		print(INFO, "Looking for 'server' blocks in the configuration file.");
+		for (size_t i = 0 ; i < vector_size && nb_of_servers < servers.max_size() ; ++i)
+		{
+			if (get_server_directives(vector, i, begin, end))
+				return (1);
+			server_directives = std::vector<std::string>(vector.begin() + begin, vector.begin() + end);
+			print(INFO, "Creating a new server context");
+			servers.push_back(Server());
+			if (servers[nb_of_servers++].parse(server_directives, servers))
+				return (1);
+		}
+	}
+	catch (const std::out_of_range & exception)
+	{
+		return (error(exception.what(), "(parse_server)"));
+	}
+	catch (const std::bad_alloc & exception)
+	{
+		return (error(exception.what(), "(parse_server)"));
 	}
 	return (0);
 };
