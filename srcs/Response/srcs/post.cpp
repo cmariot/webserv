@@ -73,7 +73,7 @@ void 	Response::generate_post_response(int	status_code)
 	{
 		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
 		_body = "Your files have been uploaded ! Click <A href=";
-		_body +=  _location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
+		_body +=   _location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
 	}
 	_header += "Content-type: text/html charset=utf-8 \r\n";
 	_header += "Content-Length: " + itostring(_body.size()) + "\r\n\r\n";
@@ -92,8 +92,9 @@ void    Response::post_method(void)
 {
    	_request.get_content();
 
-	string folder_path = "." + _location.get_upload_path();
+	string folder_path = _location.root() + _location.get_upload_path();
 
+	cout << "folder_upload : " << folder_path << endl;
 	if (make_dir_if_not_exist(folder_path))
 		return(generate_error_page(500));
 	if (post_files_creation(folder_path) && _request.content.size())
