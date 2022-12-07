@@ -1,12 +1,6 @@
-h1
-{
-	color: green;
-}
-
-#link_list, 
-#link_list a:visited
-{
-	display: flex;
-	flex-direction: column;
-	color: green;
-}
+body {
+	background: white;
+	background-image: linear-gradient(90deg, rgba(200,0,0,.5) 50%, transparent 0),
+	linear-gradient(rgba(200,0,0,.5) 50%, transparent 0);
+	background-size: 30px 30px;
+	}
