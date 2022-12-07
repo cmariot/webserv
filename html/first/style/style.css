@@ -1,6 +1,70 @@
-body {
-	background: white;
-	background-image: linear-gradient(90deg, rgba(200,0,0,.5) 50%, transparent 0),
-	linear-gradient(rgba(200,0,0,.5) 50%, transparent 0);
-	background-size: 30px 30px;
-	}
+body 
+{
+  text-align: center;
+}
+
+h1 
+{
+  font-size: 3em;
+	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
+a {
+  width: 200px;
+  height: 60px;
+  font-size: 1.6rem;
+  font-family: Baskerville;
+  font-weight: 500;
+ 
+  
+  /* centre le texte  V et H*/
+  display: flex;  /* remplit l'espace disponible de son conteneur. */
+  align-items: center;
+  justify-content: center;
+ 
+  /* enleve le soulignage */
+  text-decoration: none;
+  color: white;
+  
+ /* bordures */
+  border-radius: 5%;
+  border: 1px solid #004516;
+  background: #adc4ad;
+  
+  /* centre les boutons et les espace de 6 px*/
+  margin: 5px auto;
+  
+  /* cache ce qu'il y a en dehors*/
+  overflow: hidden;
+
+  /* niveau */
+  z-index: 0;
+  position: relative;
+
+}
+
+/* Creation d'un élément avant le bouton, c'est le rideau vert*/
+a::before {
+ /* ce qu'il y a dedans sans ça il n'est pas créé */
+  content: '';
+ /* position et taille */
+  position: absolute;
+  right: 190px;
+  bottom: 50px;
+  width: 100%;
+  height: 100%;
+  
+  background: #004516;
+  border-radius: 50% 50% 5% 5%;
+  z-index: -1;
+  
+  /* vitesse de l'effet = speed transition*/
+  transition: all .5s;     
+}
+
+/* effet lors du survol */
+a:hover::before {
+  bottom: 0px;
+  right: 0px;
+  border-radius: 0;
+}
