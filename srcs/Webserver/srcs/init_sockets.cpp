@@ -45,13 +45,11 @@ int		Webserver::bind_server_address(Server & server)
 		server.socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 		if (server.socket == -1)
 			continue ;
-
 		if (setsockopt(server.socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(int)) == -1)
 		{
 			close(server.socket);
 			continue ;
 		}
-
 		print(INFO, "Binding the server_socket with an address.");
 		if (bind(server.socket, rp->ai_addr, rp->ai_addrlen) == 0)
 		{
@@ -59,7 +57,6 @@ int		Webserver::bind_server_address(Server & server)
 			server.addrlen = rp->ai_addrlen;
 			break ; // Bind OK
 		}
-
 		close(server.socket);
 	}
 	freeaddrinfo(result);

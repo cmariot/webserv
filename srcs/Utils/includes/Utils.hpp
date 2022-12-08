@@ -10,7 +10,7 @@
 # define SIGNAL_CAUGHT	1
 # define READY			1
 # define INFO			0
-# define BUFFER_SIZE	10
+# define BUFFER_SIZE	4096
 
 # include <iostream>
 # include <string>

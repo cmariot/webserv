@@ -12,7 +12,6 @@
 # include <sstream>
 # include <iterator>
 
-
 class Response
 {
 

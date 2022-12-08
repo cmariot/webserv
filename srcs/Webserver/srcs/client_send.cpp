@@ -14,7 +14,9 @@ int		Webserver::send_response(void)
 
 	client.create_response(servers, get_env());
 
-	print(INFO, "The server is sending a response to the client.");
+	print(INFO, "Response :");
+	std::cout << client.get_response() << std::endl;
+
 	const ssize_t send_return = send(it->first,
 					client.get_response(),
 					client.get_response_size(),
@@ -31,8 +33,7 @@ int		Webserver::send_response(void)
 	}
 	else
 	{
-		print(INFO, "Response :");
-		std::cout << client.get_response() << std::endl;
+		print(INFO, "The response has been send.");
 
 		struct epoll_event	new_event;
 

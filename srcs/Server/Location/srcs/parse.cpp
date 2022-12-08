@@ -4,8 +4,6 @@ int	Location::parse(std::vector<std::string> & vector)
 {
 	for (size_t i = 0 ; i < vector.size() ; i++)
 	{
-		// Peut etre faire un truc plus propre :
-		// pointeur sur fonctions + boucle a la place de la foret de if ?
 		if (vector[i] == "allow_methods")
 		{
 			print(INFO, "Parsing of the allow_methods directive in the server's location context.");

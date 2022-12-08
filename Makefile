@@ -16,7 +16,7 @@ CONFIG_FILE		 = configuration_files/main.conf
 
 CC				 = c++
 
-CFLAGS			 = -Wall -Wextra -Werror
+CFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
 LFLAGS			 = -Wall -Wextra -Werror -std=c++98
 
@@ -29,13 +29,13 @@ INCLUDES		 = -I includes
 # **************************************************************************** #
 
 
-DEBUG			 = true
+DEBUG			 = false
 
 ifeq ($(DEBUG), true)
 
-	CFLAGS		+= -g3 -std=c++98
+	CFLAGS		+= -g3
 
-	LFLAGS		+= -g3 -std=c++98
+	LFLAGS		+= -g3
 
 else
 

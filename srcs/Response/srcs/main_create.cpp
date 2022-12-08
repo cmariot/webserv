@@ -16,15 +16,9 @@ void	Response::main_create(void)
 		return (generate_100_continue());
 	if (has_content())
 	{
-		// decoder ici ?
 		if (content_too_large()) // Voir taille body
 			return (generate_error_page(413));
-		// if (content_type_not_accepted())
-		//	return (generate_error_page(415));
 	}
-	if (request_block_not_ok()) // voir ce qu'on met dedans
-		return (generate_error_page(400));
-
 	if (_request.get_method() == "GET")
 		return (get_method());
 	else if (_request.get_method() == "POST")
