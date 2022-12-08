@@ -22,7 +22,7 @@ class	Request
 		void								add_to_request(const char *, const ssize_t &);
 		bool								is_ready(void);
 		void								clear(void);
-	
+
 		const std::string					& get_request(void) const;
 		const std::string					& get_request_line(void) const;
 		const std::string					& get_method(void) const;
@@ -34,6 +34,22 @@ class	Request
 		const std::multimap<string, string> & get_header(void) const;
 		const size_t 						& get_header_size(void) const;
 		const bool							& has_body(void) const;
+
+		int					get_boundary_content(void);
+		int					get_body_content(size_t i);
+		int 				get_content_type(size_t i);
+		int 				get_file_name(size_t i);
+		int 				get_content(void);
+
+		int					set_content(void);
+
+		void				reset(void);
+
+		string 				boundary;
+		vector<string>		content;
+		vector<string> 		file_name;
+		vector<string>		body_content;
+		vector<string>		content_type;
 
 	private:
 
@@ -47,6 +63,7 @@ class	Request
 		size_t								_header_size;		// Request_line + Header
 		bool								_has_body;			// True if body in the request
 
+
 		int									set_request_line(size_t &);
 		int									set_method(size_t &);
 		int 								set_uri(size_t &);
@@ -59,24 +76,6 @@ class	Request
 		bool								body_in_this_request(void);
 		bool								body_is_ready(void);
 		bool								unchunk(void);
-
-	public:
-
-		string 				boundary;
-		vector<string>		content;
-		vector<string> 		file_name;
-		vector<string>		body_content;
-		vector<string>		content_type;
-
-		int					get_boundary_content(void);
-		int					get_body_content(size_t i);
-		int 				get_content_type(size_t i);
-		int 				get_file_name(size_t i);
-		int 				get_content(void);
-
-		int					set_content(void);
-
-		void				reset(void);
 
 };
 

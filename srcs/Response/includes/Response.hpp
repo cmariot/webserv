@@ -38,9 +38,8 @@ class Response
 		std::string							_header;
 		std::string							_body;
 		std::string							_response;
-
 		std::string							_path;
-		
+
 
 		// Update
 		int									get_location(void);
@@ -79,6 +78,8 @@ class Response
 		int									post_files_creation(const string & path);
 		void 								generate_post_response(int status_codep);
 		void 								post_response(void);
+		int									_first_file;
+;
 
 		// Generate
 		void								generate_error_page(const int &);

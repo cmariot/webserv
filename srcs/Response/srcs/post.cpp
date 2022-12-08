@@ -1,6 +1,8 @@
 #include "Response.hpp"
 
 
+// https://stackoverflow.com/questions/630453/what-is-the-difference-between-post-and-put-in-http -> post needs to modify the state of the server
+
 static	int	make_dir_if_not_exist(const string & path)
 {
 	if (is_a_dir(path))
@@ -25,7 +27,8 @@ static	int	make_dir_if_not_exist(const string & path)
 int		Response::post_files_creation(const string & path)
 {
 	size_t i = 0;
-	
+	_first_file = -1;
+
 	if (!_location.upload_allowed() )
 	{
 		print(ERR, "The user can't upload files on this server");
@@ -40,13 +43,18 @@ int		Response::post_files_creation(const string & path)
 		std::ofstream fout;
 		infile = path + infile;
 		print(INFO, "File about to be uploaded");
-		if (is_a_file(infile) && !check_file_rights(infile))
+		if (is_a_file(infile))
 		{
-			print(ERR, "The user can't open the file : Permission denied"); 
-			print(ERR, "Files not uploaded");
-			generate_error_page(403);
-			return (1);
-		}  
+			if (!check_file_rights(infile))
+			{
+				print(ERR, "The user can't open the file : Permission denied");
+				print(ERR, "Files not uploaded");
+				generate_error_page(403);
+				return (1);
+			}
+		}
+		else if (_first_file == -1)
+			_first_file = i;
 
 		fout.open(infile.c_str(), std::ios::out | std::ios::app | std::ios::binary);
 
@@ -68,11 +76,32 @@ int		Response::post_files_creation(const string & path)
 
 void 	Response::generate_post_response(int	status_code)
 {
+	_body = "<style>";
+	_body +=			"html{";
+	_body +=				"height:100%;";
+	_body +=				"width:100%;";
+	_body += 			"}";
+	_body += 			"body{";
+	_body +=				"height:100%;";
+	_body +=				"width:100%;";
+	_body +=				"display:flex;";
+	_body +=				"flex-direction:column;";
+	_body +=				"justify-content:center;";
+	_body +=				"align-content:center;";
+	_body +=				"text-align:center;";
+	_body += 			"}";
+	_body += 		"</style>";
+
 	_header  = _request.get_http_version() + " " + itostring(status_code) + " " + _status_code_map.find(status_code)->second + "\r\n";
 	if (status_code == 201)
 	{
 		_header += "Location: " + _location.get_upload_path() + _request.file_name[0] + "\r\n";
-		_body = "Your files have been uploaded ! Click <A href=";
+		_body = "Your file has been uploaded ! Click <A href=";
+		_body +=   _location.get_upload_path() + _request.file_name[_first_file] + ">here</A> to view it.";
+	}
+	else if (status_code == 200)
+	{
+		_body = "Your file has been modified ! Click <A href=";
 		_body +=   _location.get_upload_path() + _request.file_name[0] + ">here</A> to view it.";
 	}
 	_header += "Content-type: text/html charset=utf-8 \r\n";
@@ -82,8 +111,10 @@ void 	Response::generate_post_response(int	status_code)
 
 void	Response::post_response(void)
 {
-	if (_request.content.size())
+	if (_request.content.size() && _first_file != -1)
 		generate_post_response(201);
+	else if (_request.content.size() && _first_file == -1)
+		generate_post_response(200);
 	else
 		generate_post_response(204);
 }
