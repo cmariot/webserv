@@ -41,9 +41,8 @@ int Request::get_content_type(size_t i)
 int Request::get_body_content(size_t i)
 {
 	size_t		pos;
-	
-	pos = content[i].find("\r\n");
-	pos = content[i].find("\r\n", ++pos);
+
+	pos = content[i].find("\r\n\r\n");
 	pos = pos + 4;
 
 	if (pos != std::string::npos)
@@ -99,9 +98,9 @@ void Request::reset(void)
 
 // This function stores the different infos of files in 3 vectors : name, type, content
 // 1 stored the different contents of the form divided by the boundaries in a vector
-// 2 get the name of the file 
+// 2 get the name of the file
 // 3 if name="" it means no file was uploaded => delete this content from the vector
-// 4 get the type of content 
+// 4 get the type of content
 // 5 get the content of the file
 int Request::get_content(void)
 {
