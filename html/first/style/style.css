@@ -71,42 +71,6 @@ a:hover::before {
   border-radius: 0;
 }
 
-/* FILE UPLOAD */
-file
-{
-width: 200px;
-height: 60px;
-font-size: 1.6rem;
-font-family: Baskerville;
-font-weight: 500;
-
-
-/* centre le texte  V et H*/
-display: flex;  /* remplit l'espace disponible de son conteneur. */
-align-items: center;
-justify-content: center;
-
-/* enleve le soulignage */
-text-decoration: none;
-color: white;
-
-/* bordures */
-border-radius: 5%;
-border: 1px solid #004516;
-background: #adc4ad;
-
-/* centre les boutons et les espace de 6 px*/
-margin: 5px auto;
-
-/* cache ce qu'il y a en dehors*/
-overflow: hidden;
-
-/* niveau */
-z-index: 0;
-position: relative;
-
-}
-
 input::before 
 {
 	 /* ce qu'il y a dedans sans ça il n'est pas créé */
