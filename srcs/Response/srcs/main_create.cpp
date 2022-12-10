@@ -15,16 +15,13 @@ void	Response::main_create(void)
 	if (expect_100_continue())
 		return (generate_100_continue());
 	if (has_content())
-	{
-		if (content_too_large()) // Voir taille body
+		if (content_too_large())
 			return (generate_error_page(413));
-	}
-	if (_request.get_method() == "GET")
+	if (_request.get_method()		== "GET")
 		return (get_method());
-	else if (_request.get_method() == "POST")
+	else if (_request.get_method()	== "POST")
 		return (post_method());
-	else if (_request.get_method() == "DELETE")
+	else if (_request.get_method()	== "DELETE")
 		return (delete_method());
-
 	return ;
 };

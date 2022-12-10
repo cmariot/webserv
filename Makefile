@@ -162,7 +162,6 @@ RESPONSE		= constructor.cpp \
 				  method_not_implemented.cpp \
 				  method_not_allowed.cpp \
 				  post.cpp \
-				  request_block_not_ok.cpp \
 				  update.cpp \
 				  uri_too_long.cpp
 
