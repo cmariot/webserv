@@ -1,0 +1,20 @@
+h2 {
+    margin-left:50px
+ }
+  
+ p {
+   margin-left:20px  
+   margin-right:20px  
+ }
+article {
+    min-height: 100%;
+    display: grid;
+}
+  
+footer {
+    display: flex;
+   justify-content: center;
+   padding: 2px;
+
+}
+  
